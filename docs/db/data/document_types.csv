@@ -1,0 +1,13 @@
+id,name,issuer,lead_time_days,issue_url,verified_at
+biz_registration_cert,사업자등록증명,홈택스,0,https://www.hometax.go.kr,
+sme_confirmation,중소기업확인서,중소기업현황정보시스템(sminfo),20,https://sminfo.mss.go.kr,
+insurance_member_list,4대보험 가입자명부,4대사회보험 정보연계센터,1,https://www.4insure.or.kr,
+tax_payment_cert,국세·지방세 납세증명,홈택스·위택스,0,https://www.hometax.go.kr,
+vat_base_cert,부가가치세 과세표준증명,홈택스,0,https://www.hometax.go.kr,
+financial_statements,재무제표(표준재무제표증명),홈택스,0,https://www.hometax.go.kr,
+venture_cert,벤처기업확인서,벤처확인종합관리시스템,45,https://www.smes.go.kr/venturein,
+women_enterprise_cert,여성기업확인서,여성기업종합정보포털,20,https://www.wbiz.or.kr,
+research_institute_cert,기업부설연구소 인정서,한국산업기술진흥협회,7,https://www.rnd.or.kr,
+export_record_cert,수출실적증명,한국무역협회,3,https://www.kita.net,
+food_business_permit,식품 영업신고증,관할 시·군·구,3,,
+business_plan,사업계획서,자체 작성,,,

@@ -1,0 +1,2 @@
+program_a,program_b,similarity,period_overlap,decision,decided_by,note
+seed-03,seed-23,0.78,false,distinct,human,제목이 비슷하지만 대상(신규 창업자 vs 졸업기업)과 접수기간이 다르다 — 비중복 시연용

@@ -1,0 +1,4 @@
+id,name,business_type,industry_code,industry_label,region_code,region_label,founded_at,employee_count,ceo_birth_date,ceo_gender,annual_revenue_krw,export_revenue_usd_prev_year,is_vat_exempt,certifications,flags,created_at,updated_at,demo_label
+demo-1,테크스타트 주식회사,corporation,J62,소프트웨어 개발업,29,광주광역시,-35m5d,4,-39y4m,male,320000000,0,false,[],"{""hiring_planned"":true,""has_online_sales"":false,""handles_personal_data"":false,""is_food_business"":false}",+0d,+0d,① 광주 소프트웨어 4인 (업력 2년 11개월)
+demo-2,김창업 전자부품,individual,C26,전자부품 제조업,29,광주광역시,-14m,0,-32y,male,,,false,[],"{""hiring_planned"":true,""has_online_sales"":false,""handles_personal_data"":false,""is_food_business"":false}",+0d,+0d,② 광주 제조업 1인 (첫 채용 예정)
+demo-3,남도푸드,individual,C10,식료품 제조업,46,전라남도,-2m,2,-46y,female,,,false,[],"{""hiring_planned"":false,""has_online_sales"":true,""handles_personal_data"":true,""is_food_business"":true}",+0d,+0d,③ 전남 식품 제조 2인 (개업 2개월)
