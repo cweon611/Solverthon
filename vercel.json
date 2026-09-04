@@ -1,0 +1,6 @@
+{
+  "crons": [
+    { "path": "/api/ingest?source=kstartup&maxFetch=150&maxParse=5", "schedule": "0 21 * * *" },
+    { "path": "/api/ingest?source=bizinfo&maxFetch=150&maxParse=5", "schedule": "30 21 * * *" }
+  ]
+}

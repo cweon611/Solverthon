@@ -1,0 +1,146 @@
+{
+  "generatedAt": "2026-09-03T10:15:14.908Z",
+  "note": "각 패키지의 package.json에 기재된 라이선스를 그대로 옮긴 것입니다.",
+  "entries": [
+    {
+      "name": "@anthropic-ai/sdk",
+      "version": "0.123.0",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "github:anthropics/anthropic-sdk-typescript"
+    },
+    {
+      "name": "@supabase/supabase-js",
+      "version": "2.114.0",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://github.com/supabase/supabase-js/tree/master/packages/core/supabase-js"
+    },
+    {
+      "name": "fast-xml-parser",
+      "version": "5.11.1",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://github.com/NaturalIntelligence/fast-xml-parser"
+    },
+    {
+      "name": "next",
+      "version": "16.3.4",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://nextjs.org"
+    },
+    {
+      "name": "react",
+      "version": "19.2.8",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://react.dev/"
+    },
+    {
+      "name": "react-dom",
+      "version": "19.2.8",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://react.dev/"
+    },
+    {
+      "name": "server-only",
+      "version": "0.0.1",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://reactjs.org/"
+    },
+    {
+      "name": "zod",
+      "version": "4.5.4",
+      "license": "MIT",
+      "kind": "runtime",
+      "homepage": "https://zod.dev"
+    },
+    {
+      "name": "@tailwindcss/postcss",
+      "version": "4.3.3",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://tailwindcss.com"
+    },
+    {
+      "name": "@types/node",
+      "version": "20.19.43",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node"
+    },
+    {
+      "name": "@types/react",
+      "version": "19.2.18",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react"
+    },
+    {
+      "name": "@types/react-dom",
+      "version": "19.2.5",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react-dom"
+    },
+    {
+      "name": "@vitest/coverage-v8",
+      "version": "4.1.11",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://vitest.dev/guide/coverage"
+    },
+    {
+      "name": "dotenv",
+      "version": "17.4.2",
+      "license": "BSD-2-Clause",
+      "kind": "dev",
+      "homepage": "https://github.com/motdotla/dotenv#readme"
+    },
+    {
+      "name": "eslint",
+      "version": "9.39.5",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://eslint.org"
+    },
+    {
+      "name": "eslint-config-next",
+      "version": "16.3.4",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://nextjs.org/docs/app/api-reference/config/eslint"
+    },
+    {
+      "name": "tailwindcss",
+      "version": "4.3.3",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://tailwindcss.com"
+    },
+    {
+      "name": "tsx",
+      "version": "4.23.13",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://tsx.hirok.io"
+    },
+    {
+      "name": "typescript",
+      "version": "5.9.3",
+      "license": "Apache-2.0",
+      "kind": "dev",
+      "homepage": "https://www.typescriptlang.org/"
+    },
+    {
+      "name": "vitest",
+      "version": "4.1.11",
+      "license": "MIT",
+      "kind": "dev",
+      "homepage": "https://vitest.dev"
+    }
+  ]
+}

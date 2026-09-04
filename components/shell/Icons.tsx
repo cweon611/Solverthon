@@ -1,0 +1,18 @@
+import type { ReactElement } from "react";
+
+// design/BridgePage.tsx 169–176행 아이콘 8종 그대로 + Sparkles·Layers·FileCheck 3종 추가(§4.2, 동일 스타일 16×16 stroke 1.5)
+
+export const GridIcon        = (): ReactElement => <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4"><rect x="1" y="1" width="6" height="6" rx="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5"/></svg>;
+export const CheckCircleIcon = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><circle cx="8" cy="8" r="6.5"/><path d="M5 8.5l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+export const ListIcon        = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><path d="M2 4h12M2 8h12M2 12h8" strokeLinecap="round"/></svg>;
+export const ClockIcon       = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2 2" strokeLinecap="round"/></svg>;
+export const UsersIcon       = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><circle cx="6" cy="5" r="2.5"/><path d="M1 13c0-2.76 2.24-5 5-5s5 2.24 5 5" strokeLinecap="round"/><path d="M12 7a2 2 0 100-4M15 13c0-2-.9-3.7-2.2-4.7" strokeLinecap="round"/></svg>;
+export const PersonIcon      = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.31 2.69-6 6-6s6 2.69 6 6" strokeLinecap="round"/></svg>;
+export const MegaphoneIcon   = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><path d="M2 6h2v4H2z" strokeLinejoin="round"/><path d="M4 6.5L12 2v12L4 9.5" strokeLinejoin="round"/><path d="M4 10l1 4" strokeLinecap="round"/></svg>;
+export const CalendarIcon    = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><rect x="1.5" y="2.5" width="13" height="12" rx="2"/><path d="M1.5 6.5h13M5 1v3M11 1v3" strokeLinecap="round"/></svg>;
+
+// 추가 3종 — AI 파싱(S10) · 중복 판별(S11) · 준비서류(S9)
+export const SparklesIcon    = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><path d="M7 1.5l1.4 3.6L12 6.5 8.4 7.9 7 11.5 5.6 7.9 2 6.5l3.6-1.4z" strokeLinejoin="round"/><path d="M12.5 10.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" strokeLinejoin="round"/></svg>;
+export const LayersIcon      = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><path d="M8 2l6 3-6 3-6-3 6-3z" strokeLinejoin="round"/><path d="M2 8l6 3 6-3" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 11l6 3 6-3" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+export const FileCheckIcon   = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><path d="M9 1.5H4.5a1 1 0 00-1 1v11a1 1 0 001 1h7a1 1 0 001-1V5z" strokeLinejoin="round"/><path d="M9 1.5V5h3.5" strokeLinejoin="round"/><path d="M6 10l1.5 1.5L10.5 8.5" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+export const ChartIcon       = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><path d="M2 14h12" strokeLinecap="round"/><path d="M4.5 11V7.5M8 11V3.5M11.5 11V6" strokeLinecap="round"/></svg>;

@@ -4,7 +4,7 @@
 
 | 항목 | 내용 |
 |---|---|
-| 문서 버전 | **v2.0** (2026-09-03) — v1.0 기획안을 전면 대체 (v1.0은 `docs/archive/브릿지_PRD_v1.0.md`에 보존) |
+| 문서 버전 | **v2.1** (2026-09-03) — v2.0 + §15 확장 기능(AI 코치·신청서 뼈대·현금흐름 진단, Phase 8). v1.0은 `docs/archive/브릿지_PRD_v1.0.md`에 보존 |
 | 대회 | 2026 전남광주 청년 AI 솔버톤 / **B트랙 (기업 실무 현안)** |
 | 연관 세부주제 | B-08 정부지원사업 공고 자동 분석 (확장·재해석: 법정의무 + 자격 소멸 예측 + 인원 시뮬레이션) |
 | 팀 / 참가자 | 코스모스 / 이승민 |
@@ -18,10 +18,10 @@
 
 ### 0.1 절대 규칙 — 위반 시 작업을 멈추고 사람에게 보고
 
-1. **LLM은 판단하지 않는다.** 자격 판정·마감일 계산·인원 임계값 판단·법령 해석은 `lib/engine/*`의 **결정론적 코드**만 수행한다. LLM(Claude)의 역할은 §7의 "비정형 공고문 → 정형 JSON 변환" 하나로 한정한다.
+1. **LLM은 판단하지 않는다.** 자격 판정·마감일 계산·인원 임계값 판단·재무 수치 계산·법령 해석은 `lib/engine/*`의 **결정론적 코드**만 수행한다. LLM의 역할은 §7의 "비정형 공고문 → 정형 JSON 변환"과 §15의 "판정 결과 설명·행동 계획·신청서 목차·표 구조 읽기·집계 수치 해석"으로 한정한다. LLM 출력은 항상 `AI 제안 · 참고용` 라벨을 단다.
 2. **디자인은 확정됐다.** `design/BridgePage.tsx`와 `design/globals.css`가 시각 디자인의 원본이다. 색·간격·타이포·컴포넌트 구조·문구 톤을 바꾸지 않는다. 바꾸는 것은 (a) 하드코딩 데이터 → 실제 데이터 소스, (b) 상태 관리·라우팅, (c) §4.5에 열거된 버그 수정, (d) §8에서 명시적으로 허용한 추가 화면·요소만이다.
 3. **API 키는 서버에서만.** Route Handler · 서버 컴포넌트 · `scripts/*`에서만 읽는다. `NEXT_PUBLIC_` 접두어가 없는 환경변수를 클라이언트 컴포넌트에서 참조하지 않는다. `.env.local`의 값을 로그·응답·커밋에 절대 노출하지 않는다.
-4. **기업 프로필은 브라우저 밖으로 나가지 않는다.** 사용자가 입력한 프로필·할 일·설정·판정 이력은 `localStorage`에만 저장하고, 판정 엔진은 클라이언트에서 실행한다. 서버로 가는 사용자 입력은 `/api/ai/parse`에 붙여넣은 **공고 원문**(프로필 아님)과 `/api/ai/dedupe`의 비교 대상 텍스트뿐이다.
+4. **기업 프로필은 브라우저 밖으로 나가지 않는다.** 사용자가 입력한 프로필·할 일·설정·판정 이력은 `localStorage`에만 저장하고, 판정 엔진은 클라이언트에서 실행한다. 서버로 가는 사용자 입력은 `/api/ai/parse`에 붙여넣은 **공고 원문**(프로필 아님), `/api/ai/dedupe`의 비교 대상 텍스트, 그리고 §15 기능에서 **사용자 동의 후** 보내는 구간값·집계 지표(회사명·사업자번호·생년월일·원본 거래내역은 절대 제외)뿐이다.
 5. **수집은 공식 오픈 API만.** K-Startup(공공데이터포털)·기업마당 API 외에 기관 누리집 HTML을 스크래핑하는 코드를 작성하지 않는다(대회 규정). `cheerio`·`puppeteer` 류를 공고 수집 목적으로 설치하지 않는다.
 6. **공개 배포는 합성 데이터만.** `PUBLIC_DEMO=true`이면 `is_synthetic = true`인 카탈로그만 노출한다. 실 수집(라이브) 데이터는 로컬/개발 환경 전용이다.
 7. **판정은 항상 3-state.** `eligible | ineligible | needs_check`. 프로필 값이 `null`이거나 조건의 `field`가 매핑되지 않으면 `needs_check`다. 절대 `ineligible`로 떨어뜨리지 않는다.
@@ -165,6 +165,7 @@ bridge/
 | `DATA_GO_KR_SERVICE_KEY_ENCODED` | 같은 키의 **Encoding** 버전 | ✅ 있음 | URL 문자열에 직접 이어붙일 때만. **둘 중 하나만 쓴다** — 이중 인코딩 시 `SERVICE_KEY_IS_NOT_REGISTERED_ERROR`(코드 30) |
 | `LAW_GO_KR_OC` | 국가법령정보센터 Open API 인증값(OC) → 법령 확인 **스크립트** (§7.4) | ✅ 있음 | 런타임 미사용. 호출 서버의 IP/도메인이 open.law.go.kr에 등록돼 있어야 함 |
 | `BIZINFO_API_KEY` | 기업마당 지원사업정보 API `crtfcKey` (§7.3) | ❌ **미발급** | 비어 있으면 기업마당 어댑터는 자동 비활성. 발급 후 키만 넣으면 동작 |
+| `GEMINI_API_KEY` | Gemini — §15 설명·목차·현금흐름 해석용 제2 프로바이더 | ✅ 있음 (현재 변수명 `GEMINI_API` → **`GEMINI_API_KEY`로 이름 변경**) | SDK 기본 env 이름. 모델 ID는 `GEMINI_MODEL`에 별도 지정(§15.0) |
 | `SUPABASE_URL` / `SUPABASE_SECRET_KEY` | Supabase 카탈로그 (§3.4, §5.5). **브라우저는 Supabase에 직접 접속하지 않으므로 `NEXT_PUBLIC_` 변수가 없다** | ❌ 없음 | Phase 3에서 프로젝트 생성 후 추가. 없으면 `DATA_MODE=seed`로 동작 |
 | `CRON_SECRET` | `/api/ingest` 보호 | ❌ 없음 | `openssl rand -hex 32`로 생성 |
 | `ANTHROPIC_MODEL`, `VOYAGE_MODEL`, `DATA_MODE`, `PUBLIC_DEMO`, `INGEST_ENABLED`, `AI_MOCK` | 선택 (부록 A 기본값) | — | |
@@ -265,12 +266,15 @@ bridge/
 │  └─ screens/ DashboardScreen.tsx · AnnouncementsScreen.tsx · GrantsScreen.tsx · TasksScreen.tsx
 │               ExpiringScreen.tsx · CalendarScreen.tsx · SimulatorScreen.tsx · MyPageScreen.tsx
 │               OnboardingScreen.tsx · DocumentsScreen.tsx · ParseDemoScreen.tsx · DedupeDemoScreen.tsx
+│               CoachPanel.tsx · DraftScreen.tsx · CashflowScreen.tsx   # §15
 ├─ lib/
 │  ├─ types.ts                   # §5 도메인 타입 (단일 출처)
 │  ├─ constants.ts               # 지역·업종·분야 코드표, 색 임계값
 │  ├─ engine/  evaluate.ts · schedule.ts · expiry.ts · simulate.ts · leadTime.ts · dedupe.ts · alerts.ts · format.ts
+│  │           coach.ts · prefill.ts · cashflow.ts   # §15 (Phase 8)
 │  │           __tests__/*.test.ts
 │  ├─ ai/      claude.ts · voyage.ts · prompts.ts · schema.ts (JSON Schema + zod) · postprocess.ts · __tests__/
+│  │           provider.ts · gemini.ts   # §15.0 프로바이더 추상화 (Phase 8a)
 │  ├─ ingest/  kstartup.ts · bizinfo.ts · normalize.ts · run.ts
 │  ├─ data/    repository.ts · seedRepository.ts · supabaseRepository.ts · supabase.ts
 │  ├─ store/   ProfileProvider.tsx · TasksProvider.tsx · SettingsProvider.tsx · HistoryProvider.tsx · CatalogProvider.tsx · storage.ts
@@ -278,6 +282,8 @@ bridge/
 │  ├─ view/    toGrant.ts · toAnnouncement.ts · toTasks.ts · toExpiring.ts · toCompany.ts   # 엔진 결과 → 디자인 뷰모델
 │  └─ fixtures/ design.ts   # Phase 0 임시(디자인 상수) — Phase 2에서 삭제
 ├─ seed/       programs.json · obligations.json · document_types.json · profiles.json · dedupe_pairs.json · announcements/*.txt · parsed/*.json(AI_MOCK용) · embeddings.json(생성물)
+│              coach_kb.json · outline_templates.json   # §15
+├─ public/samples/ cashflow_sample.xlsx · cashflow_sample_alt.csv   # §15.3 (scripts/make-cashflow-sample.ts 생성물)
 ├─ scripts/    ingest.ts · seed-db.ts · embed-seed.ts · verify-law.ts · licenses.ts · smoke.ts
 ├─ supabase/   migrations/0001_init.sql
 ├─ design/     BridgePage.tsx · globals.css   # 원본 보존 (import 금지, 참조용)
@@ -332,6 +338,8 @@ bridge/
 | `mypage` | `/mypage` | 마이페이지 |
 | (신규) | `/onboarding` | 사이드바 없음 |
 | (신규) | `/grants/[id]/documents` | 사이드바 있음, 메뉴 항목 없음 (판정함 카드의 "준비서류 확인" 버튼으로 진입) |
+| (신규·§15.2) | `/grants/[id]/draft` | 메뉴 항목 없음 (판정함 카드의 "신청서 뼈대 만들기" 버튼) |
+| (신규·§15.3) | `/cashflow` | **경영 도구 › 현금흐름 진단** — `simulator` 아래, "AI 데모" 그룹 위 |
 | (신규) | `/about` | 사이드바 푸터의 "데이터 출처·면책" 링크 |
 | `/` | 클라이언트 리다이렉트 | 프로필 있음 → `/dashboard`, 없음 → `/onboarding` |
 
@@ -1365,6 +1373,8 @@ runIngest({ sources: ['kstartup','bizinfo'], maxFetch: 200, maxParse: 20, maxEmb
 | **6. P1 마무리** (§8 S9, §6.5, §7.4) | `document_types` + `ProgramDocument` 매칭 → S9 리드타임 → 판정함 "준비서류 확인" 버튼 → 캘린더 지원사업 마감 점 → 판정 이력 CSV → `scripts/verify-law.ts` 실행 후 시드의 `legal_checked_at` 갱신(실패 시 수동 확인 기록) | 시나리오 5 시연. `legal_checked_at`이 채워진 의무는 "확인 중" 배지가 사라짐 |
 | **7. 배포·QA** (§12.2, §12.3, §13) | 라이선스 목록 생성 → Vercel 프로젝트(Node 24, 환경변수, `PUBLIC_DEMO=true`, `CRON_SECRET`) → 프로덕션 배포 → §12.3 수동 QA → README 갱신 | 공개 URL에서 §1.4 시나리오 8단계 전부 통과. `/api/health`가 `publicDemo: true`. Lighthouse 접근성 ≥ 90(데스크톱) |
 
+| **8. 확장 기능** (§15) | 8a 프로바이더 추상화·Gemini·health 핑 → 8b F1 조건 보완 AI 코치 → 8c F2 신청서 뼈대 → 8d F3 현금흐름 진단 (순서·완료 기준은 §15.7) | Phase 7까지의 스모크·QA가 깨지지 않은 상태에서 §15.7 각 단계 완료 기준 통과 |
+
 **P2 (시간이 남을 때만, 별도 승인 후):** Supabase 익명 인증 동기화 · 관리자 검수 화면(`ai_draft → human_verified`) · 공휴일 테이블 · 이메일/푸시 발송 · 모바일 사이드바 접힘 · Unsplash 이미지 로컬화.
 
 ---
@@ -1480,12 +1490,14 @@ seed
   AI(언어모델)는 공고문을 구조화하는 데만 사용되며 판정·법령 해석에는 사용되지 않습니다.
 · 입력하신 기업 정보는 이 브라우저에만 저장되며 서버로 전송되지 않습니다.
 · 알림은 현재 버전에서 앱 내 배너로만 제공됩니다.
+· AI 코치·신청서 뼈대·현금흐름 진단의 AI 제안은 참고용이며, 자격·기한·수치는 규칙 기반 계산 결과를 따릅니다.
+  신청서 본문은 직접 작성해야 하며, 현금흐름 진단은 재무·세무 자문이 아닙니다. 업로드한 파일은 브라우저에서만 처리됩니다.
 · 사용 이미지: Unsplash (Unsplash License). 사용 오픈소스 라이선스: 아래 목록 참조.
 ```
 
 ### 13.3 비범위 (Out of Scope) — 구현하지 않는다
 
-신청서 자동 작성 · 실시간 크롤링 · 세무·노무·법률 상담 기능 · 회원가입/로그인 · 결제 · 모바일 앱 · AI에 의한 법령 해석 · 이메일/푸시 실제 발송 · 관리자 검수 화면(P2 승인 시) · 다국어 · 사업자번호 진위 조회(국세청 API) · 다크 모드.
+신청서 **본문** 자동 작성(목차·가이드·프리필은 §15.2로 허용) · 실시간 크롤링 · 세무·노무·법률·재무 **상담/자문** 기능(현금흐름 진단은 집계·정보 제공까지) · 회원가입/로그인 · 결제 · 모바일 앱 · AI에 의한 법령 해석 · 이메일/푸시 실제 발송 · 관리자 검수 화면(P2 승인 시) · 다국어 · 사업자번호 진위 조회(국세청 API) · 다크 모드 · 회계 프로그램·은행 API 연동.
 
 ### 13.4 보안·개인정보
 
@@ -1505,13 +1517,124 @@ seed
 | 기준 | 배점 | 이 산출물의 대응 |
 |---|---|---|
 | 문제 정의 적절성 | 25 | §1.2 "모르는 것을 모른다" + 비용 비대칭 + 자격 소멸 + 채용 임계값 → 대시보드 배너·곧 사라짐·시뮬레이터가 문제를 화면으로 증명 |
-| AI 활용도·구현성 | 25 | §3.1 3계층 경계(읽기=AI, 판단=코드) · S10 실제 파싱 스트리밍 + `unmapped` 노출 · S11 임베딩 중복제거 · 단위 테스트 43개(엔진 38 + 후처리·시드 5) |
+| AI 활용도·구현성 | 25 | §3.1 3계층 경계(읽기=AI, 판단=코드) · S10 실제 파싱 스트리밍 + `unmapped` 노출 · S11 임베딩 중복제거 · 단위 테스트 43개(엔진 38 + 후처리·시드 5) · §15 AI 코치(KB 인용 강제)·신청서 뼈대(본문 대필 아님)·현금흐름 해석(수치는 코드) — 멀티 프로바이더 폴백 |
 | 실무·현장 적용 가능성 | 20 | 3-state 판정·near-miss 안내 · 서류 리드타임 역산(S9) · 법령 확인일 노출 · 오픈 API 규정 준수 · 프로필 비전송 |
 | 창의성 | 15 | 지원사업 + 법정의무 + 자격 소멸을 한 프로필로 통합 · 직원 시뮬레이터(뽑기 전에 본다) · 푸시형 전환 |
 | 발표·공감도 | 15 | §1.4 5분 동선 · 데모 프로필 3종 전환 · "첫 채용" 장면(시뮬레이터 0→5인) |
 
 ---
 
+## 15. 확장 기능 — Phase 8 (P0~P1 완료 후에만 시작)
+
+세 기능 모두 **"AI는 읽고·설명하고·질문하고, 판단·계산·기한·법령은 코드가"**라는 §3.1 경계 안에 있다. 이 절에서 AI에 새로 허용하는 역할은 (a) 판정 결과를 쉬운 말로 설명하고 행동 계획을 짜는 것, (b) 공고에서 신청서 목차·질문을 뽑는 것, (c) 표 구조를 읽고 집계 수치를 해석하는 것이다. **여전히 금지**: 자격 판정 변경, 마감일·D-day·런웨이 등 수치 계산, 법령 해석, 신청서 본문 대필, 사용자가 제공하지 않은 회사 사실 생성.
+
+### 15.0 공통 규칙
+
+| 항목 | 규칙 |
+|---|---|
+| 라벨 | 세 기능의 AI 출력은 모두 카드 하단에 `AI 제안 · 참고용 · {provider}` 소형 텍스트(`text-[10px] text-[#888888]`)를 단다 |
+| 전송 최소화 | 서버로 보내는 것: 판정 결과(`criteria[]`·`nearMiss`), **프로필 구간값**(`business_age_months`, `employee_count`, `region_code`, `industry_code`, `ceo_age_band: '20s'\|'30s'\|'40s+'\|null`, `certifications`, `flags`), 집계 지표. **절대 전송 금지**: 회사명, 사업자번호, 생년월일, 원본 거래내역 행, 업로드 파일 |
+| 동의 | 기능별 첫 사용 시 인라인 동의 박스 1회(`"이 기능은 판정 결과와 회사 규모 정보(회사명 제외)를 AI에 보냅니다"` / `"업로드한 파일은 브라우저에서만 처리되고 서버에는 월별 합계만 전송됩니다"`) → `settings.aiConsent = { coach, outline, cashflow }` 저장 |
+| 프로바이더 | `lib/ai/provider.ts`의 `LLM` 인터페이스로 추상화. 구현 2개: `claude.ts`(기존) · `gemini.ts`(신규, `@google/genai`). 작업별 라우팅 `TASK_PROVIDER = { parse: 'claude', coach: X, outline: X, cashflow: X }`, `X = process.env.AI_PROVIDER_EXPLAIN ?? (GEMINI_API_KEY ? 'gemini' : 'claude')`. 429/5xx/타임아웃 → 다른 프로바이더로 **1회 폴백**(데모 중 한쪽 장애 대비). 응답에 `provider` 포함 |
+| Gemini | `import { GoogleGenAI } from '@google/genai'; const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); ai.models.generateContent({ model: process.env.GEMINI_MODEL!, contents, config: { systemInstruction, responseMimeType: 'application/json', responseSchema } })`. **모델 ID는 코드에 하드코딩하지 않는다** — `GEMINI_MODEL` env에 넣고, Phase 8a에서 공식 문서 또는 `ai.models.list()`로 현재 사용 가능한 ID를 확인한다(학습 데이터의 모델명을 추정해 쓰지 말 것). 키 값이 AI Studio 표준(`AIza…`)과 다른 형식이면 Vertex AI Express 키일 수 있으므로 SDK 초기화 옵션을 문서로 확인 |
+| 검증 | 모든 AI 응답은 zod로 재검증(`lib/ai/schema.ts`에 추가). 실패 → 1회 재시도 → 실패 시 `"AI 제안을 만들지 못했습니다"` + 결정론 부분(요약·KB·지표)만 표시. 기능이 AI 없이도 부분 동작해야 한다 |
+| 가드레일 | 라우트별 분당 10회/IP(기존 `lib/ai/rateLimit.ts` 재사용), 입력 캡(§15.5), `maxDuration = 60`, 서버 로그에 본문 저장 금지 |
+| 헬스 | `GET /api/health`에 `providers: { claude: 'ok'\|'missing'\|'auth_error', gemini: 동일 }` 추가(1토큰 핑, 60초 캐시). **Phase 8a 완료 기준** |
+| 캐시 | AI 결과는 `localStorage`에 `(programId, profile.updated_at)` 키로 캐시(`bridge:ai:v1`) — 같은 조건이면 재호출하지 않음. "다시 생성" 버튼으로만 갱신 |
+
+### 15.1 F1. 조건 보완 AI 코치 — 판정함 확장 (P8b)
+
+| 항목 | 내용 |
+|---|---|
+| 문제 | 초보 창업자는 "상시근로자 5인 이상 조건 — 1명 충원 시 자격 충족"을 봐도 **그래서 뭘 하면 되는지** 모른다. 벤처인증이 뭔지, 어디서 받는지, 며칠 걸리는지도 모른다 |
+| 진입 | 판정함(S3) 기타 리스트의 펼침 패널 하단에 `AI 코치에게 물어보기` 버튼(`공고 원문 보기` 칩과 같은 스타일). `conditional`(near-miss·needs_check) 전부 + `fail` 카드에도 노출 |
+| 결정론 부분 (`lib/engine/coach.ts`) | `matchCoachKb(verdict, program): KbEntry[]` — `criteria[]`의 `fail`/`check` 행과 `unmapped_conditions` 텍스트를 `seed/coach_kb.json`의 `trigger`와 대조해 KB 항목을 고른다(필드+연산 매칭, unmapped는 키워드 매칭). **KB에 없는 절차는 AI가 만들어내지 못하도록** 입력에 KB 원문을 함께 넣고 `kb_id`로 인용하게 한다 |
+| KB (`seed/coach_kb.json`, ≥ 12건, 각 `verified_at`·`url`) | `venture_cert`(벤처기업확인 — 벤처확인종합관리시스템, 유형·평가 소요·수수료) · `research_institute`(기업부설연구소/연구개발전담부서 인정) · `innobiz` · `women_enterprise_cert` · `sme_confirmation`(중소기업확인서 발급 절차) · `hire_first_employee`(첫 채용 체크리스트 → OBL-LABOR-001·002·003, OBL-INS-001 연결) · `employee_threshold_5`(5인 도달 시 바뀌는 것) · `tips_operator`(TIPS 운영사 추천 — 운영사 목록·접촉 방법) · `local_excellent_company`(지자체 우수기업 인증 확인처) · `export_record`(수출실적 증명·첫 수출 준비) · `revenue_unknown`(연매출 확인법 — 홈택스 부가세 신고 내역) · `business_age_wait`(하한 도달까지 대기 시 준비할 것) |
+| AI 입력 | `{ program: { title, organization, summary, apply_end, original_url }, verdict: { overall, criteria[](label·required·current·state·sourceText), nearMiss }, profileBuckets, kb: KbEntry[] }` |
+| AI 출력 `CoachPlan` | `{ headline(≤60자), why_plain(2문장 — 왜 조건부/제외인지 쉬운 말), steps: [{ order, title(≤30자), detail(≤120자), kb_id: string\|null, url: string\|null, est_days: number\|null, adds_task: boolean, task_title: string\|null }], watch_out: string[](≤3), unknowns: string[] }` — `fail`(fixed 필드)이면 `steps`는 비우고 `why_plain`만 + `unknowns`에 "다른 회차/유사 사업 확인" |
+| 프롬프트 규칙 | (1) 판정을 바꾸거나 "될 것 같다"고 말하지 않는다 (2) 절차·기간·비용은 **kb에 있는 것만**, 없으면 `unknowns`에 "공식 안내에서 확인" (3) 법 조문 해석 금지 (4) 초보자 말투, 전문용어는 괄호 설명 (5) `steps ≤ 5` |
+| 후처리 (코드) | `kb_id`가 입력 KB에 없으면 `null`로 강제, `url`은 KB의 것으로 덮어씀, `est_days`가 KB 범위를 벗어나면 KB 값으로 교정 |
+| UI | 펼침 패널 아래 카드(`bg-[#f0eef9] border border-[#dddaf4] rounded-xl`): headline(굵게) → why_plain → 번호 매긴 steps(각 행에 KB 칩 `📎 {kb.title}` 링크, `est_days`면 `약 N일`) → `watch_out` amber 박스 → 각 step의 `할 일에 추가` 버튼(`adds_task`일 때) → 하단 라벨. `할 일에 추가`는 `TasksProvider`에 `custom:` Task(`dueDateIso = today + est_days`, `authority = kb.issuer ?? '자체'`)를 넣는 **결정론 동작** |
+| 완료 기준 | 프로필 ① #4(직원 충원) → `hire_first_employee`·`employee_threshold_5` KB 인용 + 할 일 2건 추가 가능 · #20(벤처인증) → `venture_cert` 단계 · #5(TIPS unmapped) → `tips_operator` 확인 방법 · #7(수출 실적 F) → steps 없음·why_plain만. KB에 없는 절차가 응답에 나오지 않음(테스트: kb 비운 입력 → steps 전부 `kb_id null`이고 `unknowns` ≥ 1) |
+
+### 15.2 F2. 신청서 뼈대 생성 — `/grants/[id]/draft` (P8c, B-08 연결)
+
+| 항목 | 내용 |
+|---|---|
+| 범위 | **목차 + 심사 관점 가이드 + 프로필 프리필 + 사용자가 답할 질문 + 서류 체크리스트**까지. **본문 대필은 하지 않는다**(허위 기재·범위 폭발 방지 — 발표에서 이 선을 명시적으로 말한다) |
+| 진입 | 판정함 `pass`/`conditional` 카드 액션 버튼 `신청서 뼈대 만들기`(`공고 원문`과 같은 스타일; 버튼 4개가 되면 `flex-wrap` 허용) |
+| Step A — 목차 추출 (AI) | 서버가 `ProgramRow.raw_text`(없으면 `summary`) + `required_documents` + `support_field`를 입력으로 `ApplicationOutline` 생성. 원문에 평가항목·제출 양식 정보가 부족하면 `source: 'template'`로 `seed/outline_templates.json`(분야별 표준 목차)을 쓰고 화면에 `표준 템플릿 기반` 뱃지 |
+| `ApplicationOutline` | `{ source: 'announcement'\|'template', sections: [{ id, title, purpose(1문장), guidance(심사 관점 2문장), source_text: string\|null, prefill_fields: PrefillField[], questions: string[](2~4개, 사용자가 답할 질문), required: boolean }], documents: [{ name, document_type_id: string\|null, is_required }], evaluation_criteria: [{ name, weight_text: string\|null, source_text }] }` |
+| 표준 템플릿 (`seed/outline_templates.json`) | `창업`: 기업 개요 · 문제 인식(Problem) · 실현 가능성(Solution) · 성장 전략(Scale-up) · 팀 구성(Team) — PSST · `R&D`: 개발 목표 · 개발 내용·방법 · 추진 체계·일정 · 성과 활용·사업화 · `고용`: 채용 계획 · 근로 조건 · 인력 활용 계획 · `금융`: 자금 용도 · 상환 계획 · 재무 현황 · `수출`/`경영`/`기타`: 기업 개요 · 사업 내용 · 기대 효과 |
+| Step B — 프리필 (코드, `lib/engine/prefill.ts`) | `PrefillField = 'company_name'\|'business_type'\|'industry'\|'region'\|'founded_at'\|'business_age'\|'employee_count'\|'annual_revenue'\|'certifications'\|'ceo_age'` → 프로필 값으로 문장 생성(예 `"2023년 10월 광주광역시에서 설립된 소프트웨어 개발 법인(상시근로자 4인)"`). 값 없음 → `[작성 필요]`. 프리필은 **클라이언트에서** 실행(회사명은 서버로 가지 않음) |
+| Step C — 작성 팁 (AI, 선택) | 섹션별 `작성 팁 보기` 클릭 시 `guidance + evaluation_criteria`를 근거로 3줄 팁. 회사 사실을 지어내지 않고 "무엇을 써야 하는지"만 |
+| 편집·저장 | 각 섹션에 `questions`가 표시되고 사용자가 답을 `textarea`에 씀 → `bridge:drafts:v1[programId]` 저장. 진행률 `"{답한 질문}/{전체 질문}"` |
+| 내보내기 | `.md` 다운로드(목차 → 프리필 문장 → 질문·답 → 서류 체크리스트 → 하단 "AI 생성 뼈대 · 본문은 직접 작성"). `.docx`는 P2 |
+| UI | 좌: 섹션 아코디언(`bg-white border border-[#E4E6EA] rounded-2xl`, 필수 섹션 brand 점) · 우: 서류 체크리스트(S9 리드타임 상태 뱃지 재사용) + 평가항목 표 + 진행률 |
+| 완료 기준 | #14(원문에 서류·대상 명시) → `source:'announcement'`, 섹션 ≥ 4, 서류 2건 카탈로그 매칭 · #10(원문 짧음) → `source:'template'` 금융 4섹션 · 프리필에 회사명·업력·직원 수가 정확히 들어감 · `.md` 내보내기 파일에 사용자 답이 포함 · 네트워크 탭에 회사명 전송 없음 |
+
+### 15.3 F3. 현금흐름 진단 — `/cashflow` (P8d)
+
+| 항목 | 내용 |
+|---|---|
+| 문제 | 초보 대표는 엑셀 현금흐름표를 만들어도 **"그래서 몇 달 버티나, 뭘 줄여야 하나, 어떤 자금 지원을 지금 신청해야 하나"**를 읽어내지 못한다 |
+| 사이드바 | `직원 시뮬레이터` 아래 새 그룹 소제목 `경영 도구` → `현금흐름 진단`(아이콘: 16×16 stroke 1.5 꺾은선). "AI 데모" 그룹은 그 아래로 |
+| 파일 처리 | `.xlsx/.xls/.csv` ≤ 5MB, **브라우저에서** `xlsx`(SheetJS)로 파싱. 원본 행은 메모리에만 두고 localStorage·서버에 **절대 저장/전송하지 않는다**. `샘플 파일로 체험` 버튼(`public/samples/cashflow_sample.xlsx`, 12개월 합성 — `scripts/make-cashflow-sample.ts`로 생성·커밋) |
+| 열 매핑 — 1차 (코드) | `detectColumns(headers, sampleRows): { mapping, confidence }` — 헤더 키워드(날짜: 일자·날짜·거래일·date / 입금: 입금·수입·매출·inflow·credit / 출금: 출금·지출·비용·outflow·debit / 금액+구분: 금액 & 구분·유형 / 잔액: 잔액·balance / 항목: 항목·적요·내용·category·memo) + 값 타입 검사 |
+| 열 매핑 — 2차 (AI) | `confidence < 0.8`일 때만 헤더 행 + 샘플 5행을 `POST /api/ai/cashflow/mapping`에 보내 `ColumnMapping` 구조화. **어느 경로든 사용자가 드롭다운으로 매핑을 확인하는 단계를 거친다** |
+| 정규화 (코드) | `Transaction { date, inflow, outflow, category, memo }`. 카테고리는 `CASHFLOW_CATEGORIES`(인건비·임차료·매입/원재료·마케팅·세금공과·보험·외주·장비·기타) 키워드 사전으로 결정론 분류, 미매칭 → `기타` |
+| 지표 (코드, `lib/engine/cashflow.ts`) | 월별 입금/출금/순현금 · `avgNetLast3` · `burnRate`(최근 3개월 평균 순유출, 순유입이면 null) · `balance`(잔액 열 마지막 값, 없으면 누적) · `runwayMonths = balance / burnRate`(burn null이면 null) · 카테고리 비중(최근 3개월) · 전월 대비 변화율 · 최대 지출 3건 · 인건비 비중 · 고정비 비율(임차·보험·인건비) · `healthByRule`: `runway < 3 → 'risk'`, `< 6 → 'watch'`, 그 외 `'stable'` (**AI가 아니라 코드가 정한다**) |
+| 예정 지출 (코드) | `useTasks()`의 향후 60일 날짜형 의무(부가세·4대보험·원천세)를 "예정 지출 일정"으로 오버레이(금액은 사용자가 입력하지 않으면 표시 안 함) |
+| AI 인사이트 | 입력 = 지표 JSON(만원 단위 반올림) + `industry_code` + `employee_count` + `hiring_planned` + **판정 `pass/conditional` 중 `금융`·`고용`·`수출` 프로그램 목록**(id·title·apply_end). 출력 `CashflowInsight { headline(≤50자), insights: [{ type: 'risk'\|'opportunity'\|'habit', text(≤100자), metric_ref: string }](3~5), actions: [{ text, program_id: string\|null }](≤3), questions_for_owner: string[](≤3) }`. 규칙: 입력 지표에 있는 숫자만 언급, `metric_ref`는 지표 키여야 함(코드가 검증·없으면 행 제거), `program_id`는 입력 목록 안의 것만, 세무·법률 판단 금지("세무사와 상의" 안내는 허용) |
+| 지원사업 연결 (코드) | `linkPrograms(metrics, verdicts)`: `runway ≤ 6` → 금융 분야 pass/conditional 마감 임박순 · 인건비 비중 ≥ 40% 또는 `hiring_planned` → 고용 분야 · 수출 입금 카테고리 존재 → 수출 분야. AI의 `actions.program_id`도 이 목록과 교차 검증 |
+| UI | 상단 KPI 카드 3(잔액 · 월평균 순현금흐름 · 런웨이 `N개월`, `healthByRule` 색: stable 성공색/ watch amber/ risk rose) → 월별 막대(입금 `#3D7260`, 출금 `#6E62C2`; SVG 직접 또는 `recharts` 허용, 색은 토큰만) → 카테고리 상위 5 가로 막대 → AI 인사이트 카드(type별 아이콘: risk rose·opportunity 성공색·habit brand) → `지금 볼 지원사업` 카드(판정함 카드 축약형, 마감 D-day) → 예정 지출 일정 → 하단 `데이터 삭제` 버튼 + 면책 |
+| 저장 | 지표 요약·매핑만 `bridge:cashflow:v1`. 원본 행은 새로고침 시 사라짐(의도) |
+| 면책 문구 | `"재무·세무 자문이 아닙니다. 업로드한 파일은 이 브라우저에서만 처리되며, 서버에는 월별 합계 등 집계 수치만 전송됩니다."` |
+| 완료 기준 | 샘플 파일 → 매핑 자동 감지(`confidence ≥ 0.8`) → 확인 → KPI·차트 렌더 → 인사이트 ≥ 3건(모두 유효 `metric_ref`) → 샘플은 `runway ≈ 4~5개월`로 설계해 `watch`와 금융 프로그램 연결이 나옴 · 헤더가 영문/순서 다른 두 번째 샘플(`cashflow_sample_alt.csv`)은 AI 매핑 경로를 탐 · 깨진 파일 → 친절한 오류 · 네트워크 탭에 원본 행·회사명 없음 |
+
+### 15.4 타입 추가 (`lib/types.ts`)
+
+```ts
+export interface KbEntry { id: string; title: string; issuer: string | null; trigger: { field?: ConditionField; op?: Operator; unmapped_keyword?: string }; steps: string[]; duration_days: [number, number] | null; cost_hint: string | null; url: string | null; verified_at: string | null; related_obligation_ids?: string[]; }
+export interface CoachPlan { headline: string; why_plain: string; steps: { order: number; title: string; detail: string; kb_id: string | null; url: string | null; est_days: number | null; adds_task: boolean; task_title: string | null }[]; watch_out: string[]; unknowns: string[]; }
+export type PrefillField = 'company_name' | 'business_type' | 'industry' | 'region' | 'founded_at' | 'business_age' | 'employee_count' | 'annual_revenue' | 'certifications' | 'ceo_age';
+export interface ApplicationOutline { source: 'announcement' | 'template'; sections: { id: string; title: string; purpose: string; guidance: string; source_text: string | null; prefill_fields: PrefillField[]; questions: string[]; required: boolean }[]; documents: { name: string; document_type_id: string | null; is_required: boolean }[]; evaluation_criteria: { name: string; weight_text: string | null; source_text: string }[]; }
+export interface ColumnMapping { date_col: string; inflow_col: string | null; outflow_col: string | null; amount_col: string | null; sign_col: string | null; balance_col: string | null; category_col: string | null; memo_col: string | null; date_format: string; }
+export interface CashflowMetrics { months: { ym: string; inflow: number; outflow: number; net: number }[]; avgNetLast3: number; burnRate: number | null; balance: number; runwayMonths: number | null; categoryShares: { category: string; amount: number; share: number }[]; momChangePct: number | null; topOutflows: { date: string; amount: number; memo: string }[]; payrollShare: number; fixedCostRatio: number; healthByRule: 'stable' | 'watch' | 'risk'; }
+export interface CashflowInsight { headline: string; insights: { type: 'risk' | 'opportunity' | 'habit'; text: string; metric_ref: string }[]; actions: { text: string; program_id: string | null }[]; questions_for_owner: string[]; }
+```
+
+### 15.5 API 라우트 추가
+
+| 메서드·경로 | 요청 | 응답 | 캡 |
+|---|---|---|---|
+| `POST /api/ai/coach` | `{ programId, verdict, profileBuckets }` | `{ plan: CoachPlan, kbIds: string[], provider }` | verdict JSON ≤ 8KB |
+| `POST /api/ai/outline` | `{ programId }` (서버가 `raw_text` 로드) | `{ outline: ApplicationOutline, provider }` | — |
+| `POST /api/ai/outline/tips` | `{ programId, sectionId }` | `{ tips: string[] }` | P2 |
+| `POST /api/ai/cashflow/mapping` | `{ headers: string[], sampleRows: string[][] }` | `{ mapping: ColumnMapping, provider }` | 헤더 ≤ 40열 · 샘플 ≤ 5행 |
+| `POST /api/ai/cashflow/insight` | `{ metrics: CashflowMetrics, context: { industry_code, employee_count, hiring_planned, programs: { id, title, field, apply_end }[] } }` | `{ insight: CashflowInsight, provider }` | ≤ 16KB |
+
+프로필 이름·사업자번호·원본 행은 어떤 라우트에도 실리지 않는다(§15.0). 프리필(F2 Step B)은 클라이언트 전용.
+
+### 15.6 시드·테스트 추가
+
+- `seed/coach_kb.json` ≥ 12건(§15.1) — 절차·기간·URL은 사람이 확인하고 `verified_at` 기록. 미확인은 `verified_at: null` → UI에 `확인 중`.
+- `seed/outline_templates.json` — 분야별 표준 목차 5종(§15.2).
+- `public/samples/cashflow_sample.xlsx`(한글 헤더, 12개월, 런웨이 4~5개월) · `public/samples/cashflow_sample_alt.csv`(영문 헤더·열 순서 다름) — `scripts/make-cashflow-sample.ts`로 생성.
+- 테스트(vitest): `coach.test.ts`(KB 매칭 — near-miss 직원/인증/unmapped 키워드; KB 없으면 빈 배열) · `prefill.test.ts`(프로필 → 문장, 값 없음 → `[작성 필요]`) · `cashflow.test.ts`(`detectColumns` 한글/영문 헤더 신뢰도, 월별 집계, `runwayMonths` 산식·`burn null`, `healthByRule` 경계 3/6, `linkPrograms` 분기) · `schema.test.ts`(CoachPlan·ApplicationOutline·CashflowInsight zod: `metric_ref` 검증, `kb_id` 강제 null) · `provider.test.ts`(1차 실패 → 폴백 1회, 2차 실패 → 오류).
+
+### 15.7 Phase 8 순서와 완료 기준
+
+| 단계 | 작업 | 완료 기준 |
+|---|---|---|
+| **8a. 프로바이더** | `lib/ai/provider.ts` · `gemini.ts` · `GEMINI_API_KEY`/`GEMINI_MODEL`/`AI_PROVIDER_EXPLAIN` env · `/api/health` `providers` 핑 · 폴백 | health에서 두 프로바이더 모두 `ok`. 기존 `/api/ai/parse`는 여전히 Claude(회귀 없음, 스모크 통과) |
+| **8b. F1 코치** | `coach_kb.json` → `lib/engine/coach.ts` → `/api/ai/coach` → 판정함 패널·할 일 추가 → 캐시·동의 | §15.1 완료 기준 전부 |
+| **8c. F2 뼈대** | `outline_templates.json` → `/api/ai/outline` → `prefill.ts` → `/grants/[id]/draft` 화면·저장·`.md` 내보내기 | §15.2 완료 기준 전부 |
+| **8d. F3 현금흐름** | 샘플 생성 스크립트 → `xlsx` 파싱·`detectColumns` → 매핑 확인 UI → `cashflow.ts` 지표 → `/api/ai/cashflow/*` → 화면·연결 카드·삭제 | §15.3 완료 기준 전부. `npm test` 전체 통과, `npm run build` 통과 |
+
+발표 하이라이트를 F3로 잡을 경우 8b와 8d의 순서를 바꿔도 된다. 단 8a는 항상 먼저.
+
+---
 ## 부록 A. `.env.example` (값 없이 커밋 · `.gitignore`에 `!.env.example` 추가)
 
 ```bash
@@ -1520,6 +1643,9 @@ ANTHROPIC_API_KEY=            # 필수. 서버 전용
 ANTHROPIC_MODEL=claude-sonnet-5          # 선택. 저비용: claude-haiku-4-5
 VOYAGE_API_KEY=               # 필수(중복제거). 서버 전용
 VOYAGE_MODEL=voyage-4                    # 선택. 대안: voyage-multilingual-2 (1024차원 동일)
+GEMINI_API_KEY=               # §15 제2 프로바이더. (기존 GEMINI_API 변수는 이 이름으로 변경)
+GEMINI_MODEL=                 # 필수(§15 사용 시). 공식 문서/ListModels로 확인한 현재 모델 ID — 코드에 하드코딩 금지
+AI_PROVIDER_EXPLAIN=gemini    # coach/outline/cashflow 담당. gemini | claude (미설정: GEMINI_API_KEY 있으면 gemini)
 
 # ── 공공 API ────────────────────────────────────────
 DATA_GO_KR_SERVICE_KEY=       # 공공데이터포털 Decoding 키 (URLSearchParams로 사용)
@@ -1544,9 +1670,11 @@ AI_MOCK=                      # 테스트 전용. 프로덕션 설정 금지
 ```bash
 npm i @anthropic-ai/sdk @supabase/supabase-js zod date-fns fast-xml-parser server-only
 npm i -D vitest @vitest/coverage-v8 tsx dotenv
+# Phase 8 (§15)
+npm i @google/genai xlsx            # Gemini SDK · SheetJS(브라우저 파싱). 차트가 필요하면 recharts 허용(색은 디자인 토큰만)
 ```
 
-`package.json` scripts에 추가: `"test": "vitest run"`, `"test:watch": "vitest"`, `"typecheck": "tsc --noEmit"`, `"ingest": "tsx scripts/ingest.ts"`, `"seed:db": "tsx scripts/seed-db.ts"`, `"seed:embed": "tsx scripts/embed-seed.ts"`, `"law:verify": "tsx scripts/verify-law.ts"`, `"licenses": "tsx scripts/licenses.ts"`, `"smoke": "tsx scripts/smoke.ts"`. `"lint"`는 `"eslint ."`로 변경. `package.json`에 `"engines": { "node": ">=20.9" }` 추가(Vercel은 프로젝트 설정에서 24.x).
+`package.json` scripts에 추가: `"test": "vitest run"`, `"test:watch": "vitest"`, `"typecheck": "tsc --noEmit"`, `"ingest": "tsx scripts/ingest.ts"`, `"seed:db": "tsx scripts/seed-db.ts"`, `"seed:embed": "tsx scripts/embed-seed.ts"`, `"law:verify": "tsx scripts/verify-law.ts"`, `"licenses": "tsx scripts/licenses.ts"`, `"smoke": "tsx scripts/smoke.ts"`, `"sample:cashflow": "tsx scripts/make-cashflow-sample.ts"`(§15). `"lint"`는 `"eslint ."`로 변경. `package.json`에 `"engines": { "node": ">=20.9" }` 추가(Vercel은 프로젝트 설정에서 24.x).
 
 ## 부록 C. 코드표·토큰 (`lib/constants.ts`)
 
@@ -1572,6 +1700,7 @@ npm i -D vitest @vitest/coverage-v8 tsx dotenv
 | 법령 확인 | "law.go.kr에서 확인" 지시만 | `scripts/verify-law.ts` + `legal_checked_at` + "확인 중" 배지 | 사실 확인 절차를 코드로 |
 | 시드 | 절대 날짜 | 상대 날짜 토큰 | 대회 당일에도 시나리오 유지 |
 | 인원 임계값 | 언급 없음 | §10.5 참조표(디자인 mock의 법적 오류 수정) | 사용자 손실 방지 |
+| (v2.1) 확장 기능 | — | §15 AI 코치 · 신청서 뼈대 · 현금흐름 진단, 프로바이더 추상화(Claude+Gemini), Phase 8 | 초보 창업자 실행 지원·B-08 연결·경영 도구 확장 |
 
 ## 부록 E. 용어
 

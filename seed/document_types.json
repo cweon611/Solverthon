@@ -1,0 +1,98 @@
+[
+  {
+    "id": "biz_registration_cert",
+    "name": "사업자등록증명",
+    "issuer": "홈택스",
+    "lead_time_days": 0,
+    "issue_url": "https://www.hometax.go.kr",
+    "verified_at": null
+  },
+  {
+    "id": "sme_confirmation",
+    "name": "중소기업확인서",
+    "issuer": "중소기업현황정보시스템(sminfo)",
+    "lead_time_days": 20,
+    "issue_url": "https://sminfo.mss.go.kr",
+    "verified_at": null
+  },
+  {
+    "id": "insurance_member_list",
+    "name": "4대보험 가입자명부",
+    "issuer": "4대사회보험 정보연계센터",
+    "lead_time_days": 1,
+    "issue_url": "https://www.4insure.or.kr",
+    "verified_at": null
+  },
+  {
+    "id": "tax_payment_cert",
+    "name": "국세·지방세 납세증명",
+    "issuer": "홈택스·위택스",
+    "lead_time_days": 0,
+    "issue_url": "https://www.hometax.go.kr",
+    "verified_at": null
+  },
+  {
+    "id": "vat_base_cert",
+    "name": "부가가치세 과세표준증명",
+    "issuer": "홈택스",
+    "lead_time_days": 0,
+    "issue_url": "https://www.hometax.go.kr",
+    "verified_at": null
+  },
+  {
+    "id": "financial_statements",
+    "name": "재무제표(표준재무제표증명)",
+    "issuer": "홈택스",
+    "lead_time_days": 0,
+    "issue_url": "https://www.hometax.go.kr",
+    "verified_at": null
+  },
+  {
+    "id": "venture_cert",
+    "name": "벤처기업확인서",
+    "issuer": "벤처확인종합관리시스템",
+    "lead_time_days": 45,
+    "issue_url": "https://www.smes.go.kr/venturein",
+    "verified_at": null
+  },
+  {
+    "id": "women_enterprise_cert",
+    "name": "여성기업확인서",
+    "issuer": "여성기업종합정보포털",
+    "lead_time_days": 20,
+    "issue_url": "https://www.wbiz.or.kr",
+    "verified_at": null
+  },
+  {
+    "id": "research_institute_cert",
+    "name": "기업부설연구소 인정서",
+    "issuer": "한국산업기술진흥협회",
+    "lead_time_days": 7,
+    "issue_url": "https://www.rnd.or.kr",
+    "verified_at": null
+  },
+  {
+    "id": "export_record_cert",
+    "name": "수출실적증명",
+    "issuer": "한국무역협회",
+    "lead_time_days": 3,
+    "issue_url": "https://www.kita.net",
+    "verified_at": null
+  },
+  {
+    "id": "food_business_permit",
+    "name": "식품 영업신고증",
+    "issuer": "관할 시·군·구",
+    "lead_time_days": 3,
+    "issue_url": null,
+    "verified_at": null
+  },
+  {
+    "id": "business_plan",
+    "name": "사업계획서",
+    "issuer": "자체 작성",
+    "lead_time_days": null,
+    "issue_url": null,
+    "verified_at": null
+  }
+]

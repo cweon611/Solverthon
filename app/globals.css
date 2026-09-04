@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+/* design/globals.css의 색 토큰 그대로 (§4.4) */
+@theme {
+  --color-brand-50: #f0eef9;
+  --color-brand-100: #dddaf4;
+  --color-brand-200: #bdb8e8;
+  --color-brand-300: #9d96db;
+  --color-brand-400: #8880cf;
+  --color-brand-500: #6e62c2;
+  --color-brand-600: #5a50a8;
+  --color-brand-700: #47408e;
+  --color-brand-800: #343074;
+  --color-brand-900: #21205a;
+
+  --color-surface: #ffffff;
+  --color-card: #f5f6f8;
+  --color-ink: #111111;
+  --color-ink-2: #444444;
+  --color-ink-3: #888888;
+  --color-border: #e4e6ea;
+  --color-border-2: #d0d3da;
+}
+
+/* 폰트는 next/font 변수 참조 → 반드시 inline (§4.4) */
+@theme inline {
+  --font-sans: var(--font-noto-sans-kr), "Noto Sans KR", sans-serif;
+  --font-display: var(--font-outfit), var(--font-noto-sans-kr), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+}
+
+/* 스크롤바 규칙은 design/globals.css 그대로 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d0d3da transparent;
+}
+*::-webkit-scrollbar {
+  width: 4px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #d0d3da;
+  border-radius: 2px;
 }

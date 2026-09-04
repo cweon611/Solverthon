@@ -1,0 +1,83 @@
+[
+  {
+    "id": "demo-1",
+    "name": "테크스타트 주식회사",
+    "biz_no": "234-86-01827",
+    "business_type": "corporation",
+    "industry_code": "J62",
+    "industry_label": "소프트웨어 개발업",
+    "region_code": "29",
+    "region_label": "광주광역시",
+    "founded_at": "-35m5d",
+    "employee_count": 4,
+    "ceo_birth_date": "-39y4m",
+    "ceo_gender": "male",
+    "annual_revenue_krw": 320000000,
+    "export_revenue_usd_prev_year": 0,
+    "is_vat_exempt": false,
+    "certifications": [],
+    "flags": {
+      "hiring_planned": true,
+      "has_online_sales": false,
+      "handles_personal_data": false,
+      "is_food_business": false
+    },
+    "created_at": "+0d",
+    "updated_at": "+0d",
+    "demo_label": "① 광주 소프트웨어 4인 (업력 2년 11개월)"
+  },
+  {
+    "id": "demo-2",
+    "name": "김창업 전자부품",
+    "biz_no": null,
+    "business_type": "individual",
+    "industry_code": "C26",
+    "industry_label": "전자부품 제조업",
+    "region_code": "29",
+    "region_label": "광주광역시",
+    "founded_at": "-14m",
+    "employee_count": 0,
+    "ceo_birth_date": "-32y",
+    "ceo_gender": "male",
+    "annual_revenue_krw": null,
+    "export_revenue_usd_prev_year": null,
+    "is_vat_exempt": false,
+    "certifications": [],
+    "flags": {
+      "hiring_planned": true,
+      "has_online_sales": false,
+      "handles_personal_data": false,
+      "is_food_business": false
+    },
+    "created_at": "+0d",
+    "updated_at": "+0d",
+    "demo_label": "② 광주 제조업 1인 (첫 채용 예정)"
+  },
+  {
+    "id": "demo-3",
+    "name": "남도푸드",
+    "biz_no": null,
+    "business_type": "individual",
+    "industry_code": "C10",
+    "industry_label": "식료품 제조업",
+    "region_code": "46",
+    "region_label": "전라남도",
+    "founded_at": "-2m",
+    "employee_count": 2,
+    "ceo_birth_date": "-46y",
+    "ceo_gender": "female",
+    "annual_revenue_krw": null,
+    "export_revenue_usd_prev_year": null,
+    "is_vat_exempt": false,
+    "certifications": [],
+    "flags": {
+      "hiring_planned": false,
+      "has_online_sales": true,
+      "handles_personal_data": true,
+      "is_food_business": true
+    },
+    "created_at": "+0d",
+    "updated_at": "+0d",
+    "demo_label": "③ 전남 식품 제조 2인 (개업 2개월)"
+  }
+]

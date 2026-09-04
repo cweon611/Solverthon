@@ -1,0 +1,11 @@
+[
+  {
+    "program_a": "seed-03",
+    "program_b": "seed-23",
+    "similarity": 0.78,
+    "period_overlap": false,
+    "decision": "distinct",
+    "decided_by": "human",
+    "note": "제목이 비슷하지만 대상(신규 창업자 vs 졸업기업)과 접수기간이 다르다 — 비중복 시연용"
+  }
+]
