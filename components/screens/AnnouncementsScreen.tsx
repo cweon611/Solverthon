@@ -8,15 +8,16 @@ import { useState } from "react";
 
 import { useAnnouncements } from "@/lib/store/hooks";
 import type { Announcement, AnnouncementField, AnnouncementStatus, GrantStatus } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
+import { Badge } from "@/components/ui/badge";
+import { chip, segmented } from "@/components/ui/button-variants";
+import { Card, cardTitleClass } from "@/components/ui/card";
 import { ExtLink } from "@/components/ui/ExtLink";
+import { Input } from "@/components/ui/input";
+import { annStatusBadge, cardMutedVariants, separatorVerticalClass } from "@/components/ui/variants";
 
 const annStatusLabel: Record<AnnouncementStatus, string> = { open: "접수중", closing: "마감임박", closed: "마감" };
-const annStatusStyle: Record<AnnouncementStatus, string> = {
-  open:    "bg-blue-50 text-blue-700 border-blue-200",
-  closing: "bg-rose-50 text-rose-700 border-rose-200",
-  closed:  "bg-[#F5F6F8] text-[#888888] border-[#E4E6EA]",
-};
 const fieldColors: Record<AnnouncementField | "전체", string> = {
   "전체": "",
   "창업": "bg-violet-50 text-violet-700 border-violet-200",
@@ -81,32 +82,32 @@ export function AnnouncementsScreen() {
 
       {/* 검색 + 필터 */}
       <div className="space-y-3">
-        <input
+        <Input
+          variant="flowLg"
           type="text"
           placeholder="공고명·기관명 검색"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full border border-[#E4E6EA] rounded-xl px-4 py-2.5 text-sm text-[#111111] placeholder-[#888888] focus:outline-none focus:border-[#6E62C2] focus:ring-2 focus:ring-[#6E62C2]/10"
         />
         <div className="flex items-center gap-2 flex-wrap">
           {/* 정렬 */}
           <div className="flex gap-1 bg-[#F5F6F8] border border-[#E4E6EA] rounded-xl p-1">
             {(["deadline", "eligible", "latest"] as SortKey[]).map(s => (
               <button key={s} onClick={() => setSort(s)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${sort === s ? "bg-white text-[#111111] shadow-sm border border-[#E4E6EA]" : "text-[#888888] hover:text-[#444444]"}`}>
+                className={segmented({ on: sort === s, size: "sm" })}>
                 {sortLabels[s]}
               </button>
             ))}
           </div>
-          <div className="w-px h-4 bg-[#E4E6EA]" />
+          <div className={separatorVerticalClass} />
           {/* 상태 필터 */}
           {(["all", "open", "closing", "closed"] as const).map(s => (
             <button key={s} onClick={() => setStatusFilter(s)}
-              className={`px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${statusFilter === s ? "bg-[#6E62C2] text-white border-[#6E62C2] shadow-sm" : "bg-white border-[#E4E6EA] text-[#444444] hover:border-[#6E62C2]/40"}`}>
+              className={chip({ on: statusFilter === s, elevate: "sm" })}>
               {s === "all" ? "전체 상태" : annStatusLabel[s]}
             </button>
           ))}
-          <div className="w-px h-4 bg-[#E4E6EA]" />
+          <div className={separatorVerticalClass} />
           {/* 분야 필터 */}
           {fields.filter(f => f !== "전체").map(f => (
             <button key={f} onClick={() => setFieldFilter(fieldFilter === f ? "전체" : f)}
@@ -114,7 +115,7 @@ export function AnnouncementsScreen() {
               {f}
             </button>
           ))}
-          <div className="w-px h-4 bg-[#E4E6EA]" />
+          <div className={separatorVerticalClass} />
           {/* 우리 기업 대상만 */}
           <button onClick={() => setEligibleOnly(v => !v)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${eligibleOnly ? "bg-[#3D7260] text-white border-[#3D7260] shadow-sm" : "bg-white border-[#E4E6EA] text-[#444444] hover:border-[#6FA48E]"}`}>
@@ -132,28 +133,28 @@ export function AnnouncementsScreen() {
       {/* 공고 목록 */}
       <div className="space-y-2">
         {filtered.length === 0 ? (
-          <div className="bg-[#F5F6F8] rounded-2xl p-10 text-center">
+          <div className={cardMutedVariants({ pad: "p10", center: true })}>
             <p className="text-[#888888] text-sm">조건에 맞는 공고가 없습니다.</p>
           </div>
         ) : filtered.map(ann => (
-          <div key={ann.id} className={`bg-white border border-[#E4E6EA] rounded-2xl px-5 py-4 flex items-center gap-4 shadow-sm hover:border-[#6E62C2]/30 transition-all ${ann.status === "closed" ? "opacity-60" : ""}`}>
+          <Card key={ann.id} className={cn("px-5 py-4 flex items-center gap-4 hover:border-[#6E62C2]/30 transition-all", ann.status === "closed" && "opacity-60")}>
             {/* 상태 뱃지 */}
-            <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border shrink-0 ${annStatusStyle[ann.status]}`}>
+            <Badge size="lg" weight="semibold" tone={annStatusBadge[ann.status]} fixed="shrink0">
               {annStatusLabel[ann.status]}
-            </span>
+            </Badge>
 
             {/* 본문 */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <p className="text-[#111111] font-semibold text-sm">{ann.title}</p>
+                <p className={cardTitleClass}>{ann.title}</p>
                 {ann.eligible && (
-                  <span className="text-[10px] font-semibold text-[#2A5A46] bg-[#EEF4F0] border border-[#B2D1BF] px-1.5 py-0.5 rounded-full">대상</span>
+                  <Badge size="sm" weight="semibold" tone="success">대상</Badge>
                 )}
                 {ann.isSynthetic && (
-                  <span className="text-[10px] text-[#888888] bg-[#F5F6F8] border border-[#E4E6EA] px-1.5 py-0.5 rounded-full">시연용</span>
+                  <Badge size="sm" weight="none" tone="muted">시연용</Badge>
                 )}
                 {ann.dualListed && (
-                  <span className="text-[10px] bg-[#f0eef9] text-[#6E62C2] border border-[#dddaf4] px-1.5 py-0.5 rounded-full">기업마당·K-Startup 동시 게시</span>
+                  <Badge size="sm" weight="none" tone="brand">기업마당·K-Startup 동시 게시</Badge>
                 )}
               </div>
               <div className="flex items-center gap-3 mt-1 text-xs text-[#888888]">
@@ -176,7 +177,7 @@ export function AnnouncementsScreen() {
                 <ExtLink href={ann.attachmentUrl} className="block text-[11px] text-[#888888] hover:text-[#6E62C2] transition-colors cursor-pointer">첨부파일 →</ExtLink>
               )}
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

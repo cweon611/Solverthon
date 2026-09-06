@@ -4,9 +4,11 @@
 // 대표자 연령 → 생년월일 date 입력(§4.5-14) · 개업일 date, 업력은 계산(§4.5-15) · 판정 이력 useHistory()(§4.5-10)
 // · 엑셀 내보내기 P0 disabled(§4.5-12) · 계정 관리 → 데이터 관리(§4.5-11). 스타일 동일.
 
+import { TriangleAlertIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
+import { toast } from "sonner";
 
 import { useSession } from "@/lib/auth/AuthProvider";
 import { logoutAndClear, resetAll } from "@/lib/store/sync";
@@ -18,8 +20,27 @@ import { fmtDate, toIso } from "@/lib/engine/format";
 import { useCompany, useHistory, useProfile, useSettings, useToday, useVerdicts } from "@/lib/store/hooks";
 import { exportAll } from "@/lib/store/storage";
 import type { CompanyProfile } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
+import { Alert } from "@/components/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button, button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, cardTitleClass } from "@/components/ui/card";
+import { selectField } from "@/components/ui/field-variants";
 import { Img } from "@/components/ui/Img";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 
 type ProfileDraft = Pick<
   CompanyProfile,
@@ -33,9 +54,6 @@ const toDraft = (p: CompanyProfile): ProfileDraft => ({
   employee_count: p.employee_count,
   ceo_birth_date: p.ceo_birth_date,
 });
-
-const inputCls =
-  "w-full border border-[#E4E6EA] rounded-lg px-3 py-1.5 text-sm text-[#111111] focus:outline-none focus:border-[#6E62C2] focus:ring-1 focus:ring-[#6E62C2]/20";
 
 function Field({ label, display, editing, children }: { label: string; display: string; editing: boolean; children?: ReactNode }) {
   return (
@@ -61,7 +79,6 @@ export function MyPageScreen() {
   const [draft, setDraft] = useState<ProfileDraft>(() => toDraft(profile!));
   const [saved, setSaved] = useState(false);
   const [demoOpen, setDemoOpen] = useState(false);
-  const [confirmReset, setConfirmReset] = useState(false);
 
   const demoProfiles = useMemo(() => loadDemoProfiles(today), [today]);
 
@@ -129,9 +146,16 @@ export function MyPageScreen() {
     URL.revokeObjectURL(url);
   };
 
+  // 확인 대화상자를 통과한 뒤에만 불린다. 결과를 화면 밖으로 보내 버리므로(라우트 이동)
+  // 무슨 일이 일어났는지는 토스트로만 남는다 — Toaster는 루트 레이아웃에 있어 이동 후에도 살아 있다.
   const doReset = async () => {
-    await resetAll(); // 서버 원본과 이 기기 사본을 모두 비운다. 계정은 남는다
-    router.replace("/onboarding/chat");
+    try {
+      await resetAll(); // 서버 원본과 이 기기 사본을 모두 비운다. 계정은 남는다
+      toast.success("프로필을 초기화했습니다.", { description: "처음 화면부터 다시 시작합니다." });
+      router.replace("/onboarding/chat");
+    } catch {
+      toast.error("초기화하지 못했습니다.", { description: "잠시 후 다시 시도해 주세요." });
+    }
   };
 
   const notifItems: { key: keyof typeof settings.items; label: string; desc: string }[] = [
@@ -155,92 +179,94 @@ export function MyPageScreen() {
       </div>
 
       {/* ── 기업 프로필 ── */}
-      <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-[#E4E6EA]">
+      <Card clip>
+        <CardHeader layout="between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#E4E6EA]">
               <Img src={PHOTOS.personCutout} alt="대표자" className="w-full h-full object-cover" />
             </div>
             <div>
-              <p className="text-[#111111] font-semibold text-sm">{company.name}</p>
+              <p className={cardTitleClass}>{company.name}</p>
               <p className="text-[#888888] text-xs font-mono">{company.bizNo}</p>
             </div>
           </div>
           {!editing ? (
             <div className="flex gap-2">
+              {/* <Link>라 asChild 없이 button()으로 className만 만든다 */}
               <Link href="/onboarding?edit=1"
-                className="text-xs font-semibold text-[#444444] bg-[#F5F6F8] border border-[#E4E6EA] px-3 py-1.5 rounded-xl hover:bg-[#E4E6EA] transition-colors cursor-pointer">
+                className={cn(button({ variant: "muted", pad: "3x1.5", text: "xs", radius: "xl", motion: "colors" }), "text-[#444444]")}>
                 상세 수정
               </Link>
-              <button
+              <Button
+                variant="soft" pad="3x1.5" text="xs" radius="xl" motion="colors"
                 onClick={() => { setDraft(toDraft(profile!)); setEditing(true); }}
-                className="text-xs font-semibold text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-3 py-1.5 rounded-xl hover:bg-[#dddaf4] transition-colors cursor-pointer"
               >
                 수정
-              </button>
+              </Button>
             </div>
           ) : (
             <div className="flex gap-2">
-              <button onClick={() => setEditing(false)} className="text-xs font-semibold text-[#888888] bg-[#F5F6F8] border border-[#E4E6EA] px-3 py-1.5 rounded-xl hover:bg-[#E4E6EA] transition-colors cursor-pointer">취소</button>
-              <button onClick={handleSave} className="text-xs font-semibold text-white bg-[#6E62C2] px-3 py-1.5 rounded-xl hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25">저장</button>
+              <Button variant="muted" pad="3x1.5" text="xs" radius="xl" motion="colors" onClick={() => setEditing(false)}>취소</Button>
+              <Button variant="primary" pad="3x1.5" text="xs" radius="xl" elevate="brand" motion="colors" onClick={handleSave}>저장</Button>
             </div>
           )}
-        </div>
+        </CardHeader>
 
         {saved && (
-          <div className="mx-5 mt-4 bg-[#EEF4F0] border border-[#B2D1BF] rounded-xl px-4 py-2 flex items-center gap-2">
+          <Alert tone="success" pad="sm" className="mx-5 mt-4 flex items-center gap-2">
             <span className="text-[#3D7260] text-sm">✓</span>
             <p className="text-[#2A5A46] text-xs font-semibold">저장됐습니다. 변경된 항목으로 재판정을 실행합니다.</p>
-          </div>
+          </Alert>
         )}
 
-        <div className="px-5 py-4 grid grid-cols-2 gap-4">
+        <CardContent className="grid grid-cols-2 gap-4">
           <Field label="업종" display={company.sector} editing={editing}>
-            <select value={draft.industry_code} onChange={(e) => setDraft((d) => ({ ...d, industry_code: e.target.value }))} className={inputCls}>
+            {/* select인데 input 문자열을 입은 두 곳 — selectField.asInput */}
+            <select value={draft.industry_code} onChange={(e) => setDraft((d) => ({ ...d, industry_code: e.target.value }))} className={selectField({ variant: "asInput" })}>
               {INDUSTRIES.map((i) => <option key={i.code} value={i.code}>{i.label}</option>)}
             </select>
           </Field>
           <Field label="지역" display={company.region} editing={editing}>
-            <select value={draft.region_code} onChange={(e) => setDraft((d) => ({ ...d, region_code: e.target.value }))} className={inputCls}>
+            <select value={draft.region_code} onChange={(e) => setDraft((d) => ({ ...d, region_code: e.target.value }))} className={selectField({ variant: "asInput" })}>
               {REGIONS.map((r) => <option key={r.code} value={r.code}>{r.label}</option>)}
             </select>
           </Field>
           <Field label="개업일" display={company.foundedDate} editing={editing}>
-            <input type="date" max={toIso(today)} value={draft.founded_at} onChange={(e) => setDraft((d) => ({ ...d, founded_at: e.target.value }))} className={inputCls} />
+            <Input variant="fieldSm" type="date" max={toIso(today)} value={draft.founded_at} onChange={(e) => setDraft((d) => ({ ...d, founded_at: e.target.value }))} />
           </Field>
           {/* 사업자번호는 디자인대로 읽기 전용 */}
           <Field label="사업자번호" display={company.bizNo} editing={false} />
           <Field label="상시근로자 수" display={`${company.employees}인`} editing={editing}>
-            <input type="number" min={0} max={999} value={draft.employee_count}
-              onChange={(e) => setDraft((d) => ({ ...d, employee_count: Math.max(0, Number(e.target.value)) }))} className={inputCls} />
+            <Input variant="fieldSm" type="number" min={0} max={999} value={draft.employee_count}
+              onChange={(e) => setDraft((d) => ({ ...d, employee_count: Math.max(0, Number(e.target.value)) }))} />
           </Field>
           {/* 저장 필드는 ceo_birth_date, 표시는 만 나이 (§4.5-14) */}
           <Field label="대표자 연령" display={company.ceoAge === null ? "미입력" : `만 ${company.ceoAge}세`} editing={editing}>
-            <input type="date" max={toIso(today)} value={draft.ceo_birth_date ?? ""}
-              onChange={(e) => setDraft((d) => ({ ...d, ceo_birth_date: e.target.value || null }))} className={inputCls} />
+            <Input variant="fieldSm" type="date" max={toIso(today)} value={draft.ceo_birth_date ?? ""}
+              onChange={(e) => setDraft((d) => ({ ...d, ceo_birth_date: e.target.value || null }))} />
           </Field>
           {profile?.business_direction && (
             <div className="col-span-2">
               <Field label="사업 방향 (AI 대화에서 정리)" display={profile.business_direction} editing={false} />
             </div>
           )}
-        </div>
+        </CardContent>
 
         {editing && (
-          <div className="mx-5 mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2">
+          <Alert tone="warning" pad="sm" className="mx-5 mb-4">
             <p className="text-amber-700 text-xs">직원 수·업종·지역이 바뀌면 저장 후 자동으로 재판정이 실행됩니다.</p>
-          </div>
+          </Alert>
         )}
-      </div>
+      </Card>
 
       {/* ── 알림 설정 ── */}
-      <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-        <div className="px-5 py-4 border-b border-[#E4E6EA]">
-          <h2 className="text-[#111111] font-semibold text-sm">알림 설정</h2>
+      <Card>
+        <CardHeader>
+          <h2 className={cardTitleClass}>알림 설정</h2>
           <p className="text-[11px] text-[#888888] mt-1">현재 버전은 대시보드 배너로 알립니다. 이메일·푸시 발송은 제공 예정입니다.</p>
-        </div>
+        </CardHeader>
 
-        {/* 채널 */}
+        {/* 채널 — 아래 테두리 색이 카드 헤더 표와 달라 인라인 유지 */}
         <div className="px-5 py-4 border-b border-[#F5F6F8]">
           <p className="text-[#888888] text-[11px] font-medium mb-3">수신 채널</p>
           <div className="flex gap-3">
@@ -254,31 +280,37 @@ export function MyPageScreen() {
           </div>
         </div>
 
-        {/* 항목별 토글 */}
+        {/* 항목별 토글 — 위아래 여백이 본문 표에 없는 값이라 인라인 유지.
+            손수 만든 <button> 알약을 <Switch>로 교체했다. 그림은 그대로고(같은 문자열),
+            스페이스바·화살표 조작과 role=switch·aria-checked가 새로 생긴다.
+            제목·설명 문단에 id를 붙여 스위치의 이름과 설명으로 연결한다 — 눈에 보이는 글자가
+            이미 라벨 노릇을 하고 있어 화면에 없는 문구를 새로 지어내지 않는다. */}
         <div className="px-5 py-2 divide-y divide-[#F5F6F8]">
           {notifItems.map((item) => (
             <div key={item.key} className="flex items-center gap-4 py-3">
               <div className="flex-1">
-                <p className="text-[#111111] text-sm font-medium">{item.label}</p>
-                <p className="text-[#888888] text-xs mt-0.5">{item.desc}</p>
+                <p id={`notif-${item.key}`} className="text-[#111111] text-sm font-medium">{item.label}</p>
+                <p id={`notif-${item.key}-desc`} className="text-[#888888] text-xs mt-0.5">{item.desc}</p>
               </div>
-              <button onClick={() => toggleItem(item.key)}
-                className={`w-10 h-6 rounded-full transition-all cursor-pointer relative shrink-0 ${settings.items[item.key] ? "bg-[#6E62C2]" : "bg-[#D0D3DA]"}`}>
-                <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all ${settings.items[item.key] ? "left-5" : "left-1"}`} />
-              </button>
+              <Switch
+                checked={settings.items[item.key]}
+                onCheckedChange={() => toggleItem(item.key)}
+                aria-labelledby={`notif-${item.key}`}
+                aria-describedby={`notif-${item.key}-desc`}
+              />
             </div>
           ))}
         </div>
-      </div>
+      </Card>
 
       {/* ── 판정 이력 ── */}
-      <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-        <div className="px-5 py-4 border-b border-[#E4E6EA] flex items-center justify-between">
-          <h2 className="text-[#111111] font-semibold text-sm">판정 이력</h2>
-          <button onClick={exportCsv} disabled={historyRows.length === 0}
-            className="text-xs font-semibold text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-3 py-1.5 rounded-xl hover:bg-[#dddaf4] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">엑셀 내보내기</button>
-        </div>
-        <div className="divide-y divide-[#F5F6F8]">
+      <Card>
+        <CardHeader layout="between">
+          <h2 className={cardTitleClass}>판정 이력</h2>
+          <Button variant="soft" pad="3x1.5" text="xs" radius="xl" motion="colors" off="o50"
+            onClick={exportCsv} disabled={historyRows.length === 0}>엑셀 내보내기</Button>
+        </CardHeader>
+        <CardContent size="none" list>
           {historyRows.length === 0 && (
             <p className="px-5 py-6 text-center text-[#888888] text-xs">아직 이력이 없습니다.</p>
           )}
@@ -291,28 +323,28 @@ export function MyPageScreen() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* ── 데이터 관리 (§4.5-11) ── */}
-      <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-        <div className="px-5 py-4 border-b border-[#E4E6EA]">
-          <h2 className="text-[#111111] font-semibold text-sm">데이터 관리</h2>
-        </div>
-        <div className="px-5 py-3 space-y-1">
+      <Card>
+        <CardHeader>
+          <h2 className={cardTitleClass}>데이터 관리</h2>
+        </CardHeader>
+        <CardContent size="tight" className="space-y-1">
           <div className="relative">
-            <button onClick={() => setDemoOpen((v) => !v)}
-              className="w-full text-left text-sm px-3 py-2.5 rounded-xl transition-colors cursor-pointer text-[#444444] hover:bg-[#F5F6F8]">
+            <Button variant="ghostRow" pad="3x2.5" text="sm" radius="xl" block motion="colors"
+              onClick={() => setDemoOpen((v) => !v)}>
               데모 프로필 전환
-            </button>
+            </Button>
             {demoOpen && (
+              /* 흰 배경이 없어 카드 셸 표와 어긋난다 — 인라인 유지 */
               <div className="mt-1 border border-[#E4E6EA] rounded-2xl overflow-hidden">
                 {demoProfiles.map((p) => (
-                  <button key={p.id} onClick={() => applyDemo(p.id)}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F5F6F8] transition-colors cursor-pointer border-b border-[#F5F6F8] last:border-0">
+                  <Button key={p.id} variant="menuItem" pad="4x3" block motion="colors" onClick={() => applyDemo(p.id)}>
                     <p className="text-[#111111] text-xs font-semibold">{p.demo_label}</p>
                     <p className="text-[#888888] text-[10px] mt-0.5">{p.name} · {p.region_label} · 직원 {p.employee_count}인</p>
-                  </button>
+                  </Button>
                 ))}
               </div>
             )}
@@ -330,32 +362,43 @@ export function MyPageScreen() {
               {sync.pushing ? "서버에 저장 중…" : sync.error ? `저장 오류: ${sync.error}` : sync.lastSyncedAt ? `서버 저장 ${new Date(sync.lastSyncedAt).toLocaleString("ko-KR")}` : "서버 저장 기록 없음"}
             </p>
           )}
-          <button onClick={async () => { await logoutAndClear(); router.replace("/login"); }}
-            className="w-full text-left text-sm px-3 py-2.5 rounded-xl transition-colors cursor-pointer text-[#444444] hover:bg-[#F5F6F8]">
+          <Button variant="ghostRow" pad="3x2.5" text="sm" radius="xl" block motion="colors"
+            onClick={async () => { await logoutAndClear(); router.replace("/login"); }}>
             로그아웃 <span className="text-[#888888] text-xs">— 회사 정보는 계정에 저장되어 있습니다</span>
-          </button>
+          </Button>
 
-          <button onClick={exportJson}
-            className="w-full text-left text-sm px-3 py-2.5 rounded-xl transition-colors cursor-pointer text-[#444444] hover:bg-[#F5F6F8]">
+          <Button variant="ghostRow" pad="3x2.5" text="sm" radius="xl" block motion="colors" onClick={exportJson}>
             내 데이터 내보내기 (JSON)
-          </button>
+          </Button>
 
-          {!confirmReset ? (
-            <button onClick={() => setConfirmReset(true)}
-              className="w-full text-left text-sm px-3 py-2.5 rounded-xl transition-colors cursor-pointer text-rose-600 hover:bg-rose-50">
-              프로필 초기화
-            </button>
-          ) : (
-            <div className="bg-rose-50 border border-rose-200 rounded-xl px-4 py-3 space-y-2">
-              <p className="text-rose-700 text-xs font-semibold">계정에 저장된 프로필·할 일·설정·이력·초안이 모두 삭제됩니다. 계정은 남습니다.</p>
-              <div className="flex gap-2">
-                <button onClick={doReset} className="px-3 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 cursor-pointer">삭제하고 처음부터</button>
-                <button onClick={() => setConfirmReset(false)} className="px-3 py-1.5 rounded-lg bg-white border border-[#E4E6EA] text-[#444444] text-xs font-semibold hover:bg-[#F5F6F8] cursor-pointer">취소</button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+          {/* 되돌릴 수 없는 조작이라 카드 안에서 펼쳐지던 확인 띠를 모달 확인 대화상자로 바꿨다.
+              바깥 클릭·ESC로 닫히지 않고, DOM 순서상 첫 초점이 [취소]라 실수로 엔터를 눌러도 안전하다. */}
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghostRowDanger" pad="3x2.5" text="sm" radius="xl" block motion="colors">
+                프로필 초기화
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogMedia className="border-rose-200 bg-rose-50 text-rose-600">
+                  <TriangleAlertIcon />
+                </AlertDialogMedia>
+                <AlertDialogTitle>프로필을 초기화할까요?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  계정에 저장된 프로필·할 일·설정·판정 이력·초안이 모두 삭제됩니다. 되돌릴 수 없습니다.
+                  {user ? <> 로그인 계정 <span className="font-semibold text-ink">{user.loginId}</span>은(는) 남고, </> : " 계정은 남고, "}
+                  초기화 후 처음 화면부터 다시 시작합니다.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>취소</AlertDialogCancel>
+                <AlertDialogAction variant="destructive" onClick={doReset}>삭제하고 처음부터</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </CardContent>
+      </Card>
 
     </div>
   );

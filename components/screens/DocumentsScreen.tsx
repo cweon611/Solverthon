@@ -11,16 +11,27 @@ import { dDay, fmtDate, fromIso, isoToDot } from "@/lib/engine/format";
 import { computeLeadTime, type LeadTimeStatus } from "@/lib/engine/leadTime";
 import { resolveOriginalUrl } from "@/lib/sourceLinks";
 import { useCatalog, useToday } from "@/lib/store/hooks";
+import { cn } from "@/lib/utils";
 
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { ExtLink } from "@/components/ui/ExtLink";
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { button } from "@/components/ui/button-variants";
+import { Card } from "@/components/ui/card";
+import { cardMutedVariants, cardTitleClass, leadTimeBadge } from "@/components/ui/variants";
 
-const STATUS: Record<LeadTimeStatus, { label: string; cls: string }> = {
-  ok: { label: "여유", cls: "bg-[#EEF4F0] text-[#2A5A46] border-[#B2D1BF]" },
-  tight: { label: "서둘러야", cls: "bg-amber-50 text-amber-700 border-amber-200" },
-  late: { label: "지금 신청해도 마감 초과", cls: "bg-rose-50 text-rose-700 border-rose-200" },
-  unknown: { label: "소요기간 확인 필요", cls: "bg-[#F5F6F8] text-[#888888] border-[#E4E6EA]" },
+// 색은 badge 표의 leadTimeBadge(= 예전 STATUS.cls)가 갖는다. 여기엔 문구만 남는다.
+const STATUS_LABEL: Record<LeadTimeStatus, string> = {
+  ok: "여유",
+  tight: "서둘러야",
+  late: "지금 신청해도 마감 초과",
+  unknown: "소요기간 확인 필요",
 };
+
+// 뒤로 가기 <Link> 2곳(asChild 없음) — 소스에 손 모양 커서가 없어 hand를 끈다.
+const BACK_LINK = button({ variant: "linkBrand", text: "xs", hand: false });
 
 const OVERALL_BANNER = {
   late: { cls: "bg-rose-50 border-rose-200 text-rose-700", text: "이 사업은 서류 준비 기간이 부족합니다. 다음 회차를 준비하세요." },
@@ -44,8 +55,8 @@ export function DocumentsScreen({ programId }: { programId: string }) {
   if (!program || !plan) {
     return (
       <div className="p-6 space-y-5">
-        <Link href="/grants" className="text-xs font-semibold text-[#6E62C2] hover:underline">← 판정함</Link>
-        <div className="bg-[#F5F6F8] rounded-2xl p-10 text-center">
+        <Link href="/grants" className={BACK_LINK}>← 판정함</Link>
+        <div className={cardMutedVariants({ pad: "p10", center: true })}>
           <p className="text-[#888888] text-sm">해당 공고를 찾을 수 없습니다.</p>
         </div>
       </div>
@@ -60,38 +71,38 @@ export function DocumentsScreen({ programId }: { programId: string }) {
     <div className="p-6 space-y-5">
       {/* 헤더 */}
       <div>
-        <Link href="/grants" className="text-xs font-semibold text-[#6E62C2] hover:underline">← 판정함</Link>
+        <Link href="/grants" className={BACK_LINK}>← 판정함</Link>
         <div className="flex items-start justify-between gap-4 mt-2">
           <div className="flex-1 min-w-0">
             <h1 className="text-2xl font-display font-bold text-[#111111]">{program.title}</h1>
             <p className="text-[#888888] text-sm mt-1">{program.organization}</p>
           </div>
-          <span className={`shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full border font-mono ${
-            plan.isRolling ? "bg-[#F5F6F8] text-[#888888] border-[#E4E6EA]"
-            : days !== null && days <= 7 ? "bg-rose-50 text-rose-700 border-rose-200"
-            : "bg-[#f0eef9] text-[#6E62C2] border-[#dddaf4]"}`}>
+          <Badge size="due" weight="monoSemibold" fixed="shrink0"
+            tone={plan.isRolling ? "muted" : days !== null && days <= 7 ? "danger" : "brand"}>
             {plan.isRolling ? "상시 접수" : `마감 ${end ? fmtDate(end) : "-"} · D-${days}`}
-          </span>
+          </Badge>
         </div>
       </div>
 
       {/* 종합 배너 */}
-      <div className={`border rounded-2xl px-5 py-4 flex items-center gap-3 ${banner.cls}`}>
+      {/* 지역 맵이 본문 색까지 들고 있어 tone은 비우고 색을 className으로 넘긴다 */}
+      <Alert tone={null} radius="2xl" pad="x2" className={`flex items-center gap-3 ${banner.cls}`}>
         <p className="text-sm font-semibold flex-1">{banner.text}</p>
         {plan.overall === "late" && (
-          <ExtLink href={resolveOriginalUrl(program)} className="shrink-0 text-xs font-semibold text-[#6E62C2] bg-white border border-[#dddaf4] px-3 py-1.5 rounded-xl hover:bg-[#f0eef9] transition-colors">
+          <ExtLink href={resolveOriginalUrl(program)}
+            className={cn(button({ variant: "softOnWhite", pad: "3x1.5", text: "xs", radius: "xl", motion: "colors", hand: false }), "shrink-0")}>
             공고 원문
           </ExtLink>
         )}
-      </div>
+      </Alert>
 
       {/* 서류 표 */}
       {plan.items.length === 0 ? (
-        <div className="bg-[#F5F6F8] rounded-2xl p-8 text-center">
+        <div className={cardMutedVariants({ pad: "p8", center: true })}>
           <p className="text-[#888888] text-sm">이 공고에는 등록된 제출 서류가 없습니다.</p>
         </div>
       ) : (
-        <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm overflow-hidden">
+        <Card clip>
           <div className="grid grid-cols-[2fr_1.5fr_0.8fr_1fr_1.2fr] bg-[#F5F6F8] px-5 py-2.5 text-[10px] font-semibold text-[#888888] uppercase tracking-wide">
             <span>서류</span><span>발급처</span><span>발급 소요</span><span>최종 착수일</span><span>상태</span>
           </div>
@@ -107,22 +118,22 @@ export function DocumentsScreen({ programId }: { programId: string }) {
                 {item.leadTimeDays === null ? "확인 필요" : item.leadTimeDays === 0 ? "즉시" : `${item.leadTimeDays}일`}
               </span>
               <span className="text-[#444444] text-xs font-mono">{item.latestStart ? isoToDot(item.latestStart) : "-"}</span>
-              <span className={`text-[10px] font-semibold px-2 py-1 rounded-full border w-fit ${STATUS[item.status].cls}`}>
-                {STATUS[item.status].label}
-              </span>
+              <Badge size="cell" weight="semibold" tone={leadTimeBadge[item.status]}>
+                {STATUS_LABEL[item.status]}
+              </Badge>
             </div>
           ))}
-        </div>
+        </Card>
       )}
 
       {/* 원문 근거 */}
       {plan.items.length > 0 && (
-        <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm overflow-hidden">
-          <button onClick={() => setOpenSource((v) => !v)}
-            className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-[#F5F6F8]/60 transition-colors cursor-pointer">
-            <span className="text-[#111111] font-semibold text-sm">공고 원문 근거</span>
+        <Card clip>
+          <Button variant="rowDisclosure" pad="5x3.5" block motion="colors" className="flex items-center justify-between"
+            onClick={() => setOpenSource((v) => !v)}>
+            <span className={cardTitleClass}>공고 원문 근거</span>
             <span className={`text-[#888888] text-xs transition-transform ${openSource ? "rotate-180" : ""}`}>▾</span>
-          </button>
+          </Button>
           {openSource && (
             <div className="px-5 pb-4 space-y-2 border-t border-[#E4E6EA] pt-3">
               {(program.required_documents ?? []).map((d, i) => (
@@ -133,7 +144,7 @@ export function DocumentsScreen({ programId }: { programId: string }) {
               ))}
             </div>
           )}
-        </div>
+        </Card>
       )}
 
       <p className="text-[10px] text-[#888888]">

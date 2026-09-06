@@ -13,6 +13,7 @@ import { fmtBusinessAge, fmtDate, isoToDot } from "@/lib/engine/format";
 import { useCatalog, useCompany, useExpiring, useTasks, useToday, useVerdicts } from "@/lib/store/hooks";
 
 import { Img } from "@/components/ui/Img";
+import { Badge } from "@/components/ui/badge";
 
 import { CalendarIcon, ChartIcon, CheckCircleIcon, ClockIcon, GridIcon, LayersIcon, ListIcon, MegaphoneIcon, PersonIcon, SparklesIcon, UsersIcon } from "./Icons";
 
@@ -65,7 +66,7 @@ export function Sidebar() {
       <div className="px-5 py-5 border-b border-[#E4E6EA]">
         <div className="flex items-center gap-2.5">
           <Image src="/brand/logo.png" alt="비즈버디" width={176} height={56} priority className="h-9 w-auto" />
-          <span className="ml-auto text-[9px] font-mono text-[#6E62C2] bg-[#f0eef9] px-1.5 py-0.5 rounded-full font-semibold">BETA</span>
+          <Badge size="xs" weight="monoSemibold" bordered={false} tone="brandPlain" className="ml-auto">BETA</Badge>
         </div>
       </div>
 
@@ -79,7 +80,7 @@ export function Sidebar() {
             <p className="text-[#111111] text-xs font-semibold leading-tight truncate">{company.name}</p>
             <p className="text-[#888888] text-[10px] font-mono mt-0.5">{company.bizNo}</p>
             <div className="flex gap-1 mt-1.5 flex-wrap">
-              <span className="text-[9px] text-[#6E62C2] bg-[#f0eef9] px-1.5 py-0.5 rounded-full font-semibold">업력 {fmtBusinessAge(company.ageMonths)}</span>
+              <Badge size="xs" weight="semibold" bordered={false} tone="brandPlain">업력 {fmtBusinessAge(company.ageMonths)}</Badge>
               <span className="text-[9px] text-[#444444] bg-white border border-[#E4E6EA] px-1.5 py-0.5 rounded-full">직원 {company.employees}인</span>
             </div>
           </div>
@@ -108,7 +109,9 @@ export function Sidebar() {
                   <span className={`w-4 h-4 shrink-0 ${active ? "opacity-100" : "opacity-60 group-hover:opacity-80"}`}>{item.icon}</span>
                   <span className="flex-1 text-[13px]">{item.label}</span>
                   {item.badge !== undefined && (
-                    <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full font-semibold ${active ? "bg-white/20 text-white" : "bg-[#E4E6EA] text-[#444444]"}`}>{item.badge}</span>
+                    // 색이 활성 상태에 달려 있어 tone은 지역 문자열로 넘긴다
+                    <Badge size="sm" weight="monoSemibold" bordered={false} tone={null}
+                      className={active ? "bg-white/20 text-white" : "bg-[#E4E6EA] text-[#444444]"}>{item.badge}</Badge>
                   )}
                 </Link>
               );

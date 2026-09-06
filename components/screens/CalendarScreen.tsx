@@ -12,6 +12,10 @@ import type { Task, TaskDraft } from "@/lib/types";
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { MiniForm } from "@/components/ui/MiniForm";
 import { EMPTY_DRAFT } from "@/components/ui/TaskForm";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { cardHeaderVariants, cardMutedVariants } from "@/components/ui/variants";
 
 export function CalendarScreen() {
   const today = useToday();
@@ -93,12 +97,12 @@ export function CalendarScreen() {
             <p className="text-[#888888] text-xs mt-0.5">날짜를 클릭해 일정을 확인하세요</p>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => { setViewYear(today.getFullYear()); setViewMonth(today.getMonth()); }}
-              className="px-3 py-1.5 rounded-xl border border-[#E4E6EA] text-xs font-semibold text-[#444444] hover:bg-[#F5F6F8] cursor-pointer">
+            <Button variant="outline" pad="3x1.5" text="xs" radius="xl"
+              onClick={() => { setViewYear(today.getFullYear()); setViewMonth(today.getMonth()); }}>
               오늘
-            </button>
-            <button onClick={prevMonth} className="w-8 h-8 rounded-xl border border-[#E4E6EA] flex items-center justify-center text-[#444444] hover:bg-[#F5F6F8] cursor-pointer">‹</button>
-            <button onClick={nextMonth} className="w-8 h-8 rounded-xl border border-[#E4E6EA] flex items-center justify-center text-[#444444] hover:bg-[#F5F6F8] cursor-pointer">›</button>
+            </Button>
+            <Button variant="iconNeutral" box="8" radius="xl" center onClick={prevMonth}>‹</Button>
+            <Button variant="iconNeutral" box="8" radius="xl" center onClick={nextMonth}>›</Button>
           </div>
         </div>
 
@@ -170,25 +174,26 @@ export function CalendarScreen() {
 
         {/* 선택된 날 또는 이번달 요약 */}
         {selectedDate ? (
-          <div className="bg-white border border-[#E4E6EA] rounded-2xl overflow-hidden shadow-sm">
-            <div className="px-4 py-3 border-b border-[#E4E6EA] flex items-center justify-between">
+          <Card clip>
+            <CardHeader size="compact" layout="between">
               <div>
                 <p className="text-[11px] text-[#888888]">선택한 날짜</p>
                 <p className="text-sm font-semibold text-[#111111]">{isoToDot(selectedDate)}</p>
               </div>
-              <button onClick={() => { setShowAdd(true); setAddDraft({ ...EMPTY_DRAFT, dueDate: isoToDot(selectedDate) }); setEditingId(null); }}
-                className="px-3 py-1.5 rounded-xl bg-[#6E62C2] text-white text-[11px] font-semibold hover:bg-[#5a50a8] cursor-pointer">
+              <Button variant="primary" pad="3x1.5" text="11" radius="xl"
+                onClick={() => { setShowAdd(true); setAddDraft({ ...EMPTY_DRAFT, dueDate: isoToDot(selectedDate) }); setEditingId(null); }}>
                 + 추가
-              </button>
-            </div>
+              </Button>
+            </CardHeader>
 
+            {/* 헤더가 아니라 폼 칸이지만 여백·아래 테두리는 헤더와 같은 표를 쓴다 */}
             {showAdd && (
-              <div className="px-4 py-3 border-b border-[#E4E6EA]">
+              <div className={cardHeaderVariants({ size: "compact" })}>
                 <MiniForm draft={addDraft} setDraft={setAddDraft} onSave={saveAdd} onCancel={() => setShowAdd(false)} label="추가" />
               </div>
             )}
 
-            <div className="divide-y divide-[#F5F6F8]">
+            <CardContent size="none" list>
               {selectedTasks.length === 0 && !showAdd && (
                 <p className="px-4 py-6 text-center text-[#888888] text-xs">이 날 등록된 일정이 없습니다.</p>
               )}
@@ -205,58 +210,59 @@ export function CalendarScreen() {
                           {task.penalty && <p className="text-[10px] text-rose-600 mt-0.5">{task.penalty}</p>}
                         </div>
                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                          <button onClick={() => startEdit(task)} className="w-6 h-6 rounded-lg border border-[#E4E6EA] text-[#888888] hover:text-[#6E62C2] flex items-center justify-center text-[10px] cursor-pointer">✎</button>
-                          <button onClick={() => remove(task.id)} className="w-6 h-6 rounded-lg border border-[#E4E6EA] text-[#888888] hover:text-rose-600 flex items-center justify-center text-[10px] cursor-pointer">✕</button>
+                          <Button variant="iconMuted" box="6" text="10" radius="lg" center className="hover:text-[#6E62C2]" onClick={() => startEdit(task)}>✎</Button>
+                          <Button variant="iconMuted" box="6" text="10" radius="lg" center className="hover:text-rose-600" onClick={() => remove(task.id)}>✕</Button>
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 mt-1.5">
-                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-medium ${task.done ? "bg-[#EEF4F0] text-[#2A5A46] border-[#B2D1BF]" : "bg-[#F5F6F8] text-[#888888] border-[#E4E6EA]"}`}>
+                        <Badge size="xs" tone={task.done ? "success" : "muted"}>
                           {task.done ? "완료" : "미완료"}
-                        </span>
-                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-medium ${task.type === "date" ? "text-blue-700 border-blue-200 bg-blue-50" : "text-purple-700 border-purple-200 bg-purple-50"}`}>
+                        </Badge>
+                        <Badge size="xs" tone={task.type === "date" ? "info" : "purple"}>
                           {task.type === "date" ? "날짜형" : "이벤트형"}
-                        </span>
+                        </Badge>
                       </div>
                     </div>
                   )}
                 </div>
               ))}
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ) : (
-          <div className="bg-[#F5F6F8] border border-[#E4E6EA] rounded-2xl px-4 py-4">
+          <div className={cardMutedVariants({ bordered: true, pad: "px4y4" })}>
             <p className="text-[#888888] text-xs">날짜를 클릭하면<br />해당 날의 일정을 확인하고<br />추가·수정·삭제할 수 있습니다.</p>
           </div>
         )}
 
         {/* 이번달 중요 법정의무 요약 */}
-        <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm overflow-hidden">
-          <div className="px-4 py-3 border-b border-[#E4E6EA]">
+        <Card clip>
+          <CardHeader size="compact">
             <p className="text-xs font-semibold text-[#111111]">중요 법정의무</p>
             <p className="text-[10px] text-[#888888] mt-0.5">페널티가 있는 일정</p>
-          </div>
-          <div className="divide-y divide-[#F5F6F8] max-h-64 overflow-y-auto">
+          </CardHeader>
+          <CardContent size="none" list className="max-h-64 overflow-y-auto">
             {importantTasks.length === 0 && (
               <p className="px-4 py-4 text-center text-[#888888] text-xs">해당 없음</p>
             )}
             {importantTasks.map(task => {
               const isThisMonth = inViewMonth(task);
               return (
-                <button key={task.id} onClick={() => setSelectedDate(task.dueDateIso ?? null)}
-                  className={`w-full text-left px-4 py-3 hover:bg-[#F5F6F8] transition-colors cursor-pointer ${isThisMonth ? "" : "opacity-50"}`}>
+                <Button key={task.id} variant="rowDisclosure" pad="4x3" block motion="colors"
+                  className={`hover:bg-[#F5F6F8] ${isThisMonth ? "" : "opacity-50"}`}
+                  onClick={() => setSelectedDate(task.dueDateIso ?? null)}>
                   <p className="text-[11px] font-semibold text-[#111111] truncate">{task.title}</p>
                   <div className="flex items-center gap-2 mt-0.5">
                     <span className="text-[10px] font-mono text-[#888888]">{task.dueDate}</span>
                     <span className="text-[9px] text-rose-600 truncate">{task.penalty}</span>
                   </div>
-                </button>
+                </Button>
               );
             })}
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* 이번달 통계 */}
-        <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm px-4 py-4">
+        <Card className="px-4 py-4">
           <p className="text-xs font-semibold text-[#111111] mb-3">{viewMonth + 1}월 통계</p>
           <div className="space-y-2">
             {[
@@ -270,7 +276,7 @@ export function CalendarScreen() {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
 
         <Disclaimer />
       </div>

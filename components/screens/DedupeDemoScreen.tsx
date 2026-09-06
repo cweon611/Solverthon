@@ -4,13 +4,22 @@
 // 임베딩은 의미를 비교하고, 중복 결정은 임계값 + 기간 겹침이라는 결정론이 내린다 (§3.1).
 
 import { useState } from "react";
+import { toast } from "sonner";
 
 import { DEDUPE } from "@/lib/constants";
 import { fmtDate, fromIso } from "@/lib/engine/format";
 import { useCatalog } from "@/lib/store/hooks";
 import type { Program } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { chip, segmented } from "@/components/ui/button-variants";
+import { Card, cardTitleClass } from "@/components/ui/card";
 import { Disclaimer } from "@/components/ui/Disclaimer";
+import { Textarea } from "@/components/ui/textarea";
+import { cardMutedVariants, dedupeStatusBadge } from "@/components/ui/variants";
 
 interface DedupeResult {
   similarity: number;
@@ -22,11 +31,8 @@ interface DedupeResult {
 
 const SOURCE_LABEL: Record<string, string> = { kstartup: "K-Startup", bizinfo: "기업마당", local: "직접 등록", synthetic: "합성" };
 
-const DECISION = {
-  duplicate: { label: "중복", cls: "bg-[#EEF4F0] text-[#2A5A46] border-[#B2D1BF]" },
-  review: { label: "검토 필요", cls: "bg-amber-50 text-amber-700 border-amber-200" },
-  distinct: { label: "별개", cls: "bg-[#F5F6F8] text-[#888888] border-[#E4E6EA]" },
-} as const;
+// 색은 badge 표(dedupeStatusBadge)가 들고 있다 — 여기는 라벨만 남긴다.
+const DECISION_LABEL = { duplicate: "중복", review: "검토 필요", distinct: "별개" } as const;
 
 function period(p: Program): string {
   if (p.is_rolling || !p.apply_end) return "상시 접수";
@@ -37,21 +43,21 @@ function period(p: Program): string {
 
 function ProgramCard({ p, side }: { p: Program; side: string }) {
   return (
-    <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5 shadow-sm">
+    <Card pad="p5">
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-[10px] font-semibold text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-2 py-0.5 rounded-full">
+        <Badge size="md" weight="semibold" tone="brand">
           {SOURCE_LABEL[p.source] ?? p.source}
-        </span>
+        </Badge>
         <span className="text-[10px] text-[#888888] font-mono">{side}</span>
       </div>
-      <p className="text-[#111111] font-semibold text-sm leading-snug">{p.title}</p>
+      <p className={cn(cardTitleClass, "leading-snug")}>{p.title}</p>
       <p className="text-[#888888] text-xs mt-1">{p.organization}</p>
       <div className="flex items-center gap-3 mt-2 text-xs">
         <span className="text-[#6E62C2] font-mono font-semibold">{p.amount_text ?? "-"}</span>
         <span className="text-[#888888] font-mono">{period(p)}</span>
       </div>
       {p.summary && <p className="text-[#444444] text-[11px] leading-relaxed mt-3 line-clamp-4">{p.summary}</p>}
-    </div>
+    </Card>
   );
 }
 
@@ -79,6 +85,9 @@ export function DedupeDemoScreen() {
 
   const compare = async (body: unknown) => {
     setRunning(true); setError(null); setResult(null);
+    const tid = toast.loading("두 공고를 임베딩으로 비교하는 중…", {
+      description: "문장을 벡터로 바꿔 코사인 유사도를 냅니다. 판정은 임계값이 합니다.",
+    });
     try {
       const res = await fetch("/api/ai/dedupe", {
         method: "POST",
@@ -87,9 +96,16 @@ export function DedupeDemoScreen() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error?.message ?? `요청 실패 (${res.status})`);
-      setResult(json as DedupeResult);
+      const data = json as DedupeResult;
+      setResult(data);
+      toast.success(`판별 결과: ${DECISION_LABEL[data.decision]}`, {
+        id: tid,
+        description: `코사인 유사도 ${data.similarity.toFixed(4)} · 접수기간 ${data.overlap ? "겹침" : "안 겹침"} · 임계값 ${DEDUPE.duplicate}`,
+      });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "알 수 없는 오류");
+      const message = e instanceof Error ? e.message : "알 수 없는 오류";
+      setError(message);
+      toast.error("유사도를 계산하지 못했습니다", { id: tid, description: message });
     } finally {
       setRunning(false);
     }
@@ -108,7 +124,7 @@ export function DedupeDemoScreen() {
       <div className="flex gap-0 bg-[#F5F6F8] rounded-xl p-1 w-fit border border-[#E4E6EA]">
         {([{ id: "preset", label: "카탈로그 비교" }, { id: "manual", label: "직접 비교" }] as const).map((t) => (
           <button key={t.id} onClick={() => { setMode(t.id); setResult(null); setError(null); }}
-            className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${mode === t.id ? "bg-white text-[#111111] shadow-sm border border-[#E4E6EA]" : "text-[#888888] hover:text-[#444444]"}`}>
+            className={segmented({ on: mode === t.id, size: "md" })}>
             {t.label}
           </button>
         ))}
@@ -119,7 +135,7 @@ export function DedupeDemoScreen() {
           <div className="flex gap-2 flex-wrap">
             {pairs.map((p, i) => (
               <button key={p.label} onClick={() => { setPairIndex(i); setResult(null); }}
-                className={`px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${i === pairIndex ? "bg-[#6E62C2] text-white border-[#6E62C2] shadow-sm" : "bg-white border-[#E4E6EA] text-[#444444] hover:border-[#6E62C2]/40"}`}>
+                className={chip({ on: i === pairIndex, elevate: "sm" })}>
                 {p.label}
               </button>
             ))}
@@ -127,22 +143,22 @@ export function DedupeDemoScreen() {
 
           <div className="grid grid-cols-2 gap-4">
             <ProgramCard p={current.a} side="대표 공고" />
-            <div className="bg-[#F5F6F8] border border-[#E4E6EA] rounded-2xl p-5 flex flex-col items-center justify-center text-center">
+            <div className={cn(cardMutedVariants({ bordered: true, center: true }), "flex flex-col items-center justify-center")}>
               <p className="text-[#888888] text-xs">비교할 공고 원문을 아래에 붙여넣거나</p>
               <p className="text-[#888888] text-xs">직접 비교 탭을 사용하세요</p>
             </div>
           </div>
 
-          <textarea value={textB} onChange={(e) => setTextB(e.target.value)}
-            placeholder="다른 기관에 올라온 같은 사업의 공고문을 붙여넣으세요"
-            className="w-full h-32 border border-[#E4E6EA] rounded-2xl p-4 font-mono text-xs text-[#111111] placeholder-[#888888] focus:outline-none focus:border-[#6E62C2] resize-none" />
+          <Textarea variant="pasteMonoH32" value={textB} onChange={(e) => setTextB(e.target.value)}
+            placeholder="다른 기관에 올라온 같은 사업의 공고문을 붙여넣으세요" />
 
-          <button onClick={() => compare({ a: { programId: current.a.id }, b: { text: textB } })}
+          <Button onClick={() => compare({ a: { programId: current.a.id }, b: { text: textB } })}
             disabled={running || textB.trim().length === 0}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#6E62C2] text-white text-sm font-semibold hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25 disabled:opacity-40 disabled:cursor-not-allowed">
+            variant="primary" pad="5x2" text="sm" radius="xl" elevate="brand" motion="colors" off="o40"
+            className="flex items-center gap-2">
             {running && <span className="w-3 h-3 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
             유사도 계산
-          </button>
+          </Button>
         </div>
       )}
 
@@ -152,29 +168,29 @@ export function DedupeDemoScreen() {
             {([["A", textA, setTextA], ["B", textB, setTextB]] as const).map(([label, value, setter]) => (
               <div key={label} className="space-y-2">
                 <p className="text-[11px] text-[#888888] font-medium">공고 {label}</p>
-                <textarea value={value} onChange={(e) => setter(e.target.value)}
-                  placeholder={`공고 ${label} 원문`}
-                  className="w-full h-48 border border-[#E4E6EA] rounded-2xl p-4 font-mono text-xs text-[#111111] placeholder-[#888888] focus:outline-none focus:border-[#6E62C2] resize-none" />
+                <Textarea variant="pasteMonoH48" value={value} onChange={(e) => setter(e.target.value)}
+                  placeholder={`공고 ${label} 원문`} />
               </div>
             ))}
           </div>
-          <button onClick={() => compare({ a: { text: textA }, b: { text: textB } })}
+          <Button onClick={() => compare({ a: { text: textA }, b: { text: textB } })}
             disabled={running || textA.trim().length === 0 || textB.trim().length === 0}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#6E62C2] text-white text-sm font-semibold hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25 disabled:opacity-40 disabled:cursor-not-allowed">
+            variant="primary" pad="5x2" text="sm" radius="xl" elevate="brand" motion="colors" off="o40"
+            className="flex items-center gap-2">
             {running && <span className="w-3 h-3 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
             유사도 계산
-          </button>
+          </Button>
         </div>
       )}
 
       {error && (
-        <div className="bg-rose-50 border border-rose-200 rounded-2xl px-4 py-3">
+        <Alert radius="2xl" pad="lg">
           <p className="text-rose-700 text-xs font-semibold">{error}</p>
-        </div>
+        </Alert>
       )}
 
       {result && (
-        <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm p-6">
+        <Card pad="p6">
           <div className="flex items-start gap-8">
             <div className="text-center shrink-0">
               <p className="text-[#888888] text-xs mb-1">코사인 유사도</p>
@@ -194,9 +210,9 @@ export function DedupeDemoScreen() {
                 </div>
               ))}
               <div className="pt-2">
-                <span className={`inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full border ${DECISION[result.decision].cls}`}>
-                  {DECISION[result.decision].label}
-                </span>
+                <Badge size="lg" weight="semibold" tone={dedupeStatusBadge[result.decision]} fixed="inlineBlock">
+                  {DECISION_LABEL[result.decision]}
+                </Badge>
               </div>
             </div>
           </div>
@@ -210,7 +226,7 @@ export function DedupeDemoScreen() {
           <p className="text-[10px] text-[#888888] font-mono mt-4">
             임베딩 모델 {result.model} · {result.dimension}차원 · 코사인 유사도 · 중복 {DEDUPE.duplicate} / 검토 {DEDUPE.review}
           </p>
-        </div>
+        </Card>
       )}
 
       <Disclaimer />

@@ -6,11 +6,18 @@
 import { EXPIRY_AMBER, EXPIRY_ROSE, PHOTOS } from "@/lib/constants";
 import { resolveApplyUrl } from "@/lib/sourceLinks";
 import { useCatalog, useExpiring } from "@/lib/store/hooks";
+import { cn } from "@/lib/utils";
 
 import { CutoutFrame } from "@/components/ui/CutoutFrame";
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { ExtLink } from "@/components/ui/ExtLink";
 import { Img } from "@/components/ui/Img";
+import { Badge } from "@/components/ui/badge";
+import { button } from "@/components/ui/button-variants";
+import { cardMutedVariants } from "@/components/ui/variants";
+
+// ExtLink는 <a>다(asChild 없음) — button()으로 className만 만든다.
+const CTA_LINK = cn(button({ variant: "primary", pad: "4x2", text: "xs", radius: "xl", elevate: "brand", motion: "colors" }), "inline-block mt-3");
 
 export function ExpiringScreen() {
   const expiringItems = useExpiring();
@@ -33,7 +40,7 @@ export function ExpiringScreen() {
       </div>
 
       {expiringItems.length === 0 && (
-        <div className="bg-[#F5F6F8] rounded-2xl p-8 text-center">
+        <div className={cardMutedVariants({ pad: "p8", center: true })}>
           <p className="text-[#888888] text-sm">3개월 안에 사라지는 자격이 없습니다.</p>
         </div>
       )}
@@ -57,7 +64,8 @@ export function ExpiringScreen() {
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60" />
                 <div className="absolute bottom-3 left-5 flex items-center gap-2">
                   <span className="text-white font-mono font-bold text-2xl">{item.expiresIn === null ? "채용 시" : `D-${item.expiresIn}`}</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold ${item.axis === "업력" ? "bg-blue-500 text-white" : item.axis === "대표자연령" ? "bg-purple-500 text-white" : "bg-green-500 text-white"}`}>{item.axis}</span>
+                  <Badge size="sm" weight="semibold" bordered={false} tone={null}
+                    className={item.axis === "업력" ? "bg-blue-500 text-white" : item.axis === "대표자연령" ? "bg-purple-500 text-white" : "bg-green-500 text-white"}>{item.axis}</Badge>
                 </div>
               </div>
             ) : (
@@ -84,7 +92,7 @@ export function ExpiringScreen() {
               <p className="text-[#111111] font-semibold text-sm">{item.grantName}</p>
               <p className="text-[#888888] text-xs mt-1">{item.reason}</p>
               {soon && (
-                <ExtLink href={urlFor(item.programId)} className="inline-block mt-3 text-xs font-semibold bg-[#6E62C2] hover:bg-[#5a50a8] text-white px-4 py-2 rounded-xl transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25">
+                <ExtLink href={urlFor(item.programId)} className={CTA_LINK}>
                   지금 신청하기 →
                 </ExtLink>
               )}
@@ -94,7 +102,7 @@ export function ExpiringScreen() {
         })}
       </div>
 
-      <div className="bg-[#F5F6F8] rounded-2xl p-4">
+      <div className={cardMutedVariants({ pad: "p4" })}>
         <p className="text-[#888888] text-xs leading-relaxed">
           <span className="text-[#111111] font-semibold">판정 기준:</span> 업력(개업일), 대표자 연령, 상시근로자 수 세 축으로 만료 시점 계산.
           90일·30일·7일 전 대시보드 배너로 알립니다. (이메일·푸시는 향후 제공) 마이페이지에서 설정 변경 가능.

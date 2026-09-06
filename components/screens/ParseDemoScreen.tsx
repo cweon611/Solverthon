@@ -4,13 +4,22 @@
 // 프로필은 서버로 보내지 않는다. 판정은 받은 초안으로 클라이언트에서 실행한다 (§9).
 
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 
 import { evaluateProgram } from "@/lib/engine/evaluate";
 import { useCatalog, useFlatProfile, useToday } from "@/lib/store/hooks";
 import type { Condition, ConditionGroup, Program, ProgramDocument, UnmappedCondition } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { toGrant } from "@/lib/view/toGrant";
 
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { chip } from "@/components/ui/button-variants";
+import { Card, CardContent, CardHeader, cardTitleClass } from "@/components/ui/card";
 import { Disclaimer } from "@/components/ui/Disclaimer";
+import { Textarea } from "@/components/ui/textarea";
+import { grantStatusBadge } from "@/components/ui/variants";
 
 const PRESETS = [
   { label: "광주 청년일자리도약장려금", file: "01_광주_청년일자리도약장려금" },
@@ -56,15 +65,35 @@ export function ParseDemoScreen() {
   const [verdictShown, setVerdictShown] = useState(false);
   const preRef = useRef<HTMLPreElement>(null);
 
-  const loadPreset = async (file: string) => {
+  // 예시 불러오기는 실패하면 입력칸만 비우고 조용히 끝났다 — 네트워크 오류는 그마저도 없었다
+  const loadPreset = async (file: string, label: string) => {
     setError(null);
-    const res = await fetch(`/presets/${file}.txt`);
-    setText(res.ok ? await res.text() : "");
+    try {
+      const res = await fetch(`/presets/${file}.txt`);
+      if (!res.ok) {
+        setText("");
+        toast.error("예시 공고문을 불러오지 못했습니다", { description: `${label} · 서버 응답 ${res.status}` });
+        return;
+      }
+      const body = await res.text();
+      setText(body);
+      toast.success(`예시 공고문을 붙여넣었습니다 — ${label}`, {
+        description: `${body.length.toLocaleString()}자 · 오른쪽 아래 구조화 실행을 눌러 주세요`,
+      });
+    } catch (e) {
+      toast.error("예시 공고문을 불러오지 못했습니다", {
+        description: e instanceof Error ? e.message : "네트워크 오류",
+      });
+    }
   };
 
   const run = async () => {
     setRunning(true); setRaw(""); setBasics(null); setDraft(null); setUsage(null);
     setError(null); setVerdictShown(false);
+    const tid = toast.loading("공고문을 구조화하는 중…", {
+      description: `${text.trim().length.toLocaleString()}자를 AI가 읽고 있습니다. 자격 판정은 규칙 엔진이 따로 합니다.`,
+    });
+    let settled = false; // final·error 없이 스트림이 끊기는 경우
     try {
       const res = await fetch("/api/ai/parse", {
         method: "POST",
@@ -93,15 +122,31 @@ export function ParseDemoScreen() {
             requestAnimationFrame(() => { if (preRef.current) preRef.current.scrollTop = preRef.current.scrollHeight; });
           } else if (evt.type === "final") {
             setBasics(evt.parsed); setDraft(evt.program); setUsage(evt.usage);
+            settled = true;
+            const got = evt.program as ProgramDraft;
+            const found = got.eligibility.conditions.flatMap(flatten).length;
+            const unsure = got.unmapped_conditions.length;
+            toast.success(`공고문을 구조화했습니다 — ${(evt.parsed as ParsedBasics).title}`, {
+              id: tid,
+              description: `조건 ${found}건 · 제출서류 ${got.required_documents.length}건${unsure > 0 ? ` · AI가 확신하지 못한 항목 ${unsure}건` : ""}`,
+            });
           } else if (evt.type === "error") {
             setError(evt.message);
+            settled = true;
+            toast.error("구조화에 실패했습니다", { id: tid, description: String(evt.message) });
           }
         }
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : "알 수 없는 오류");
+      const message = e instanceof Error ? e.message : "알 수 없는 오류";
+      setError(message);
+      settled = true;
+      toast.error("구조화에 실패했습니다", { id: tid, description: message });
     } finally {
       setRunning(false);
+      if (!settled) {
+        toast.error("구조화가 도중에 끊겼습니다", { id: tid, description: "응답이 끝까지 오지 않았습니다. 다시 실행해 주세요." });
+      }
     }
   };
 
@@ -122,6 +167,17 @@ export function ParseDemoScreen() {
 
   const conditions = draft ? draft.eligibility.conditions.flatMap(flatten) : [];
 
+  // 판정 결과는 카드 아래쪽에 그려져 화면 밖일 수 있다 — 결론만 토스트로 한 번 더 알린다
+  const showVerdict = () => {
+    setVerdictShown(true);
+    if (!verdict) return;
+    const rows = verdict.eligibility?.length ?? 0;
+    const checked = `요건 ${rows}개를 브라우저에서 대조했습니다`;
+    if (verdict.status === "pass") toast.success("판정 결과: 대상", { description: checked });
+    else if (verdict.status === "conditional") toast.warning("판정 결과: 조건부", { description: verdict.nearMissReason ?? checked });
+    else toast.info("판정 결과: 제외", { description: verdict.failReason ?? checked });
+  };
+
   return (
     <div className="p-6 space-y-5">
       <div>
@@ -136,26 +192,37 @@ export function ParseDemoScreen() {
         <div className="space-y-3">
           <div className="flex gap-2 flex-wrap">
             {PRESETS.map((p) => (
-              <button key={p.file} onClick={() => loadPreset(p.file)} disabled={running}
-                className="px-3 py-1.5 rounded-xl border border-[#E4E6EA] bg-white text-xs font-semibold text-[#444444] hover:border-[#6E62C2]/40 transition-all cursor-pointer disabled:opacity-50">
+              <button key={p.file} onClick={() => void loadPreset(p.file, p.label)} disabled={running}
+                className={cn(chip({ on: false }), "disabled:opacity-50")}>
                 {p.label}
               </button>
             ))}
           </div>
 
-          <textarea
+          <Textarea
+            variant="pasteMonoH64"
             value={text}
-            onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
+            onChange={(e) => {
+              const next = e.target.value;
+              // 긴 공고문은 조용히 잘려 나갔다. 고정 id라 계속 입력해도 토스트가 쌓이지 않는다.
+              if (next.length > MAX_CHARS) {
+                toast.warning("공고문이 길어 뒷부분을 잘랐습니다", {
+                  id: "parse-max-chars",
+                  description: `한 번에 ${MAX_CHARS.toLocaleString()}자까지 읽습니다. 자격 요건이 담긴 부분을 남겨 주세요.`,
+                });
+              }
+              setText(next.slice(0, MAX_CHARS));
+            }}
             placeholder="공고 원문을 붙여넣으세요"
-            className="w-full h-64 border border-[#E4E6EA] rounded-2xl p-4 font-mono text-xs text-[#111111] placeholder-[#888888] focus:outline-none focus:border-[#6E62C2] focus:ring-2 focus:ring-[#6E62C2]/10 resize-none"
           />
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-[#888888] font-mono">{text.length.toLocaleString()} / {MAX_CHARS.toLocaleString()}자</span>
-            <button onClick={run} disabled={running || text.trim().length === 0}
-              className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#6E62C2] text-white text-sm font-semibold hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25 disabled:opacity-40 disabled:cursor-not-allowed">
+            <Button onClick={run} disabled={running || text.trim().length === 0}
+              variant="primary" pad="5x2" text="sm" radius="xl" elevate="brand" motion="colors" off="o40"
+              className="flex items-center gap-2">
               {running && <span className="w-3 h-3 border-2 border-white/40 border-t-white rounded-full animate-spin" />}
               {running ? "구조화 중…" : "구조화 실행"}
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -174,19 +241,19 @@ export function ParseDemoScreen() {
       </div>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-200 rounded-2xl px-4 py-3">
+        <Alert radius="2xl" pad="lg">
           <p className="text-rose-700 text-xs font-semibold">{error}</p>
-        </div>
+        </Alert>
       )}
 
       {basics && draft && (
         <div className="space-y-4">
           {/* 기본 정보 */}
-          <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-            <div className="px-5 py-4 border-b border-[#E4E6EA]">
-              <h2 className="text-[#111111] font-semibold text-sm">기본 정보</h2>
-            </div>
-            <div className="px-5 py-4 grid grid-cols-3 gap-3">
+          <Card>
+            <CardHeader>
+              <h2 className={cardTitleClass}>기본 정보</h2>
+            </CardHeader>
+            <CardContent className="grid grid-cols-3 gap-3">
               {[
                 { label: "공고명", value: basics.title },
                 { label: "기관", value: basics.organization },
@@ -200,36 +267,36 @@ export function ParseDemoScreen() {
                   <p className="text-[#111111] text-xs font-semibold">{f.value}</p>
                 </div>
               ))}
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* 추출 조건 */}
-          <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-[#E4E6EA] flex items-center gap-2">
-              <h2 className="text-[#111111] font-semibold text-sm">추출된 조건</h2>
-              <span className="text-[10px] font-mono text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-2 py-0.5 rounded-full">{conditions.length}건</span>
-            </div>
+          <Card clip>
+            <CardHeader layout="row">
+              <h2 className={cardTitleClass}>추출된 조건</h2>
+              <Badge size="md" weight="mono" tone="brand">{conditions.length}건</Badge>
+            </CardHeader>
             {conditions.length === 0 ? (
               <p className="px-5 py-6 text-center text-[#888888] text-xs">추출된 조건이 없습니다.</p>
             ) : (
-              <div className="divide-y divide-[#F5F6F8]">
+              <CardContent size="none" list>
                 {conditions.map((c, i) => (
                   <div key={i} className="px-5 py-3">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-mono text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-2 py-0.5 rounded-full">{c.field}</span>
+                      <Badge size="md" weight="mono" tone="brand">{c.field}</Badge>
                       <span className="text-[#111111] text-xs font-semibold">{String(Array.isArray(c.value) ? c.value.join(", ") : c.value)} {OP_LABEL[c.op] ?? c.op}</span>
                       <span className="text-[#888888] text-xs">{c.label}</span>
                     </div>
                     <p className="text-[11px] text-[#888888] bg-[#F5F6F8] rounded-lg px-3 py-2 italic mt-2">{c.source_text}</p>
                   </div>
                 ))}
-              </div>
+              </CardContent>
             )}
-          </div>
+          </Card>
 
           {/* AI가 확신하지 못한 항목 */}
           {draft.unmapped_conditions.length > 0 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl px-5 py-4">
+            <Alert tone="warning" radius="2xl" pad="x2">
               <h2 className="text-amber-800 font-semibold text-sm mb-2">AI가 확신하지 못한 항목 {draft.unmapped_conditions.length}건</h2>
               <div className="space-y-2">
                 {draft.unmapped_conditions.map((u, i) => (
@@ -240,17 +307,17 @@ export function ParseDemoScreen() {
                 ))}
               </div>
               <p className="text-amber-800 text-[11px] font-semibold mt-3">→ 판정에서 &quot;확인 필요&quot;로 처리됩니다</p>
-            </div>
+            </Alert>
           )}
 
           {/* 제출 서류 */}
           {draft.required_documents.length > 0 && (
-            <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-              <div className="px-5 py-4 border-b border-[#E4E6EA]">
-                <h2 className="text-[#111111] font-semibold text-sm">제출 서류</h2>
+            <Card>
+              <CardHeader>
+                <h2 className={cardTitleClass}>제출 서류</h2>
                 <p className="text-[10px] text-[#888888] mt-0.5">서류 카탈로그({documentTypes.length}종)와 이름이 맞으면 발급 소요기간을 역산할 수 있습니다</p>
-              </div>
-              <div className="px-5 py-3 space-y-1.5">
+              </CardHeader>
+              <CardContent size="tight" className="space-y-1.5">
                 {draft.required_documents.map((d, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className={`text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold ${d.document_type_id ? "bg-[#3D7260] text-white" : "bg-[#E4E6EA] text-[#888888]"}`}>
@@ -261,30 +328,27 @@ export function ParseDemoScreen() {
                     {!d.document_type_id && <span className="text-[10px] text-[#888888]">카탈로그 미등록</span>}
                   </div>
                 ))}
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           )}
 
           {/* 즉시 판정 */}
-          <div className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-            <div className="px-5 py-4 border-b border-[#E4E6EA] flex items-center justify-between">
+          <Card>
+            <CardHeader layout="between">
               <div>
-                <h2 className="text-[#111111] font-semibold text-sm">내 프로필로 판정</h2>
+                <h2 className={cardTitleClass}>내 프로필로 판정</h2>
                 <p className="text-[10px] text-[#888888] mt-0.5">프로필은 서버로 전송되지 않습니다. 이 계산은 브라우저에서 실행됩니다.</p>
               </div>
-              <button onClick={() => setVerdictShown(true)}
-                className="text-xs font-semibold text-white bg-[#6E62C2] px-4 py-2 rounded-xl hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25">
+              <Button onClick={showVerdict}
+                variant="primary" pad="4x2" text="xs" radius="xl" elevate="brand" motion="colors">
                 판정 실행
-              </button>
-            </div>
+              </Button>
+            </CardHeader>
             {verdictShown && verdict && (
-              <div className="px-5 py-4 space-y-3">
-                <span className={`inline-block text-[11px] font-semibold px-2.5 py-1 rounded-full border ${
-                  verdict.status === "pass" ? "bg-[#EEF4F0] text-[#2A5A46] border-[#B2D1BF]"
-                  : verdict.status === "conditional" ? "bg-amber-50 text-amber-700 border-amber-200"
-                  : "bg-rose-50 text-rose-600 border-rose-200"}`}>
+              <CardContent className="space-y-3">
+                <Badge size="lg" weight="semibold" tone={grantStatusBadge[verdict.status]} fixed="inlineBlock">
                   {verdict.status === "pass" ? "대상" : verdict.status === "conditional" ? "조건부" : "제외"}
-                </span>
+                </Badge>
                 {verdict.nearMissReason && <p className="text-amber-700 text-xs">{verdict.nearMissReason}</p>}
                 {verdict.failReason && <p className="text-rose-700 text-xs">{verdict.failReason}</p>}
 
@@ -306,9 +370,9 @@ export function ParseDemoScreen() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </CardContent>
             )}
-          </div>
+          </Card>
         </div>
       )}
 

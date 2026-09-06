@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* 오버레이 진입·퇴장 애니메이션 유틸리티 */
+@import "tw-animate-css";
+/* shadcn 4.x가 쓰는 data-open/data-closed 커스텀 variant와 아코디언 키프레임 */
+@import "shadcn/tailwind.css";
+
+/* 테스트는 원본 클래스 문자열을 단언 대상으로 들고 있을 뿐이라
+   스캔 대상에서 뺀다. 빼지 않으면 단언에 쓰인 토큰이 실제 유틸리티로 배포된다. */
+@source not "../components/**/__tests__/**";
+
 html,
 body {
   height: 100%;
@@ -45,4 +54,65 @@ body {
 *::-webkit-scrollbar-thumb {
   background: #d0d3da;
   border-radius: 2px;
+}
+
+/* ── shadcn/ui 시맨틱 토큰 브리지 (§4.1 시각 불변 · 다크 모드 없음) ──
+   위의 기존 토큰은 하나도 바꾸지 않는다. shadcn 기본 globals.css가 주입하는
+   :root 색상값 / .dark / @custom-variant dark / --radius-* 스케일은 전부 제외한다.
+   특히 --radius-sm/md/lg/xl/2xl/3xl 을 덮으면 rounded-* 261곳이 ±2px 이동한다. */
+
+/* (A) 리터럴 값뿐 → 일반 @theme. 현재 소비처 없음(그래프는 div 막대). */
+@theme {
+  --color-chart-1: #6e62c2;
+  --color-chart-2: #6fa48e;
+  --color-chart-3: #8880cf;
+  --color-chart-4: #b2d1bf;
+  --color-chart-5: #bdb8e8;
+}
+
+/* (B) 다른 CSS 변수를 참조 → 반드시 @theme inline.
+   inline이면 참조 대상이 유틸리티에 그대로 인라인된다:
+     .bg-primary { background-color: var(--color-brand-500) }
+   일반 @theme면 :root에 --color-primary를 한 겹 더 내보내 간접참조가 2단이 된다.
+   값의 단일 출처는 위 §4.4 팔레트다. */
+@theme inline {
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-ink);
+
+  /* --color-card 는 정의하지 않는다: 이미 #f5f6f8(연회색 패널)이고
+     shadcn의 card 는 '흰 카드 표면'이라 의미가 충돌한다.
+     shadcn Card/Alert 쪽에서 bg-card 대신 bg-surface 를 쓴다. */
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-ink);
+
+  --color-primary: var(--color-brand-500);
+  --color-primary-foreground: var(--color-surface);
+  --color-secondary: var(--color-brand-50);
+  --color-secondary-foreground: var(--color-brand-500);
+  --color-muted: var(--color-card);
+  --color-muted-foreground: var(--color-ink-3);
+  --color-accent: var(--color-card);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: #e11d48;
+  --color-destructive-foreground: var(--color-surface);
+
+  /* --color-border 는 이미 #e4e6ea 로 shadcn이 원하는 값과 같다 → 재정의 금지. */
+  --color-input: var(--color-border);
+  --color-ring: var(--color-brand-500);
+
+  --color-sidebar: var(--color-surface);
+  --color-sidebar-foreground: var(--color-ink-2);
+  --color-sidebar-primary: var(--color-brand-500);
+  --color-sidebar-primary-foreground: var(--color-surface);
+  --color-sidebar-accent: var(--color-card);
+  --color-sidebar-accent-foreground: var(--color-ink);
+  --color-sidebar-border: var(--color-border);
+  --color-sidebar-ring: var(--color-brand-500);
+}
+
+/* (C) Tailwind 네임스페이스가 아닌 원시 변수. var(--radius)를 직접 읽는
+   컴포넌트를 위해 값만 준다. --radius-* 스케일은 건드리지 않는다. */
+:root {
+  --radius: 0.75rem; /* 12px = 앱에서 가장 많이 쓰는 rounded-xl */
 }

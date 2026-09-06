@@ -7,9 +7,14 @@ import { useState } from "react";
 
 import { PHOTOS } from "@/lib/constants";
 import { useCompany, useEmployeeThresholdCards, useSimulation } from "@/lib/store/hooks";
+import { cn } from "@/lib/utils";
 
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { Img } from "@/components/ui/Img";
+import { Alert } from "@/components/ui/alert";
+import { chip } from "@/components/ui/button-variants";
+import { Card } from "@/components/ui/card";
+import { cardMutedVariants } from "@/components/ui/variants";
 
 const THRESHOLD_CARDS = [5, 10, 30];
 
@@ -38,7 +43,7 @@ export function SimulatorScreen() {
       </div>
 
       {/* 슬라이더 카드 */}
-      <div className="bg-white border border-[#E4E6EA] rounded-2xl p-6 shadow-sm">
+      <Card pad="p6">
         <div className="flex items-center justify-between mb-6">
           <div className="text-center flex-1">
             <p className="text-[#888888] text-xs mb-1">현재</p>
@@ -61,19 +66,23 @@ export function SimulatorScreen() {
         </div>
 
         <div className="flex gap-2 mt-4 flex-wrap">
-          {[{ n: 5, label: "5인" }, { n: 10, label: "10인" }, { n: 30, label: "30인" }].map(m => (
-            <button key={m.n} onClick={() => setSimEmployees(m.n)}
-              className={`text-xs px-3 py-1.5 rounded-xl border font-semibold transition-all cursor-pointer ${simEmployees >= m.n && company.employees < m.n ? "bg-[#6E62C2] text-white border-[#6E62C2] shadow-md shadow-[#6E62C2]/25" : "border-[#E4E6EA] text-[#444444] hover:border-[#6E62C2]/40 bg-[#F5F6F8]"}`}>
-              {m.label} 구간
-            </button>
-          ))}
+          {[{ n: 5, label: "5인" }, { n: 10, label: "10인" }, { n: 30, label: "30인" }].map(m => {
+            const on = simEmployees >= m.n && company.employees < m.n;
+            // OFF 배경만 칩 표준(bg-white)과 다르다 — cn()이 갈아끼운다
+            return (
+              <button key={m.n} onClick={() => setSimEmployees(m.n)}
+                className={cn(chip({ on, elevate: "brand" }), !on && "bg-[#F5F6F8]")}>
+                {m.label} 구간
+              </button>
+            );
+          })}
         </div>
-      </div>
+      </Card>
 
       {/* 결과 */}
       {hasChange ? (
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+          <Alert tone="warning" radius="2xl" pad="p5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-amber-600">⚡</span>
               <h3 className="text-[#111111] font-semibold text-sm">{increasing ? "새로 생기는 법정 의무" : "사라지는 법정 의무"}</h3>
@@ -89,9 +98,9 @@ export function SimulatorScreen() {
                 ))}
               </ul>
             ) : <p className="text-[#888888] text-sm">{increasing ? "이 구간에서 새 의무 없음" : "이 구간에서 사라지는 의무 없음"}</p>}
-          </div>
+          </Alert>
 
-          <div className="bg-rose-50 border border-rose-200 rounded-2xl p-5">
+          <Alert radius="2xl" pad="p5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-rose-500">✕</span>
               <h3 className="text-[#111111] font-semibold text-sm">{increasing ? "사라지는 지원 자격" : "새로 열리는 지원 자격"}</h3>
@@ -107,10 +116,10 @@ export function SimulatorScreen() {
                 ))}
               </ul>
             ) : <p className="text-[#888888] text-sm">{increasing ? "소멸되는 자격 없음" : "새로 열리는 자격 없음"}</p>}
-          </div>
+          </Alert>
         </div>
       ) : (
-        <div className="bg-[#F5F6F8] border border-[#E4E6EA] rounded-2xl p-8 text-center">
+        <div className={cardMutedVariants({ bordered: true, pad: "p8", center: true })}>
           <p className="text-[#888888]">슬라이더를 움직여 인원 변화 시나리오를 확인하세요</p>
           <p className="text-[#888888]/60 text-sm mt-1">5인·10인·30인 구간을 넘을 때 의무와 자격이 동시에 바뀝니다</p>
         </div>
@@ -119,7 +128,7 @@ export function SimulatorScreen() {
       {/* 3D 컷 + 안내 — 임계값별 새 의무 제목(최대 3개)에서 생성(§6.4) */}
       <div className="grid grid-cols-3 gap-3">
         {cards.map(t => (
-          <div key={t.n} className="bg-[#F5F6F8] rounded-2xl p-4 border border-[#E4E6EA]">
+          <div key={t.n} className={cardMutedVariants({ bordered: true, pad: "p4" })}>
             <span className="text-[#6E62C2] font-mono font-bold text-base">{t.n}</span>
             <p className="text-[#888888] text-[11px] mt-1.5 leading-relaxed">{t.desc}</p>
           </div>

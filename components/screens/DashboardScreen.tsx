@@ -7,8 +7,19 @@ import Link from "next/link";
 import { EXPIRY_AMBER, EXPIRY_ROSE } from "@/lib/constants";
 import { fmtDate } from "@/lib/engine/format";
 import { useCompany, useExpiring, useTasks, useToday, useTopAlert, useVerdicts } from "@/lib/store/hooks";
+import { cn } from "@/lib/utils";
 
 import { Disclaimer } from "@/components/ui/Disclaimer";
+import { Alert } from "@/components/ui/alert";
+import { button } from "@/components/ui/button-variants";
+import { cardMutedVariants, cardTitleClass, cardVariants } from "@/components/ui/variants";
+
+// 섹션 "전체 →"와 숫자 카드는 <Link>다(asChild 없음) — 클래스만 표에서 만든다.
+const SECTION_LINK = button({ variant: "linkBrand", text: "xs" });
+const NUMBER_CARD = cn(
+  cardVariants({ pad: "p5", shadow: "none" }),
+  "text-left hover:border-[#D0D3DA] hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer group",
+);
 
 export function DashboardScreen() {
   const today = useToday();
@@ -31,22 +42,23 @@ export function DashboardScreen() {
           <h1 className="text-2xl font-display font-bold text-[#111111]">안녕하세요, {company.name.replace("주식회사", "").trim()} 👋</h1>
           <p className="text-[#888888] text-sm mt-1">{fmtDate(today)} 기준 자동 판정 결과입니다.</p>
         </div>
-        <div className="flex items-center gap-2 bg-[#EEF4F0] border border-[#B2D1BF] rounded-2xl px-4 py-2">
+        <Alert tone="success" radius="2xl" pad="sm" className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#3D7260] animate-pulse" />
           <span className="text-[#2A5A46] text-xs font-semibold">판정 완료</span>
-        </div>
+        </Alert>
       </div>
 
       {/* ── 알림 배너 (pickTopAlert 1건, 없으면 미표시 — §4.5-5) ── */}
+      {/* 오렌지는 tone 표에 없다 — 색만 className으로 넘긴다 */}
       {alert && (
-        <div className="bg-[#fff8f0] border border-orange-200 rounded-2xl px-5 py-3.5 flex items-start gap-3">
+        <Alert tone={null} radius="2xl" pad="xl" className="flex items-start gap-3 bg-[#fff8f0] border-orange-200">
           <span className="text-orange-500 text-lg mt-0.5">⚠</span>
           <div className="flex-1">
             <p className="text-[#111111] text-sm font-semibold">{alert.title}</p>
             <p className="text-[#888888] text-xs mt-0.5">{alert.subtitle}</p>
           </div>
           <Link href={alert.href} className="text-xs font-semibold text-orange-600 hover:text-orange-800 shrink-0 cursor-pointer">자세히 →</Link>
-        </div>
+        </Alert>
       )}
 
       {/* ── 요약 숫자 카드 3개 ── */}
@@ -56,8 +68,7 @@ export function DashboardScreen() {
           { label: "미완료 할 일",   value: pendingTasks.length,  unit: "건", accent: "#4A4A6A", href: "/tasks" },
           { label: "곧 소멸 (3개월)", value: urgentExpiring.length, unit: "건", accent: "#7A4040", href: "/expiring" },
         ].map((c) => (
-          <Link key={c.label} href={c.href}
-            className="bg-white border border-[#E4E6EA] rounded-2xl p-5 text-left hover:border-[#D0D3DA] hover:shadow-sm active:scale-[0.98] transition-all cursor-pointer group">
+          <Link key={c.label} href={c.href} className={NUMBER_CARD}>
             <p className="text-[#888888] text-[11px] font-medium mb-3">{c.label}</p>
             <div className="flex items-baseline gap-1.5">
               <span className="text-4xl font-display font-bold text-[#111111]">{c.value}</span>
@@ -69,10 +80,10 @@ export function DashboardScreen() {
       </div>
 
       {/* ── 받을 수 있는 지원사업 ── */}
-      <div className="bg-[#F5F6F8] rounded-2xl p-5">
+      <div className={cardMutedVariants()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-[#111111] font-semibold text-sm">받을 수 있는 지원사업</h2>
-          <Link href="/grants" className="text-xs text-[#6E62C2] font-semibold hover:underline cursor-pointer">전체 →</Link>
+          <h2 className={cardTitleClass}>받을 수 있는 지원사업</h2>
+          <Link href="/grants" className={SECTION_LINK}>전체 →</Link>
         </div>
         <div className="grid grid-cols-3 gap-2">
           {grants.filter(g => g.status === "pass").slice(0, 3).map(g => (
@@ -92,10 +103,10 @@ export function DashboardScreen() {
       <div className="grid grid-cols-2 gap-4">
 
         {/* 곧 사라짐 */}
-        <div className="bg-[#F5F6F8] rounded-2xl p-5">
+        <div className={cardMutedVariants()}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[#111111] font-semibold text-sm">곧 사라질 자격</h2>
-            <Link href="/expiring" className="text-xs text-[#6E62C2] font-semibold hover:underline cursor-pointer">전체 →</Link>
+            <h2 className={cardTitleClass}>곧 사라질 자격</h2>
+            <Link href="/expiring" className={SECTION_LINK}>전체 →</Link>
           </div>
           <div className="space-y-2">
             {expiringItems.slice(0, 3).map(item => {
@@ -117,10 +128,10 @@ export function DashboardScreen() {
         </div>
 
         {/* 오늘 할 일 */}
-        <div className="bg-[#F5F6F8] rounded-2xl p-5">
+        <div className={cardMutedVariants()}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[#111111] font-semibold text-sm">오늘 할 일</h2>
-            <Link href="/tasks" className="text-xs text-[#6E62C2] font-semibold hover:underline cursor-pointer">전체 →</Link>
+            <h2 className={cardTitleClass}>오늘 할 일</h2>
+            <Link href="/tasks" className={SECTION_LINK}>전체 →</Link>
           </div>
           <div className="space-y-2">
             {pendingTasks.slice(0, 3).map(t => (

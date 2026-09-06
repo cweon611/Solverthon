@@ -6,6 +6,10 @@ import Link from "next/link";
 
 import type { Metadata } from "next";
 
+import { button } from "@/components/ui/button-variants";
+import { Card, CardContent, CardHeader, cardContentVariants, cardTitleClass } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 export const metadata: Metadata = {
   title: "데이터 출처·면책 — 비즈버디",
   description: "비즈버디가 사용하는 데이터의 출처와 면책 사항, 오픈소스 라이선스 고지입니다.",
@@ -50,7 +54,8 @@ export default function AboutPage() {
 
         <div className="flex items-center gap-2.5">
           <Image src="/brand/logo.png" alt="비즈버디" width={176} height={56} priority className="h-9 w-auto" />
-          <Link href="/dashboard" className="ml-auto text-xs font-semibold text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-3 py-1.5 rounded-xl hover:bg-[#dddaf4] transition-colors">
+          <Link href="/dashboard"
+            className={cn(button({ variant: "soft", pad: "3x1.5", text: "xs", radius: "xl", motion: "colors", hand: false }), "ml-auto")}>
             ← 대시보드
           </Link>
         </div>
@@ -60,11 +65,12 @@ export default function AboutPage() {
           <p className="text-[#888888] text-sm mt-1">이 서비스가 무엇을 근거로 판정하는지, 무엇을 보장하지 않는지 밝힙니다.</p>
         </div>
 
-        <section className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-          <div className="px-5 py-4 border-b border-[#E4E6EA]">
-            <h2 className="text-[#111111] font-semibold text-sm">고지 사항</h2>
-          </div>
-          <ul className="px-5 py-4 space-y-3">
+        <Card as="section">
+          <CardHeader>
+            <h2 className={cardTitleClass}>고지 사항</h2>
+          </CardHeader>
+          {/* 본문이 <ul>이라 CardContent 컴포넌트 대신 표만 입힌다 */}
+          <ul className={cn(cardContentVariants(), "space-y-3")}>
             {NOTICES.map((text) => (
               <li key={text} className="flex items-start gap-2">
                 <span className="text-[#6E62C2] text-xs mt-1 shrink-0">·</span>
@@ -72,13 +78,13 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Card>
 
-        <section className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-          <div className="px-5 py-4 border-b border-[#E4E6EA]">
-            <h2 className="text-[#111111] font-semibold text-sm">데이터 출처</h2>
-          </div>
-          <div className="divide-y divide-[#F5F6F8]">
+        <Card as="section">
+          <CardHeader>
+            <h2 className={cardTitleClass}>데이터 출처</h2>
+          </CardHeader>
+          <CardContent size="none" list>
             {SOURCES.map((s) => (
               <div key={s.name} className="flex items-center gap-4 px-5 py-3.5">
                 <div className="flex-1 min-w-0">
@@ -86,19 +92,19 @@ export default function AboutPage() {
                   <p className="text-[#888888] text-xs mt-0.5">{s.org}</p>
                 </div>
                 <a href={s.url} target="_blank" rel="noopener noreferrer"
-                  className="text-[11px] text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-3 py-1.5 rounded-lg font-medium hover:bg-[#dddaf4] transition-colors shrink-0">
+                  className={cn(button({ variant: "soft", pad: "3x1.5", text: "11", radius: "lg", motion: "colors", hand: false }), "font-medium shrink-0")}>
                   바로가기
                 </a>
               </div>
             ))}
-          </div>
-        </section>
+          </CardContent>
+        </Card>
 
-        <section className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm">
-          <div className="px-5 py-4 border-b border-[#E4E6EA]">
-            <h2 className="text-[#111111] font-semibold text-sm">오픈소스 라이선스</h2>
-          </div>
-          <div className="px-5 py-4">
+        <Card as="section">
+          <CardHeader>
+            <h2 className={cardTitleClass}>오픈소스 라이선스</h2>
+          </CardHeader>
+          <CardContent>
             {licenses.length === 0 ? (
               <p className="text-[#888888] text-xs">라이선스 목록을 생성하려면 npm run licenses 를 실행하세요.</p>
             ) : (
@@ -111,15 +117,15 @@ export default function AboutPage() {
                 ))}
               </div>
             )}
-          </div>
-        </section>
+          </CardContent>
+        </Card>
 
-        <section className="bg-white border border-[#E4E6EA] rounded-2xl shadow-sm px-5 py-4">
-          <h2 className="text-[#111111] font-semibold text-sm mb-2">사업모델 고지</h2>
+        <Card as="section" className="px-5 py-4">
+          <h2 className={cn(cardTitleClass, "mb-2")}>사업모델 고지</h2>
           <p className="text-[#444444] text-xs leading-relaxed">
             세무사·노무사·변호사 등 자격사에 대한 유료 알선은 법적으로 제한됩니다. 따라서 비즈버디는 전문가 연결을 무료 정보 링크(관할 기관·공식 안내 페이지)로만 제공하며, 이 산출물에는 결제·광고 게재 기능이 없습니다.
           </p>
-        </section>
+        </Card>
 
         <p className="text-[10px] text-[#888888] text-center pb-4">
           2026 전남광주 청년 AI 솔버톤 · 팀 코스모스 · 공식 오픈 API 실수집 데이터

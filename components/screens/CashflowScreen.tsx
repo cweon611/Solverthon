@@ -21,8 +21,16 @@ import {
   type Orientation,
   type ParseResult,
 } from "@/lib/engine/cashflow";
+import { cn } from "@/lib/utils";
 
+import { Alert } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { button, segmented } from "@/components/ui/button-variants";
+import { Card } from "@/components/ui/card";
 import { Disclaimer } from "@/components/ui/Disclaimer";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cardMutedVariants, statTileVariants } from "@/components/ui/variants";
 
 const fmtWon = (n: number): string => {
   const abs = Math.abs(n);
@@ -213,24 +221,26 @@ export function CashflowScreen() {
       </div>
 
       {/* 입력 */}
-      <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5 space-y-4">
+      <Card pad="p5" shadow="none" className="space-y-4">
         <div className="flex items-center gap-2 flex-wrap">
-          <label className="px-4 py-2.5 rounded-xl bg-[#6E62C2] text-white text-sm font-semibold hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25">
+          {/* 파일 입력을 감싼 <label> — 시각적으로 primary 버튼이라 button()으로 클래스만 받는다 */}
+          <label className={button({ variant: "primary", pad: "4x2.5", text: "sm", radius: "xl", elevate: "brand", motion: "colors" })}>
             엑셀 파일 올리기
             <input type="file" accept=".xlsx,.xls,.csv" className="hidden" onChange={onFile} />
           </label>
-          <button onClick={loadSample} className="px-4 py-2.5 rounded-xl text-sm font-medium text-[#6E62C2] bg-[#f0eef9] hover:bg-[#dddaf4] border border-[#dddaf4] transition-colors cursor-pointer">
+          <Button variant="soft" pad="4x2.5" text="sm" radius="xl" motion="colors" className="font-medium" onClick={loadSample}>
             샘플로 보기
-          </button>
-          <button onClick={() => downloadTemplate([SAMPLE_HEADER, ...SAMPLE_ROWS.slice(0, 7)])} className="px-4 py-2.5 rounded-xl text-sm font-medium text-[#444444] bg-white hover:bg-[#F5F6F8] border border-[#E4E6EA] transition-colors cursor-pointer">
+          </Button>
+          <Button variant="outline" pad="4x2.5" text="sm" radius="xl" motion="colors" className="bg-white font-medium"
+            onClick={() => downloadTemplate([SAMPLE_HEADER, ...SAMPLE_ROWS.slice(0, 7)])}>
             템플릿 내려받기
-          </button>
+          </Button>
           <a href="/samples/cashflow-sample.xlsx" download="현금흐름표_예시_12개월.xlsx"
-            className="px-4 py-2.5 rounded-xl text-sm font-medium text-[#444444] bg-white hover:bg-[#F5F6F8] border border-[#E4E6EA] transition-colors cursor-pointer">
+            className={cn(button({ variant: "outline", pad: "4x2.5", text: "sm", radius: "xl", motion: "colors" }), "bg-white font-medium")}>
             예시 파일 내려받기 (12개월)
           </a>
           <div className="ml-auto flex items-center gap-2">
-            <label className="text-xs text-[#888888]">기초 잔액(원)</label>
+            <Label variant="inlineCaption">기초 잔액(원)</Label>
             <input value={opening} onChange={(e) => setOpening(e.target.value)} inputMode="numeric"
               className="w-36 border border-[#E4E6EA] rounded-xl px-3 py-2 text-sm font-mono text-[#111111] focus:outline-none focus:border-[#6E62C2]" />
           </div>
@@ -242,11 +252,16 @@ export function CashflowScreen() {
 
         {sheets && sheets.length > 1 && (
           <div className="flex items-center gap-2">
-            <label className="text-xs text-[#888888]">시트</label>
-            <select value={sheetIndex} onChange={(e) => onChangeSheet(Number(e.target.value))}
-              className="border border-[#E4E6EA] rounded-lg px-2 py-1 text-xs text-[#111111] focus:outline-none focus:border-[#6E62C2]">
-              {sheets.map((s, i) => <option key={s.name} value={i}>{s.name}</option>)}
-            </select>
+            <Label variant="inlineCaption">시트</Label>
+            {/* 값은 시트 번호라 문자열로 오간다(Radix Select는 문자열만 받는다) */}
+            <Select value={String(sheetIndex)} onValueChange={(v) => onChangeSheet(Number(v))}>
+              <SelectTrigger variant="miniXs" aria-label="시트 선택" className="w-auto px-2 py-1">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent text="xs">
+                {sheets.map((s, i) => <SelectItem key={s.name} value={String(i)}>{s.name}</SelectItem>)}
+              </SelectContent>
+            </Select>
           </div>
         )}
         {source && <p className="text-xs text-[#444444]"><span className="font-semibold">불러온 데이터:</span> {source}</p>}
@@ -255,23 +270,22 @@ export function CashflowScreen() {
           <ul className="space-y-0.5">{parsed.errors.map((e, i) => <li key={i} className="text-xs text-amber-700">· {e}</li>)}</ul>
         )}
         {manualMapping && inferred !== null && openingIsDefault && (
-          <button onClick={() => setOpening(String(inferred))}
-            className="text-xs font-semibold text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-3 py-1.5 rounded-lg hover:bg-[#dddaf4] cursor-pointer">
+          <Button variant="soft" pad="3x1.5" text="xs" radius="lg" onClick={() => setOpening(String(inferred))}>
             잔액 열에서 역산한 기초 잔액 {inferred.toLocaleString("ko-KR")}원 적용
-          </button>
+          </Button>
         )}
 
         {table && (
           <div className="pt-2 border-t border-[#E4E6EA]">
             {!manualOpen ? (
-              <button onClick={() => setManualOpenOverride(true)} className="text-xs font-semibold text-[#6E62C2] hover:underline cursor-pointer">
+              <Button variant="linkBrand" text="xs" onClick={() => setManualOpenOverride(true)}>
                 {auto?.layout === null ? "형식을 알아보지 못했어요 — 직접 열을 지정하기 →" : "형식이 다른가요? 직접 열을 지정하기 →"}
-              </button>
+              </Button>
             ) : (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold text-[#111111]">열 직접 지정하기</p>
-                  <button onClick={() => setManualOpenOverride(false)} className="text-[11px] text-[#888888] hover:text-[#6E62C2] cursor-pointer">접기 ▴</button>
+                  <Button variant="link" text="11" onClick={() => setManualOpenOverride(false)}>접기 ▴</Button>
                 </div>
                 <p className="text-[11px] text-[#888888]">
                   각 열이 무엇인지 골라 주세요. 수입·지출 열은 여러 개 지정할 수 있고, 항목 열이 없으면 열 이름이 항목이 됩니다. 이후 계산은 지정한 셀만 그대로 읽습니다 — AI는 관여하지 않습니다.
@@ -281,18 +295,17 @@ export function CashflowScreen() {
                   <div className="flex gap-1 bg-[#F5F6F8] border border-[#E4E6EA] rounded-xl p-1">
                     {([["rows", "세로표 · 행이 거래/날짜"], ["columns", "가로표 · 열이 월"]] as const).map(([o, label]) => (
                       <button key={o} onClick={() => changeOrientation(o)}
-                        className={`px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer ${orientation === o ? "bg-white text-[#111111] shadow-sm border border-[#E4E6EA]" : "text-[#888888] hover:text-[#444444]"}`}>
+                        className={segmented({ on: orientation === o, size: "sm", motion: "none" })}>
                         {label}
                       </button>
                     ))}
                   </div>
                   <div className="flex items-center gap-2">
-                    <label className="text-[11px] text-[#888888]">열 이름 행</label>
-                    <button onClick={() => changeHeaderRow(headerRow - 1)}
-                      className="w-6 h-6 rounded border border-[#E4E6EA] text-[#444444] text-xs hover:bg-[#F5F6F8] cursor-pointer">−</button>
+                    <Label variant="inlineCaption11">열 이름 행</Label>
+                    {/* radius="DEFAULT" = 맨 rounded(4px) — 저장소에서 이 두 곳뿐이다 */}
+                    <Button variant="iconNeutral" box="6" text="xs" radius="DEFAULT" onClick={() => changeHeaderRow(headerRow - 1)}>−</Button>
                     <span className="text-xs font-mono text-[#111111] w-16 text-center">{headerRow + 1}번째 줄</span>
-                    <button onClick={() => changeHeaderRow(headerRow + 1)}
-                      className="w-6 h-6 rounded border border-[#E4E6EA] text-[#444444] text-xs hover:bg-[#F5F6F8] cursor-pointer">+</button>
+                    <Button variant="iconNeutral" box="6" text="xs" radius="DEFAULT" onClick={() => changeHeaderRow(headerRow + 1)}>+</Button>
                     <span className="text-[10px] text-[#888888]">(제목 줄이 있으면 조정 · 그 다음 줄부터 데이터)</span>
                   </div>
                 </div>
@@ -311,10 +324,18 @@ export function CashflowScreen() {
                           const tone = role === "income" ? "border-[#B2D1BF] bg-[#EEF4F0]" : role === "expense" ? "border-rose-200 bg-rose-50" : role === "date" || role === "period" ? "border-[#dddaf4] bg-[#f0eef9]" : "border-[#E4E6EA] bg-white";
                           return (
                             <th key={c} className="px-2 py-1.5 border-b border-[#E4E6EA]">
-                              <select value={role} onChange={(e) => setRole(c, e.target.value as ColumnRole)}
-                                className={`w-full border rounded-md px-1.5 py-1 text-[11px] text-[#111111] focus:outline-none focus:border-[#6E62C2] ${tone}`}>
-                                {roleOptions.map((r) => <option key={r} value={r}>{ROLE_LABEL[r]}</option>)}
-                              </select>
+                              {/* 값 칸의 최소 너비를 글자 전체 폭으로 잡아 둔다 — 네이티브 select가
+                                  가장 긴 항목 기준으로 열을 벌리던 것과 같은 결과를 낸다.
+                                  이걸 빼면 열이 128px로 주저앉아 역할 이름이 잘린다. */}
+                              <Select value={role} onValueChange={(v) => setRole(c, v as ColumnRole)}>
+                                <SelectTrigger variant="miniXs" aria-label={`${colLetter(c)}열 역할`}
+                                  className={cn("rounded-md px-1.5 py-1 text-[11px] [&>span]:min-w-max", tone)}>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent text="xs">
+                                  {roleOptions.map((r) => <SelectItem key={r} value={r}>{ROLE_LABEL[r]}</SelectItem>)}
+                                </SelectContent>
+                              </Select>
                             </th>
                           );
                         })}
@@ -339,14 +360,14 @@ export function CashflowScreen() {
                 </p>
 
                 <div className="flex items-center gap-2 flex-wrap">
-                  <button onClick={applyMapping} disabled={!mappingResult.mapping}
-                    className="px-3 py-1.5 rounded-lg bg-[#6E62C2] text-white text-xs font-semibold hover:bg-[#5a50a8] transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+                  <Button variant="primary" pad="3x1.5" text="xs" radius="lg" motion="colors" off="o40"
+                    onClick={applyMapping} disabled={!mappingResult.mapping}>
                     이 지정으로 다시 읽기
-                  </button>
+                  </Button>
                   {manualMapping && (
-                    <button onClick={cancelManual} className="px-3 py-1.5 rounded-lg border border-[#E4E6EA] text-[#444444] text-xs font-semibold hover:bg-[#F5F6F8] cursor-pointer">
+                    <Button variant="outline" pad="3x1.5" text="xs" radius="lg" onClick={cancelManual}>
                       자동 인식으로 되돌리기
-                    </button>
+                    </Button>
                   )}
                   {mappingResult.error && <span className="text-[11px] text-amber-700">{mappingResult.error}</span>}
                   {manualMapping && !mappingResult.error && <span className="text-[11px] text-[#2A5A46]">✓ 지정한 열로 읽는 중 · 거래 {manualParsed?.rows.length ?? 0}건</span>}
@@ -355,19 +376,19 @@ export function CashflowScreen() {
             )}
           </div>
         )}
-      </div>
+      </Card>
 
       {summary && (
         <>
           {/* KPI */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
+            {([
               { label: "기말 잔액", value: fmtWon(summary.endingBalance), sub: `${summary.span.from} ~ ${summary.span.to}`, tone: summary.endingBalance <= 0 ? "rose" : "default" },
               { label: "월평균 순현금", value: fmtWon(summary.avgMonthlyNet), sub: `수입 ${fmtWon(summary.avgMonthlyInflow)} · 지출 ${fmtWon(summary.avgMonthlyOutflow)}`, tone: summary.avgMonthlyNet < 0 ? "amber" : "green" },
               { label: "번레이트 (최근 3개월 순유출)", value: summary.burnRate === null ? "없음" : fmtWon(summary.burnRate), sub: summary.burnRate === null ? "순유입 상태" : "월 기준", tone: summary.burnRate === null ? "green" : "amber" },
               { label: "런웨이 (현금이 버티는 기간)", value: summary.runwayMonths === null ? "—" : `${summary.runwayMonths}개월`, sub: summary.runwayMonths === null ? "순유출이 없어 해당 없음" : summary.runwayMonths < 6 ? "6개월 미만" : "6개월 이상", tone: summary.runwayMonths !== null && summary.runwayMonths < 6 ? "rose" : "default" },
-            ].map((k) => (
-              <div key={k.label} className={`rounded-2xl border p-4 ${k.tone === "rose" ? "bg-rose-50 border-rose-200" : k.tone === "amber" ? "bg-amber-50 border-amber-200" : k.tone === "green" ? "bg-[#EEF4F0] border-[#B2D1BF]" : "bg-white border-[#E4E6EA]"}`}>
+            ] as const).map((k) => (
+              <div key={k.label} className={statTileVariants({ tone: k.tone })}>
                 <p className="text-[10px] text-[#888888] font-medium">{k.label}</p>
                 <p className="text-xl font-bold font-mono text-[#111111] mt-1 leading-none">{k.value}</p>
                 <p className="text-[10px] text-[#888888] mt-1.5">{k.sub}</p>
@@ -377,7 +398,7 @@ export function CashflowScreen() {
 
           <div className="grid md:grid-cols-[1fr_320px] gap-4">
             {/* 월별 */}
-            <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5">
+            <Card pad="p5" shadow="none">
               <div className="flex items-center gap-3 mb-3">
                 <h2 className="text-sm font-bold text-[#111111]">월별 수입·지출</h2>
                 <span className="flex items-center gap-1 text-[10px] text-[#888888]"><span className="w-2 h-2 rounded-sm bg-[#6FA48E]" />수입</span>
@@ -398,11 +419,11 @@ export function CashflowScreen() {
                   </div>
                 ))}
               </div>
-            </div>
+            </Card>
 
             {/* 상위 항목 + 신호 */}
             <div className="space-y-4">
-              <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5">
+              <Card pad="p5" shadow="none">
                 <h2 className="text-sm font-bold text-[#111111] mb-3">지출 상위</h2>
                 <div className="space-y-2">
                   {summary.topExpenses.map((t) => (
@@ -412,8 +433,8 @@ export function CashflowScreen() {
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className="bg-[#F5F6F8] border border-[#E4E6EA] rounded-2xl p-5">
+              </Card>
+              <div className={cardMutedVariants({ bordered: true, pad: "p5" })}>
                 <h2 className="text-sm font-bold text-[#111111] mb-2">코드가 감지한 신호</h2>
                 {summary.flags.length === 0 ? <p className="text-xs text-[#888888]">특별한 신호 없음</p> : (
                   <ul className="space-y-1">{summary.flags.map((f, i) => <li key={i} className="text-xs text-[#444444]">· {f}</li>)}</ul>
@@ -423,18 +444,18 @@ export function CashflowScreen() {
           </div>
 
           {/* AI 해설 */}
-          <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5 space-y-4">
+          <Card pad="p5" shadow="none" className="space-y-4">
             <div className="flex items-center justify-between gap-3 flex-wrap">
               <div>
                 <h2 className="text-sm font-bold text-[#111111]">사장님을 위한 AI 해설</h2>
                 <p className="text-[11px] text-[#888888] mt-0.5">위 집계 숫자만 AI에 보내 대표 입장에서 읽어 드립니다. 세무·법률 판단은 하지 않습니다.</p>
               </div>
-              <button onClick={explain} disabled={ai.status === "loading"}
-                className="px-4 py-2.5 rounded-xl bg-[#6E62C2] text-white text-sm font-semibold hover:bg-[#5a50a8] transition-colors cursor-pointer shadow-md shadow-[#6E62C2]/25 disabled:opacity-60 disabled:cursor-wait">
+              <Button variant="primary" pad="4x2.5" text="sm" radius="xl" elevate="brand" motion="colors" off="wait"
+                onClick={explain} disabled={ai.status === "loading"}>
                 {ai.status === "loading" ? "읽고 있습니다…" : ai.status === "done" ? "다시 해설" : "✦ AI 해설 받기"}
-              </button>
+              </Button>
             </div>
-            {ai.status === "error" && <div className="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5"><p className="text-rose-700 text-xs">{ai.message}</p></div>}
+            {ai.status === "error" && <Alert><p className="text-rose-700 text-xs">{ai.message}</p></Alert>}
             {ai.status === "done" && (
               <div className="space-y-4">
                 <div className="bg-[#6E62C2] text-white rounded-2xl px-5 py-4">
@@ -445,7 +466,7 @@ export function CashflowScreen() {
                   {ai.data.insights.map((ins, i) => {
                     const s = SEVERITY[ins.severity];
                     return (
-                      <div key={i} className={`rounded-2xl border p-4 ${s.cls}`}>
+                      <div key={i} className={cn(statTileVariants({ tone: null }), s.cls)}>
                         <div className="flex items-center gap-2 mb-1.5">
                           <span className={`w-2 h-2 rounded-full ${s.dot}`} />
                           <p className="text-sm font-bold">{ins.title}</p>
@@ -458,7 +479,7 @@ export function CashflowScreen() {
                   })}
                 </div>
                 {ai.data.questions_for_accountant.length > 0 && (
-                  <div className="bg-[#F5F6F8] rounded-2xl px-5 py-4">
+                  <div className={cardMutedVariants({ pad: "px5y4" })}>
                     <p className="text-xs font-bold text-[#111111] mb-1.5">세무사·회계사에게 물어볼 것</p>
                     <ul className="space-y-1">{ai.data.questions_for_accountant.map((q, i) => <li key={i} className="text-xs text-[#444444]">{i + 1}. {q}</li>)}</ul>
                   </div>
@@ -466,7 +487,7 @@ export function CashflowScreen() {
                 <p className="text-[10px] text-[#888888]">AI 해설은 참고용이며 재무·세무 자문이 아닙니다. 숫자 계산은 코드가 했고, AI는 그 숫자를 읽어 설명만 했습니다.{ai.model && <span className="font-mono"> · {ai.model}</span>}</p>
               </div>
             )}
-          </div>
+          </Card>
         </>
       )}
 

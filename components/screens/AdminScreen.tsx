@@ -11,13 +11,20 @@ import { loadStats, useAdminStats } from "@/lib/admin/statsStore";
 import type { Bucket } from "@/lib/admin/stats";
 import { useSession } from "@/lib/auth/AuthProvider";
 import { logoutAndClear } from "@/lib/store/sync";
+import { cn } from "@/lib/utils";
+
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { skeletonCardClass, statTileVariants } from "@/components/ui/variants";
 
 const fmtDT = (iso: string | null) => (iso ? new Date(iso).toLocaleString("ko-KR", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }) : "—");
 
 function Kpi({ label, value, sub, tone = "default" }: { label: string; value: string | number; sub?: string; tone?: "default" | "purple" | "green" }) {
-  const cls = tone === "purple" ? "bg-[#f0eef9] border-[#dddaf4]" : tone === "green" ? "bg-[#EEF4F0] border-[#B2D1BF]" : "bg-white border-[#E4E6EA]";
   return (
-    <div className={`rounded-2xl border p-4 ${cls}`}>
+    <div className={statTileVariants({ tone })}>
       <p className="text-[10px] text-[#888888] font-medium">{label}</p>
       <p className="text-2xl font-bold font-mono text-[#111111] mt-1 leading-none">{value}</p>
       {sub && <p className="text-[10px] text-[#888888] mt-1.5">{sub}</p>}
@@ -28,7 +35,7 @@ function Kpi({ label, value, sub, tone = "default" }: { label: string; value: st
 function Bars({ title, items, color = "bg-[#6E62C2]" }: { title: string; items: Bucket[]; color?: string }) {
   const max = Math.max(...items.map((i) => i.count), 1);
   return (
-    <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5">
+    <Card pad="p5" shadow="none">
       <h3 className="text-sm font-bold text-[#111111] mb-3">{title}</h3>
       {items.length === 0 ? <p className="text-xs text-[#888888]">데이터 없음</p> : (
         <div className="space-y-2">
@@ -41,7 +48,7 @@ function Bars({ title, items, color = "bg-[#6E62C2]" }: { title: string; items: 
           ))}
         </div>
       )}
-    </div>
+    </Card>
   );
 }
 
@@ -66,28 +73,29 @@ export function AdminScreen() {
             <h1 className="text-lg font-display font-bold text-[#111111] leading-tight">관리자 대시보드</h1>
           </div>
           {user && <span className="text-xs text-[#888888]">{user.loginId}</span>}
-          <button onClick={() => void loadStats()} disabled={stats.status === "loading"}
-            className="text-xs font-semibold text-[#6E62C2] bg-[#f0eef9] border border-[#dddaf4] px-3 py-1.5 rounded-xl hover:bg-[#dddaf4] transition-colors cursor-pointer disabled:opacity-50">
+          <Button onClick={() => void loadStats()} disabled={stats.status === "loading"}
+            variant="soft" pad="3x1.5" text="xs" radius="xl" motion="colors" off="o50only">
             {stats.status === "loading" ? "불러오는 중…" : "새로 고침"}
-          </button>
+          </Button>
+          {/* 이 <Link>는 cursor-pointer가 없다(a 기본값에 의존) → button()을 쓰면 클래스가 늘어난다. 인라인 유지. */}
           <Link href="/dashboard" className="text-xs font-semibold text-[#444444] border border-[#E4E6EA] px-3 py-1.5 rounded-xl hover:bg-[#F5F6F8]">앱으로</Link>
-          <button onClick={async () => { await logoutAndClear(); router.replace("/login"); }}
-            className="text-xs font-semibold text-[#444444] border border-[#E4E6EA] px-3 py-1.5 rounded-xl hover:bg-[#F5F6F8] cursor-pointer">로그아웃</button>
+          <Button onClick={async () => { await logoutAndClear(); router.replace("/login"); }}
+            variant="outline" pad="3x1.5" text="xs" radius="xl">로그아웃</Button>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-6 space-y-6">
         {denied && (
-          <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6">
+          <Alert radius="2xl" pad="p6">
             <p className="text-rose-700 text-sm font-semibold">관리자만 볼 수 있는 화면입니다.</p>
             <p className="text-rose-600 text-xs mt-1">현재 계정: {user?.loginId}. 관리자 계정으로 다시 로그인하세요.</p>
-          </div>
+          </Alert>
         )}
         {!denied && stats.status === "error" && (
-          <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6"><p className="text-rose-700 text-sm">{stats.error}</p></div>
+          <Alert radius="2xl" pad="p6"><p className="text-rose-700 text-sm">{stats.error}</p></Alert>
         )}
         {!denied && stats.status !== "error" && !stats.data && (
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">{Array.from({ length: 5 }, (_, i) => <div key={i} className="h-24 rounded-2xl bg-white border border-[#E4E6EA] animate-pulse" />)}</div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">{Array.from({ length: 5 }, (_, i) => <div key={i} className={cn(skeletonCardClass, "h-24")} />)}</div>
         )}
 
         {!denied && stats.data && (() => {
@@ -104,7 +112,7 @@ export function AdminScreen() {
                   <Kpi label="프로필 완료" value={d.users.withProfile} sub={d.users.total ? `${Math.round((d.users.withProfile / d.users.total) * 100)}%` : undefined} tone="green" />
                   <Kpi label="사업 방향 입력" value={d.profiles.directions} sub="AI 대화에서 수집" />
                 </div>
-                <div className="bg-white border border-[#E4E6EA] rounded-2xl p-5 mt-3">
+                <Card pad="p5" shadow="none" className="mt-3">
                   <h3 className="text-sm font-bold text-[#111111] mb-3">일별 가입 (최근 30일)</h3>
                   <div className="flex items-end gap-1 h-20">
                     {d.users.signupsByDay.map((x) => (
@@ -116,7 +124,7 @@ export function AdminScreen() {
                   <div className="flex justify-between text-[10px] font-mono text-[#888888] mt-1">
                     <span>{d.users.signupsByDay[0]?.date.slice(5)}</span><span>{d.users.signupsByDay.at(-1)?.date.slice(5)}</span>
                   </div>
-                </div>
+                </Card>
               </section>
 
               <section>
@@ -154,54 +162,50 @@ export function AdminScreen() {
 
               <section>
                 <h2 className="text-sm font-bold text-[#111111] mb-3">공고 수집 실행 (최근 10회)</h2>
-                <div className="bg-white border border-[#E4E6EA] rounded-2xl overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead className="bg-[#F5F6F8] text-[#888888]">
-                        <tr>{["시작", "출처", "수집", "적재", "파싱", "임베딩", "중복", "실패", "메모"].map((h) => <th key={h} className="text-left font-semibold px-4 py-2">{h}</th>)}</tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#F5F6F8]">
-                        {d.ingest.runs.length === 0 ? <tr><td colSpan={9} className="px-4 py-4 text-[#888888]">실행 기록 없음</td></tr> : d.ingest.runs.map((r) => (
-                          <tr key={r.id} className="text-[#444444]">
-                            <td className="px-4 py-2 font-mono">{fmtDT(r.started_at)}</td>
-                            <td className="px-4 py-2">{r.source}</td>
-                            <td className="px-4 py-2 font-mono">{r.fetched}</td><td className="px-4 py-2 font-mono">{r.upserted}</td>
-                            <td className="px-4 py-2 font-mono">{r.parsed}</td><td className="px-4 py-2 font-mono">{r.embedded}</td>
-                            <td className="px-4 py-2 font-mono">{r.deduped}</td>
-                            <td className={`px-4 py-2 font-mono ${r.failed ? "text-rose-600 font-semibold" : ""}`}>{r.failed}</td>
-                            <td className="px-4 py-2 text-[#888888] truncate max-w-[220px]" title={r.notes ?? ""}>{r.notes ?? ""}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <Card shadow="none" clip>
+                  <Table>
+                    <TableHeader>
+                      <TableRow tone="none">{["시작", "출처", "수집", "적재", "파싱", "임베딩", "중복", "실패", "메모"].map((h) => <TableHead key={h}>{h}</TableHead>)}</TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {d.ingest.runs.length === 0 ? <TableRow tone="none"><TableCell colSpan={9} className="px-4 py-4 text-[#888888]">실행 기록 없음</TableCell></TableRow> : d.ingest.runs.map((r) => (
+                        <TableRow key={r.id}>
+                          <TableCell className="font-mono">{fmtDT(r.started_at)}</TableCell>
+                          <TableCell>{r.source}</TableCell>
+                          <TableCell className="font-mono">{r.fetched}</TableCell><TableCell className="font-mono">{r.upserted}</TableCell>
+                          <TableCell className="font-mono">{r.parsed}</TableCell><TableCell className="font-mono">{r.embedded}</TableCell>
+                          <TableCell className="font-mono">{r.deduped}</TableCell>
+                          <TableCell className={`font-mono ${r.failed ? "text-rose-600 font-semibold" : ""}`}>{r.failed}</TableCell>
+                          <TableCell className="text-[#888888] truncate max-w-[220px]" title={r.notes ?? ""}>{r.notes ?? ""}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Card>
               </section>
 
               <section>
                 <h2 className="text-sm font-bold text-[#111111] mb-3">최근 회원 (최대 50 · 사업자번호 마스킹)</h2>
-                <div className="bg-white border border-[#E4E6EA] rounded-2xl overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead className="bg-[#F5F6F8] text-[#888888]">
-                        <tr>{["아이디", "사업자번호", "가입", "마지막 로그인", "지역", "업종", "직원", "프로필"].map((h) => <th key={h} className="text-left font-semibold px-4 py-2">{h}</th>)}</tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#F5F6F8]">
-                        {d.members.map((m) => (
-                          <tr key={m.loginId} className="text-[#444444]">
-                            <td className="px-4 py-2 font-semibold text-[#111111]">{m.loginId}</td>
-                            <td className="px-4 py-2 font-mono">{m.bizNoMasked}</td>
-                            <td className="px-4 py-2 font-mono">{fmtDT(m.createdAt)}</td>
-                            <td className="px-4 py-2 font-mono">{fmtDT(m.lastLoginAt)}</td>
-                            <td className="px-4 py-2">{m.region ?? "—"}</td><td className="px-4 py-2">{m.industry ?? "—"}</td>
-                            <td className="px-4 py-2 font-mono">{m.employees ?? "—"}</td>
-                            <td className="px-4 py-2">{m.hasProfile ? <span className="text-[#2A5A46] bg-[#EEF4F0] border border-[#B2D1BF] px-1.5 py-0.5 rounded-full text-[10px]">완료</span> : <span className="text-[#888888]">미완료</span>}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <Card shadow="none" clip>
+                  <Table>
+                    <TableHeader>
+                      <TableRow tone="none">{["아이디", "사업자번호", "가입", "마지막 로그인", "지역", "업종", "직원", "프로필"].map((h) => <TableHead key={h}>{h}</TableHead>)}</TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {d.members.map((m) => (
+                        <TableRow key={m.loginId}>
+                          <TableCell className="font-semibold text-[#111111]">{m.loginId}</TableCell>
+                          <TableCell className="font-mono">{m.bizNoMasked}</TableCell>
+                          <TableCell className="font-mono">{fmtDT(m.createdAt)}</TableCell>
+                          <TableCell className="font-mono">{fmtDT(m.lastLoginAt)}</TableCell>
+                          <TableCell>{m.region ?? "—"}</TableCell><TableCell>{m.industry ?? "—"}</TableCell>
+                          <TableCell className="font-mono">{m.employees ?? "—"}</TableCell>
+                          <TableCell>{m.hasProfile ? <Badge size="sm" weight="none" tone="success">완료</Badge> : <span className="text-[#888888]">미완료</span>}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Card>
               </section>
 
               <p className="text-[10px] text-[#888888]">집계 시각 {new Date(d.generatedAt).toLocaleString("ko-KR")} · 개인 프로필 원문은 표시하지 않고 분포와 마스킹된 값만 보여줍니다.</p>
