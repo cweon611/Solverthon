@@ -100,11 +100,11 @@ Node.js 20.9 이상이 필요합니다. 배포는 Node 24를 권장합니다.
 | 기능 | 화면 | API | 서버로 가는 것 | 서버로 안 가는 것 |
 |---|---|---|---|---|
 | 요건 코치 | 판정함 → 조건부·제외 카드 펼침 | `POST /api/ai/coach` | 공고 id, 요건 행(라벨·기준·원문·상태) | 회사의 현재 값, 프로필 |
-| 신청서 뼈대 | 판정함·공고 목록 → "신청서 초안" → `/grants/[id]/draft` | `POST /api/ai/draft` (SSE) | 공고 id | 프로필 — `{{키}}` 치환은 브라우저에서 |
+| 신청서 초안 | 판정함·공고 목록 → "신청서 초안" → `/grants/[id]/draft` | `POST /api/ai/draft` (SSE) — "기본 양식"은 AI 없이 `lib/draft/template.ts` | 공고 id | 프로필·내 사업 정보 — `{{키}}`·`{{lib:키}}` 치환은 브라우저에서 |
 | 현금흐름 해설 | 사이드바 → 현금흐름 분석 `/cashflow` | `POST /api/ai/cashflow` | 월별 합계·상위 항목 집계 숫자 | 엑셀 파일, 개별 거래, 회사명·거래처명 |
 
 - 프롬프트: `lib/ai/geminiPrompts.ts` · 출력 스키마: `lib/ai/geminiSchemas.ts` · 클라이언트: `lib/ai/gemini.ts`
-- 신청서 템플릿의 `{{company_name}}` 같은 프리필 키는 `lib/ai/prefill.ts`가 브라우저에서 프로필로 채운다. `[[ ]]`는 사용자가 쓸 빈칸.
+- 신청서 템플릿의 `{{company_name}}` 같은 프리필 키는 `lib/ai/prefill.ts`가 브라우저에서 프로필로 채운다. `{{lib:problem}}` 등은 "내 사업 정보"(`lib/draft/library.ts`, 계정 동기화)로 채워 모든 공고 초안에 재사용하고, `{{eligibility_summary}}`는 판정 엔진 결과로 만든 자격 충족 근거 문단(`lib/draft/evidence.ts`)이다. `[[ ]]`는 사용자가 쓸 빈칸.
 - 현금흐름 집계는 `lib/engine/cashflow.ts`(순수 TS, 테스트 있음). 지원 레이아웃: `[날짜, 구분, 항목, 금액]` · `[날짜, 항목, 수입, 지출]` · `[날짜, 항목, 금액(부호)]`.
 
 ## 진입 흐름 · 계정

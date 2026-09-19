@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { applyPrefill, buildPrefillValues, countBlanks, splitBlanks } from "@/lib/ai/prefill";
+import { applyPrefill, buildPrefillValues, countBlanks, fillBlank, freeBlanks, libBlanks, refill, splitBlanks, toPlainText } from "@/lib/ai/prefill";
 import type { CompanyProfile } from "@/lib/types";
 
 const profile: CompanyProfile = {
@@ -50,5 +50,43 @@ describe("prefill", () => {
       { kind: "text", value: "가 " }, { kind: "blank", value: "하나" },
       { kind: "text", value: " 나 " }, { kind: "blank", value: "둘" }, { kind: "text", value: " 다" },
     ]);
+  });
+});
+
+describe("내 사업 정보({{lib:키}})", () => {
+  const v = buildPrefillValues(profile, today);
+
+  it("값이 있으면 채우고, 없으면 라벨 빈칸 + libMissing", () => {
+    const r = applyPrefill("{{lib:problem}} / {{lib:team}} / {{lib:nope}}", v, { problem: "재고 폐기가 12%입니다." });
+    expect(r.text).toBe("재고 폐기가 12%입니다. / [[입력 필요: 팀 구성·역량]] / [[입력 필요: nope]]");
+    expect(r.filled).toEqual(["lib:problem"]);
+    expect(r.libMissing).toEqual(["team"]);
+  });
+
+  it("사용자가 고친 문단의 라벨 빈칸을 나중에 생긴 값으로 채운다", () => {
+    const edited = "우리 팀: [[입력 필요: 팀 구성·역량]] 그리고 [[입력 필요: 회사명]], [[직접 쓸 곳]]";
+    expect(refill(edited, v, { team: "개발 7년 CTO" })).toBe("우리 팀: 개발 7년 CTO 그리고 테크스타트, [[직접 쓸 곳]]");
+    expect(refill(edited, v, {})).toBe("우리 팀: [[입력 필요: 팀 구성·역량]] 그리고 테크스타트, [[직접 쓸 곳]]");
+  });
+
+  it("빈칸 분류: 내 사업 정보 / 자유 빈칸", () => {
+    const t = "[[입력 필요: 해결하려는 문제]] [[입력 필요: 회사명]] [[시제품 사양]] [[입력 필요: 모르는 것]]";
+    expect(libBlanks(t)).toEqual(["problem"]);
+    expect(freeBlanks(t)).toEqual(["시제품 사양", "입력 필요: 모르는 것"]);
+  });
+
+  it("자유 빈칸 하나를 답으로 바꾼다 (첫 번째만)", () => {
+    expect(fillBlank("가 [[A]] 나 [[A]]", "A", " 답 ")).toBe("가 답 나 [[A]]");
+    expect(fillBlank("가 [[A]]", "A", "  ")).toBe("가 [[A]]");
+  });
+
+  it("자격 충족 근거는 extra로 받는다", () => {
+    const w = buildPrefillValues(profile, today, { eligibility_summary: "요건 충족" });
+    expect(applyPrefill("{{eligibility_summary}}", w).text).toBe("요건 충족");
+    expect(applyPrefill("{{eligibility_summary}}", v).text).toBe("[[입력 필요: 자격 충족 근거]]");
+  });
+
+  it("평문 내보내기", () => {
+    expect(toPlainText("제목", [{ heading: "1. 개요", text: "본문" }])).toBe("제목\n\n1. 개요\n\n본문\n");
   });
 });

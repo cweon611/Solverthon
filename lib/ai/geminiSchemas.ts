@@ -25,6 +25,7 @@ export type CoachOutput = z.infer<typeof CoachOutputZ>;
 export const PREFILL_KEYS = [
   "company_name", "biz_no", "business_type", "industry", "region", "founded_at",
   "business_age", "employee_count", "ceo_age", "annual_revenue", "certifications", "business_direction",
+  "eligibility_summary",
 ] as const;
 export type PrefillKey = (typeof PREFILL_KEYS)[number];
 
@@ -32,6 +33,7 @@ export const PREFILL_LABEL: Record<PrefillKey, string> = {
   company_name: "회사명", biz_no: "사업자번호", business_type: "사업자 형태", industry: "업종", region: "소재지",
   founded_at: "개업일", business_age: "업력", employee_count: "상시근로자 수", ceo_age: "대표자 연령",
   annual_revenue: "연매출", certifications: "보유 인증", business_direction: "사업 방향",
+  eligibility_summary: "자격 충족 근거",
 };
 
 export const DraftOutputZ = z.object({
@@ -48,8 +50,9 @@ export const DraftOutputZ = z.object({
     z.object({
       heading: z.string().describe("목차 제목. 예: 1. 기업 개요"),
       purpose: z.string().describe("이 항목의 목적 1문장"),
-      template: z.string().describe("문단 뼈대. 회사 정보는 {{프리필키}}, 사용자가 쓸 곳은 [[안내문]]. 사실을 지어내지 않는다"),
+      template: z.string().describe("문단 뼈대. 회사 정보는 {{프리필키}}, 사업 서술은 {{lib:키}}, 이 문단에만 쓸 곳은 [[안내문]]. 사실을 지어내지 않는다"),
       tips: z.array(z.string()).describe("심사위원 확인 포인트·흔한 감점 요인 1~3개"),
+      criteria: z.array(z.number().int()).describe("이 문단이 다루는 evaluation_criteria의 인덱스(0부터). 없으면 빈 배열"),
     }),
   ),
   documents: z.array(

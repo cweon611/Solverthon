@@ -22,7 +22,7 @@ export interface SyncSnapshot {
 }
 
 /** 서버와 맞추는 키. owner는 기기 로컬 전용 */
-export const SYNC_KEYS = ["profile", "tasks", "settings", "history", "drafts"] as const;
+export const SYNC_KEYS = ["profile", "tasks", "settings", "history", "drafts", "library"] as const;
 type SyncKey = (typeof SYNC_KEYS)[number];
 export type SyncData = Partial<Record<SyncKey, unknown>>;
 

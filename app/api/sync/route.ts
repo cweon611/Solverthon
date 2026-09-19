@@ -9,7 +9,7 @@ import { getSupabase } from "@/lib/data/supabase";
 export const dynamic = "force-dynamic";
 
 const MAX_BYTES = 1_000_000;
-const SYNC_KEYS = ["profile", "tasks", "settings", "history", "drafts"] as const;
+const SYNC_KEYS = ["profile", "tasks", "settings", "history", "drafts", "library"] as const;
 const DataZ = z.object(Object.fromEntries(SYNC_KEYS.map((k) => [k, z.unknown().optional()]))).strict();
 
 const err = (code: string, message: string, status: number) => Response.json({ error: { code, message } }, { status });
