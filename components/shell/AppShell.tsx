@@ -2,7 +2,7 @@
 
 // design/BizBuddyPage.tsx 1687–1707행 BizBuddyPage 루트 → 앱 셸(§4.2).
 // page 상태 → 라우팅. main의 overflow 클래스는 pathname === '/calendar' 조건 유지.
-// 세션이 없으면 /login, 세션은 있는데 이 기기에 프로필이 없으면 /onboarding(설문)으로 보낸다.
+// 데모: 세션은 항상 있다(데모 사용자). 이 브라우저에 프로필이 없으면 /onboarding(설문)으로 보낸다.
 // 읽는 중에는 스켈레톤만 그리고 잘못된 리다이렉트를 하지 않는다 (§4.3).
 
 import { usePathname, useRouter } from "next/navigation";
@@ -63,8 +63,13 @@ function ShellGuard({ children }: { children: ReactNode }) {
   return (
     <div className="size-full flex bg-white font-sans overflow-hidden">
       <Sidebar />
-      <main className={`flex-1 bg-white ${pathname === "/calendar" ? "overflow-hidden" : "overflow-y-auto"}`}>
-        {children}
+      <main className={`flex-1 bg-white flex flex-col ${pathname === "/calendar" ? "overflow-hidden" : "overflow-y-auto"}`}>
+        {/* 대회 제출용 데모 안내 — 로그인 없음 · 합성 데이터 · 브라우저 저장 */}
+        <div className="shrink-0 bg-[#6E62C2]/[0.06] border-b border-[#6E62C2]/15 px-6 py-1.5 text-[11px] text-[#47408E] flex flex-wrap gap-x-3">
+          <span className="font-semibold">대회 제출용 데모</span>
+          <span>로그인 없이 체험 · 공고는 시연용 합성 데이터 · 입력한 정보는 이 브라우저에만 저장됩니다</span>
+        </div>
+        <div className={pathname === "/calendar" ? "flex-1 min-h-0" : ""}>{children}</div>
       </main>
     </div>
   );

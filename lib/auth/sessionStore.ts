@@ -17,17 +17,14 @@ export interface SessionSnapshot {
   unavailableMessage: string | null;
 }
 
-const INITIAL: SessionSnapshot = { status: "loading", user: null, unavailableMessage: null };
+// 대회 제출용 데모: 로그인이 없다. 모든 방문자는 같은 데모 사용자로 "로그인된" 상태이고,
+// 데이터는 이 브라우저(localStorage)에만 저장된다. 서버 세션·계정 API는 이 빌드에 없다.
+const DEMO_USER: SessionUser = { id: "demo", loginId: "demo", bizNo: "", isAdmin: false };
+const INITIAL: SessionSnapshot = { status: "authed", user: DEMO_USER, unavailableMessage: null };
 const SERVER: SessionSnapshot = INITIAL;
 
-let snapshot: SessionSnapshot = INITIAL;
-let inflight: Promise<void> | null = null;
+const snapshot: SessionSnapshot = INITIAL;
 const listeners = new Set<() => void>();
-
-function set(next: SessionSnapshot): void {
-  snapshot = next;
-  listeners.forEach((l) => l());
-}
 
 export function getSessionSnapshot(): SessionSnapshot {
   return snapshot;
@@ -36,39 +33,17 @@ export function getServerSessionSnapshot(): SessionSnapshot {
   return SERVER;
 }
 
-/** /api/auth/me 를 다시 묻는다. 동시에 여러 곳이 부르면 한 번만 나간다 */
+/** 데모: 물을 서버가 없다 */
 export function refreshSession(): Promise<void> {
-  if (inflight) return inflight;
-  inflight = (async () => {
-    try {
-      const res = await fetch("/api/auth/me", { cache: "no-store" });
-      if (res.ok) {
-        const body = (await res.json()) as { user: SessionUser };
-        set({ status: "authed", user: body.user, unavailableMessage: null });
-      } else if (res.status === 503) {
-        const body = await res.json().catch(() => null);
-        set({ status: "unavailable", user: null, unavailableMessage: body?.error?.message ?? "인증 서버가 준비되지 않았습니다." });
-      } else {
-        set({ status: "anon", user: null, unavailableMessage: null });
-      }
-    } catch {
-      set({ status: "anon", user: null, unavailableMessage: null });
-    } finally {
-      inflight = null;
-    }
-  })();
-  return inflight;
+  return Promise.resolve();
 }
 
 export async function logoutSession(): Promise<void> {
-  await fetch("/api/auth/logout", { method: "POST" }).catch(() => null);
-  set({ status: "anon", user: null, unavailableMessage: null });
+  // 데모에는 로그아웃이 없다
 }
 
 export function subscribeSession(cb: () => void): () => void {
   listeners.add(cb);
-  // 첫 구독자가 붙을 때 아직 모르는 상태면 서버에 묻는다 — 외부 시스템 구독의 일부다
-  if (snapshot.status === "loading" && !inflight && typeof window !== "undefined") void refreshSession();
   return () => {
     listeners.delete(cb);
   };

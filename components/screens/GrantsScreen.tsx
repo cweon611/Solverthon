@@ -12,7 +12,6 @@ import { useCompany, useTasks, useVerdicts } from "@/lib/store/hooks";
 import type { GrantStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-import { ConditionCoach } from "@/components/ui/ConditionCoach";
 import { CriteriaTable } from "@/components/ui/CriteriaTable";
 import { CutoutFrame } from "@/components/ui/CutoutFrame";
 import { Disclaimer } from "@/components/ui/Disclaimer";
@@ -256,8 +255,6 @@ export function GrantsScreen() {
                               </ExtLink>
                             )}
                           </div>
-                          {/* 부족한 요건을 AI가 쉬운 말로 풀어준다. 판정은 바꾸지 않는다 */}
-                          <ConditionCoach grant={grant} />
                         </div>
                       </div>
                     )}

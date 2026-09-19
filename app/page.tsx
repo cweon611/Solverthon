@@ -1,6 +1,6 @@
 "use client";
 
-// "/" → 로그인 화면. 저장된 계정이 있으면 로그인 화면이 그 계정을 보여주고 한 번에 들어간다.
+// "/" → 대시보드. 데모에는 로그인이 없고, 프로필이 없으면 앱 셸이 설문(/onboarding)으로 보낸다.
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -9,7 +9,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/login");
+    router.replace("/dashboard");
   }, [router]);
 
   return (

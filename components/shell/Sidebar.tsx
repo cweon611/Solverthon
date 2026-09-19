@@ -15,7 +15,7 @@ import { useCatalog, useCompany, useExpiring, useTasks, useToday, useVerdicts } 
 import { Img } from "@/components/ui/Img";
 import { Badge } from "@/components/ui/badge";
 
-import { CalendarIcon, ChartIcon, CheckCircleIcon, ClockIcon, GridIcon, LayersIcon, ListIcon, MegaphoneIcon, PersonIcon, SparklesIcon, UsersIcon } from "./Icons";
+import { CalendarIcon, ChartIcon, CheckCircleIcon, ClockIcon, GridIcon, ListIcon, MegaphoneIcon, PersonIcon, UsersIcon } from "./Icons";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -38,15 +38,11 @@ export function Sidebar() {
         { href: "/expiring",       label: "곧 사라짐",        icon: <ClockIcon />, badge: expiring.filter(e => e.expiresIn !== null && e.expiresIn <= EXPIRY_AMBER).length },
         { href: "/calendar",       label: "캘린더",           icon: <CalendarIcon /> },
         { href: "/simulator",      label: "직원 시뮬레이터",  icon: <UsersIcon /> },
-        { href: "/cashflow",       label: "현금흐름 분석",    icon: <ChartIcon /> },
       ],
     },
     {
-      heading: "AI 데모",
-      items: [
-        { href: "/demo/parse",  label: "공고 AI 파싱",   icon: <SparklesIcon /> },
-        { href: "/demo/dedupe", label: "중복 공고 판별", icon: <LayersIcon /> },
-      ],
+      heading: "근거",
+      items: [{ href: "/report", label: "매칭 품질 리포트", icon: <ChartIcon /> }],
     },
     {
       items: [{ href: "/mypage", label: "마이페이지", icon: <PersonIcon /> }],
@@ -66,7 +62,7 @@ export function Sidebar() {
       <div className="px-5 py-5 border-b border-[#E4E6EA]">
         <div className="flex items-center gap-2.5">
           <Image src="/brand/logo.png" alt="비즈버디" width={176} height={56} priority className="h-9 w-auto" />
-          <Badge size="xs" weight="monoSemibold" bordered={false} tone="brandPlain" className="ml-auto">BETA</Badge>
+          <Badge size="xs" weight="monoSemibold" bordered={false} tone="brandPlain" className="ml-auto">DEMO</Badge>
         </div>
       </div>
 

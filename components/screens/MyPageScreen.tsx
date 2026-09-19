@@ -10,10 +10,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
-import { useSession } from "@/lib/auth/AuthProvider";
-import { logoutAndClear, resetAll } from "@/lib/store/sync";
-import { useSyncState } from "@/lib/store/useSync";
-import { formatBizNo } from "@/lib/auth/bizNo";
+import { resetAll } from "@/lib/store/sync";
 import { INDUSTRIES, PHOTOS, REGIONS } from "@/lib/constants";
 import { loadDemoProfiles, toStoredProfile } from "@/lib/data/demoProfiles";
 import { fmtDate, toIso } from "@/lib/engine/format";
@@ -72,8 +69,6 @@ export function MyPageScreen() {
   const grants = useVerdicts();
   const { entries: historyRows, push: pushHistory } = useHistory();
   const { settings, toggleChannel, toggleItem } = useSettings();
-  const { user } = useSession();
-  const sync = useSyncState();
 
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState<ProfileDraft>(() => toDraft(profile!));
@@ -150,7 +145,7 @@ export function MyPageScreen() {
   // 무슨 일이 일어났는지는 토스트로만 남는다 — Toaster는 루트 레이아웃에 있어 이동 후에도 살아 있다.
   const doReset = async () => {
     try {
-      await resetAll(); // 서버 원본과 이 기기 사본을 모두 비운다. 계정은 남는다
+      await resetAll(); // 데모: 이 브라우저의 데이터를 모두 비운다
       toast.success("프로필을 초기화했습니다.", { description: "처음 화면부터 다시 시작합니다." });
       router.replace("/onboarding");
     } catch {
@@ -350,23 +345,6 @@ export function MyPageScreen() {
             )}
           </div>
 
-          {user && (
-            <div className="px-3 py-2.5 text-sm text-[#444444] flex items-center gap-2 flex-wrap">
-              <span className="text-[#888888] text-xs">로그인 계정</span>
-              <span className="font-semibold text-[#111111]">{user.loginId}</span>
-              <span className="text-[#888888] text-xs font-mono">{formatBizNo(user.bizNo)}</span>
-            </div>
-          )}
-          {user && (
-            <p className="px-3 text-[10px] text-[#888888]">
-              {sync.pushing ? "서버에 저장 중…" : sync.error ? `저장 오류: ${sync.error}` : sync.lastSyncedAt ? `서버 저장 ${new Date(sync.lastSyncedAt).toLocaleString("ko-KR")}` : "서버 저장 기록 없음"}
-            </p>
-          )}
-          <Button variant="ghostRow" pad="3x2.5" text="sm" radius="xl" block motion="colors"
-            onClick={async () => { await logoutAndClear(); router.replace("/login"); }}>
-            로그아웃 <span className="text-[#888888] text-xs">— 회사 정보는 계정에 저장되어 있습니다</span>
-          </Button>
-
           <Button variant="ghostRow" pad="3x2.5" text="sm" radius="xl" block motion="colors" onClick={exportJson}>
             내 데이터 내보내기 (JSON)
           </Button>
@@ -386,8 +364,7 @@ export function MyPageScreen() {
                 </AlertDialogMedia>
                 <AlertDialogTitle>프로필을 초기화할까요?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  계정에 저장된 프로필·할 일·설정·판정 이력·초안이 모두 삭제됩니다. 되돌릴 수 없습니다.
-                  {user ? <> 로그인 계정 <span className="font-semibold text-ink">{user.loginId}</span>은(는) 남고, </> : " 계정은 남고, "}
+                  이 브라우저에 저장된 프로필·할 일·설정·판정 이력·초안·내 사업 정보가 모두 삭제됩니다. 되돌릴 수 없습니다.
                   초기화 후 처음 화면부터 다시 시작합니다.
                 </AlertDialogDescription>
               </AlertDialogHeader>

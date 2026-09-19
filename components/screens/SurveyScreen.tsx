@@ -16,8 +16,6 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { progressIndicatorClass, progressTrackClass } from "@/components/ui/variants";
-import { useSession } from "@/lib/auth/AuthProvider";
-import { formatBizNo } from "@/lib/auth/bizNo";
 import { CERT_LABEL, PRIOR_SUPPORT_LABEL, REGIONS, INDUSTRY_LABEL } from "@/lib/constants";
 import { loadDemoProfiles, toStoredProfile } from "@/lib/data/demoProfiles";
 import { fmtDate, fmtMonths, fromIso, isoToDot, monthsBetween, toIso } from "@/lib/engine/format";
@@ -161,15 +159,10 @@ export function SurveyScreen() {
   const today = useToday();
   const { profile, isLoaded, save } = useProfile();
   const { push } = useHistory();
-  const { status, user } = useSession();
   const { programs: catalog } = useCatalog();
 
   const wantsEdit = params.get("edit") === "1";
   const isEdit = wantsEdit && profile !== null;
-
-  useEffect(() => {
-    if (status === "anon" || status === "unavailable") router.replace("/login");
-  }, [status, router]);
 
   // 신규 가입은 브라우저에 이어쓰기용으로 저장하고, 수정은 저장된 프로필에서 시작해 확인 화면부터 보여준다
   const [stored, setStored] = usePersistent<SurveyState>(STORAGE_KEYS.survey, FRESH);
@@ -233,7 +226,7 @@ export function SurveyScreen() {
     const built = answersToProfile(a, {
       id: profile?.id ?? newProfileId(),
       created_at: isEdit && profile ? profile.created_at : now,
-      biz_no: isEdit && profile ? profile.biz_no : user ? formatBizNo(user.bizNo) : null,
+      biz_no: isEdit && profile ? profile.biz_no : null, // 데모: 계정이 없으니 사업자번호도 없다
     });
     if (!built) {
       toast.error("필수 항목이 비어 있습니다", { description: missing.join(", ") });
