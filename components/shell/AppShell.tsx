@@ -11,7 +11,9 @@ import { useEffect, type ReactNode } from "react";
 import { AuthProvider, useSession } from "@/lib/auth/AuthProvider";
 import { useSyncState } from "@/lib/store/useSync";
 import type { CatalogResult } from "@/lib/data/repository";
+import { isoToDot } from "@/lib/engine/format";
 import { CatalogProvider } from "@/lib/store/CatalogProvider";
+import { useCatalog } from "@/lib/store/hooks";
 import { HistoryProvider } from "@/lib/store/HistoryProvider";
 import { ProfileProvider, useProfileStore } from "@/lib/store/ProfileProvider";
 import { SettingsProvider } from "@/lib/store/SettingsProvider";
@@ -47,6 +49,7 @@ function ShellGuard({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { profile, isLoaded } = useProfileStore();
+  const { meta } = useCatalog();
   const { status } = useSession();
   const sync = useSyncState();
   // 서버에서 내려받기가 끝난(또는 실패해 로컬로 가는) 뒤에만 프로필 유무를 판단한다
@@ -67,7 +70,13 @@ function ShellGuard({ children }: { children: ReactNode }) {
         {/* 대회 제출용 데모 안내 — 로그인 없음 · 합성 데이터 · 브라우저 저장 */}
         <div className="shrink-0 bg-[#6E62C2]/[0.06] border-b border-[#6E62C2]/15 px-6 py-1.5 text-[11px] text-[#47408E] flex flex-wrap gap-x-3">
           <span className="font-semibold">대회 제출용 데모</span>
-          <span>로그인 없이 체험 · 공고는 시연용 합성 데이터 · 입력한 정보는 이 브라우저에만 저장됩니다</span>
+          <span>
+            로그인 없이 체험 ·{" "}
+            {meta.mode === "local"
+              ? `공고는 K-Startup 공식 API로 수집한 모집 중 실공고 (${meta.syncedAt ? isoToDot(meta.syncedAt.slice(0, 10)) : "-"} 수집, 이 PC 시연용)`
+              : "공고는 시연용 합성 데이터"}{" "}
+            · 입력한 정보는 이 브라우저에만 저장됩니다
+          </span>
         </div>
         <div className={pathname === "/calendar" ? "flex-1 min-h-0" : ""}>{children}</div>
       </main>
