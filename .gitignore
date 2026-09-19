@@ -43,3 +43,6 @@ next-env.d.ts
 
 # 임시 파일
 _to_delete/
+
+# 로컬 실공고 수집본 (scripts/ingest-local.ts) — 공개 저장소·배포에 넣지 않는다
+/data/live/

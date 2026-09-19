@@ -21,7 +21,8 @@
     "licenses": "tsx scripts/licenses.ts",
     "smoke": "tsx scripts/smoke.ts",
     "admin:create": "tsx scripts/create-admin.ts",
-    "match:report": "tsx scripts/match-report.ts"
+    "match:report": "tsx scripts/match-report.ts",
+    "ingest:local": "tsx scripts/ingest-local.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.123.0",

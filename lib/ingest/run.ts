@@ -4,7 +4,7 @@
 // 백로그는 다음 런에서 이어진다. 각 단계가 끝날 때마다 카운터를 즉시 기록해
 // 함수가 중간에 끊겨도 진행 상황이 남는다.
 
-import { parseAnnouncement } from "@/lib/ai/claude";
+import { parseAnnouncement } from "@/lib/ai/parse";
 import { postprocess } from "@/lib/ai/postprocess";
 import { embed } from "@/lib/ai/voyage";
 import { requireSupabase } from "@/lib/data/supabase";
