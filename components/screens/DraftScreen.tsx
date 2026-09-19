@@ -7,10 +7,11 @@
 // LLM은 공고문만 본다. 회사 프로필·내 사업 정보는 서버로 가지 않는다.
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import type { DraftOutput } from "@/lib/ai/geminiSchemas";
+import { hasCachedDraft } from "@/lib/ai-cache/available";
 import { applyPrefill, buildPrefillValues, countBlanks, fillBlank, freeBlanks, libBlanks, refill, splitBlanks, toPlainText } from "@/lib/ai/prefill";
 import { eligibilityEvidence } from "@/lib/draft/evidence";
 import { LIB_FIELDS, LIB_KEYS, libraryProgress, type LibKey, type Library } from "@/lib/draft/library";
@@ -57,11 +58,15 @@ export function DraftScreen({ programId }: { programId: string }) {
   const program = programs.find((p) => p.id === programId);
   const saved = store[programId];
 
+  const [running, setRunning] = useState(false);
+  const [raw, setRaw] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [view, setView] = useState<"edit" | "preview">("edit");
   const [copied, setCopied] = useState(false);
   const [openLib, setOpenLib] = useState<Set<LibKey>>(new Set());
   const [showAllLib, setShowAllLib] = useState(false);
   const [freeAnswers, setFreeAnswers] = useState<Record<string, string>>({});
+  const preRef = useRef<HTMLPreElement>(null);
 
   // 판정 엔진 결과 → "신청 자격 충족 현황" 문단
   const evidence = useMemo(() => {
@@ -119,6 +124,81 @@ export function DraftScreen({ programId }: { programId: string }) {
     toast.success("기본 양식으로 초안을 만들었습니다", {
       description: `문단 ${draft.sections.length}개 · 회사 정보와 '내 사업 정보'로 채울 수 있는 곳은 자동으로 채웠습니다.`,
     });
+  };
+
+  const generate = async () => {
+    setRunning(true); setRaw(""); setError(null);
+    // 20~40초짜리 스트리밍이라 진행 중 토스트를 띄우고 끝에서 같은 id로 갈아끼운다
+    const tid = toast.loading("공고문을 읽고 신청서 뼈대를 만드는 중…", {
+      description: `${program?.title ?? "공고"} · 평가항목과 제출서류를 정리합니다. 20~40초 걸립니다.`,
+    });
+    let settled = false; // final·error 없이 스트림이 끊기면 지금까지 아무 표시도 없었다
+    try {
+      const res = await fetch("/api/ai/draft", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ programId }),
+      });
+      if (!res.ok || !res.body) {
+        const body = await res.json().catch(() => null);
+        if (body?.error?.code === "no_api_key" || body?.error?.code === "no_cache") {
+          settled = true;
+          setError(null);
+          toast.info("이 공고는 AI 초안이 준비되어 있지 않습니다", {
+            id: tid,
+            description: body?.error?.message ?? "기본 양식으로 바로 시작할 수 있습니다.",
+            action: { label: "기본 양식으로 시작", onClick: startBasic },
+          });
+          return;
+        }
+        throw new Error(body?.error?.message ?? `요청 실패 (${res.status})`);
+      }
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop() ?? "";
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const evt = JSON.parse(line.slice(6));
+          if (evt.type === "delta") {
+            setRaw((prev) => prev + evt.text);
+            requestAnimationFrame(() => { if (preRef.current) preRef.current.scrollTop = preRef.current.scrollHeight; });
+          } else if (evt.type === "reset") {
+            setRaw("");
+          } else if (evt.type === "final") {
+            setStore((prev) => ({
+              ...prev,
+              [programId]: { generatedAt: new Date().toISOString(), model: evt.usage?.model ?? "", source: "ai", draft: evt.draft as DraftOutput, edits: {} },
+            }));
+            setView("edit");
+            settled = true;
+            const made = evt.draft as DraftOutput;
+            toast.success("신청서 뼈대를 만들었습니다", {
+              id: tid,
+              description: `문단 ${made.sections.length}개 · 제출서류 ${made.documents.length}건 · 이 브라우저에 자동 저장했습니다`,
+            });
+          } else if (evt.type === "error") {
+            setError(evt.message);
+            settled = true;
+            toast.error("뼈대를 만들지 못했습니다", { id: tid, description: String(evt.message) });
+          }
+        }
+      }
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "알 수 없는 오류";
+      setError(message);
+      settled = true;
+      toast.error("뼈대를 만들지 못했습니다", { id: tid, description: message });
+    } finally {
+      setRunning(false);
+      if (!settled) {
+        toast.error("생성이 도중에 끊겼습니다", { id: tid, description: "응답이 끝까지 오지 않았습니다. 다시 생성을 눌러 주세요." });
+      }
+    }
   };
 
   const setEdit = (i: number, text: string) =>
@@ -209,11 +289,17 @@ export function DraftScreen({ programId }: { programId: string }) {
       <div className={cn(cardMutedVariants({ bordered: true, pad: "px5y4" }), "space-y-3")}>
         <p className="text-xs text-[#444444] leading-relaxed">
           목차를 만든 뒤 <span className="font-semibold text-[#111111]">회사 정보 · 자격 충족 근거 · 내 사업 정보</span>로 채울 수 있는 곳은 자동으로 채웁니다.
-          남은 <span className="font-semibold text-amber-700">[[ ]]</span> 빈칸은 오른쪽 패널에서 채우세요. 모든 내용은 이 브라우저에만 저장됩니다.
+          남은 <span className="font-semibold text-amber-700">[[ ]]</span> 빈칸은 오른쪽 패널에서 채우세요. AI는 공고문만 읽으며 회사 정보는 서버로 보내지 않습니다.
         </p>
         <div className="flex items-center gap-2 flex-wrap">
-          <Button variant="primaryBordered" pad="3x2" text="xs" radius="xl" motion="colors" off="o50" onClick={startBasic}>
-            {saved ? "초안 다시 만들기" : "✦ 신청서 초안 만들기"}
+          {/* 데모 빌드: 사전 생성된 AI 초안이 있는 공고에만 AI 버튼을 보인다 */}
+          {hasCachedDraft(programId) && (
+            <Button variant="primaryBordered" pad="3x2" text="xs" radius="xl" motion="colors" off="o50" onClick={generate} disabled={running}>
+              {running ? "생성 중…" : saved?.source === "ai" || (saved && !saved.source) ? "AI로 다시 생성" : "✦ AI로 공고 맞춤 목차 만들기"}
+            </Button>
+          )}
+          <Button variant="soft" pad="3x2" text="xs" radius="xl" motion="colors" off="o50" onClick={startBasic} disabled={running}>
+            {saved?.source === "basic" ? "기본 양식 다시 만들기" : "기본 양식으로 바로 시작 (AI 없음)"}
           </Button>
           {saved && (
             <>
@@ -242,14 +328,25 @@ export function DraftScreen({ programId }: { programId: string }) {
               <div className="h-full bg-[#6E62C2] transition-all" style={{ width: `${Math.round(completion * 100)}%` }} />
             </div>
             <p className="text-[10px] text-[#888888] font-mono">
-              채움 {Math.round(completion * 100)}% · 자동으로 채운 곳 {totalFilled}개 · 남은 빈칸 {totalBlanks}개 · 기본 양식 · {isoToDot(saved.generatedAt.slice(0, 10))} 생성 · 이 브라우저에 자동 저장
+              채움 {Math.round(completion * 100)}% · 자동으로 채운 곳 {totalFilled}개 · 남은 빈칸 {totalBlanks}개 · {saved.source === "basic" ? "기본 양식" : `AI${saved.model ? ` (${saved.model})` : ""} · 시연용 사전 생성 결과`} · {isoToDot(saved.generatedAt.slice(0, 10))} 생성 · 이 브라우저에 자동 저장
             </p>
           </div>
         )}
       </div>
 
+      {error && (
+        <Alert pad="lg"><p className="text-rose-700 text-xs">{error}</p></Alert>
+      )}
+
+      {/* 스트리밍 중 */}
+      {running && (
+        <pre ref={preRef} className="bg-[#111111] text-[#c9c4ea] text-[11px] font-mono rounded-2xl p-4 h-48 overflow-auto whitespace-pre-wrap break-all">
+          {raw || "공고문을 읽고 있습니다…"}
+        </pre>
+      )}
+
       {/* 결과 */}
-      {saved && (
+      {saved && !running && (
         <div className="grid lg:grid-cols-[1fr_340px] gap-5 items-start">
           <div className="space-y-5 min-w-0">
             <Card pad="p5" shadow="none" className="space-y-3">
@@ -440,12 +537,12 @@ export function DraftScreen({ programId }: { programId: string }) {
         </div>
       )}
 
-      {!saved && (
+      {!saved && !running && (
         <div className="bg-white border border-dashed border-[#E4E6EA] rounded-2xl p-10 text-center space-y-1">
           <p className="text-[#444444] text-sm">아직 만든 초안이 없습니다.</p>
           <p className="text-[#888888] text-xs">
-            분야별 표준 목차(창업은 PSST: 문제 인식·실현 가능성·성장 전략·팀 구성)로 초안을 만들고,
-            회사 정보·자격 충족 근거·내 사업 정보로 채울 수 있는 곳을 자동으로 채웁니다.
+            &quot;AI로 공고 맞춤 목차&quot;는 공고문의 평가항목·양식을 읽어 목차를 만듭니다(20~40초).
+            &quot;기본 양식&quot;은 AI 없이 분야별 표준 목차(창업은 PSST)로 바로 시작합니다.
           </p>
         </div>
       )}

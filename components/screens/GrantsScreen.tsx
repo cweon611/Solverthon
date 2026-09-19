@@ -12,6 +12,7 @@ import { useCompany, useTasks, useVerdicts } from "@/lib/store/hooks";
 import type { GrantStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
+import { ConditionCoach } from "@/components/ui/ConditionCoach";
 import { CriteriaTable } from "@/components/ui/CriteriaTable";
 import { CutoutFrame } from "@/components/ui/CutoutFrame";
 import { Disclaimer } from "@/components/ui/Disclaimer";
@@ -242,6 +243,8 @@ export function GrantsScreen() {
                           {grant.eligibility && grant.eligibility.length > 0 && (
                             <CriteriaTable rows={grant.eligibility} rowKey={grant.id} />
                           )}
+                          {/* 부족한 요건을 AI가 쉬운 말로 풀어준다(시연용 사전 생성 결과). 판정은 바꾸지 않는다 */}
+                          <ConditionCoach grant={grant} />
                           <div className="flex gap-2 text-xs flex-wrap">
                             <ExtLink href={grant.originalUrl} className={PILL_SOFT}>
                               {grant.isSynthetic ? "포털에서 찾기" : "공고 원문 보기"}

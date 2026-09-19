@@ -1,0 +1,126 @@
+"use client";
+
+// 미충족·확인필요 요건을 AI가 쉬운 말로 풀어주고 충족 방법을 안내한다.
+// 서버로 보내는 것은 공고 id와 요건 행(라벨·기준·원문·상태)뿐이다. 회사의 현재 값은 보내지 않는다 (§0.1-4).
+// 판정은 lib/engine이 이미 끝냈고, 이 설명은 판정을 바꾸지 않는다 (§0.1-1).
+
+import { useState } from "react";
+import { toast } from "sonner";
+
+import type { CoachOutput } from "@/lib/ai/geminiSchemas";
+import { hasCachedCoach } from "@/lib/ai-cache/available";
+import type { Grant } from "@/lib/types";
+
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
+type State =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "done"; data: CoachOutput; model: string }
+  | { status: "error"; message: string };
+
+export function ConditionCoach({ grant }: { grant: Grant }) {
+  const [state, setState] = useState<State>({ status: "idle" });
+
+  const rows = (grant.eligibility ?? [])
+    .filter((e) => e.state !== "pass")
+    .map((e) => ({ label: e.label, required: e.required, sourceText: e.sourceText, state: e.state as "fail" | "check" }));
+  // 데모 빌드: 사전 생성된 설명이 있는 조합에만 버튼을 보인다
+  if (rows.length === 0 || !hasCachedCoach(grant.id, rows.slice(0, 15))) return null;
+
+  const run = async () => {
+    setState({ status: "loading" });
+    // 접힌 카드 안에서 도는 호출이라 버튼 글자 말고는 진행 표시가 없었다
+    const tid = toast.loading("AI 코치가 요건을 읽는 중…", {
+      description: `요건 ${rows.length}개의 뜻과 충족 방법을 정리합니다. 판정은 바꾸지 않습니다.`,
+    });
+    try {
+      const res = await fetch("/api/ai/coach", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ programId: grant.id, criteria: rows.slice(0, 15) }),
+      });
+      const body = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(body?.error?.message ?? `요청 실패 (${res.status})`);
+      setState({ status: "done", data: body.coach as CoachOutput, model: body.usage?.model ?? "" });
+      const coach = body.coach as CoachOutput;
+      toast.success("AI 코치 설명이 준비됐습니다", {
+        id: tid,
+        description: `요건 ${coach.items.length}개 풀이와 오늘 할 첫 행동까지 정리했습니다`,
+      });
+    } catch (e) {
+      const message = e instanceof Error ? e.message : "알 수 없는 오류";
+      setState({ status: "error", message });
+      toast.error("AI 코치 설명을 받지 못했습니다", { id: tid, description: message });
+    }
+  };
+
+  return (
+    <div className="mt-2">
+      {state.status !== "done" && (
+        <Button
+          onClick={run}
+          disabled={state.status === "loading"}
+          variant="softInverse" pad="3x2.5" radius="xl" block motion="colors" off="wait"
+        >
+          <p className="text-xs font-semibold text-[#6E62C2]">
+            ✦ {state.status === "loading" ? "AI 코치가 요건을 읽고 있습니다…" : "AI 코치에게 물어보기 — 이 요건, 어떻게 충족하나요?"}
+          </p>
+          <p className="text-[10px] text-[#888888] mt-0.5">요건의 뜻과 충족 방법만 설명합니다. 판정은 바꾸지 않습니다.</p>
+        </Button>
+      )}
+
+      {state.status === "error" && (
+        <Alert pad="xs" className="mt-2">
+          <p className="text-rose-700 text-xs">{state.message}</p>
+        </Alert>
+      )}
+
+      {state.status === "done" && (
+        <div className="bg-[#f0eef9]/60 border border-[#dddaf4] rounded-xl p-4 space-y-3">
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-xs text-[#444444] leading-relaxed">{state.data.summary}</p>
+          </div>
+
+          <div className="space-y-2">
+            {state.data.items.map((item, i) => (
+              <div key={i} className="bg-white border border-[#E4E6EA] rounded-xl p-3 space-y-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="text-xs font-semibold text-[#111111]">{item.requirement}</p>
+                  <Badge size="sm" tone={item.can_fix_now ? "success" : "muted"}>
+                    {item.can_fix_now ? "지금 행동으로 해결 가능" : "시간·상황이 필요"}
+                  </Badge>
+                </div>
+                <p className="text-xs text-[#444444] leading-relaxed">{item.meaning}</p>
+                {item.how_to_meet.length > 0 && (
+                  <ol className="space-y-1 pl-4 list-decimal">
+                    {item.how_to_meet.map((step, j) => (
+                      <li key={j} className="text-xs text-[#444444] leading-relaxed">{step}</li>
+                    ))}
+                  </ol>
+                )}
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  {item.where_to_check && <p className="text-[11px] text-[#6E62C2]">확인처: {item.where_to_check}</p>}
+                  {item.caution && <p className="text-[11px] text-amber-700">주의: {item.caution}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-[#6E62C2] text-white rounded-xl px-3 py-2.5">
+            <p className="text-[10px] font-semibold opacity-80">오늘 할 첫 행동</p>
+            <p className="text-xs font-semibold mt-0.5">{state.data.next_step}</p>
+          </div>
+
+          <p className="text-[10px] text-[#888888]">
+            AI 설명은 참고용입니다. 자격 판정은 코드가 했고 이 설명은 판정을 바꾸지 않습니다. 최종 확인은 공고 원문과 주관기관에서 하세요.
+            {state.model && <span className="font-mono"> · {state.model}</span>}
+            <span> · 시연용으로 사전 생성된 AI 결과</span>
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
