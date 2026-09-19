@@ -223,7 +223,7 @@ function Sidebar({ page, setPage, company }: { page: Page; setPage: (p: Page) =>
           <div className="w-8 h-8 rounded-xl bg-[#6E62C2] flex items-center justify-center shadow-lg shadow-[#6E62C2]/30">
             <span className="text-white font-display font-bold text-sm">B</span>
           </div>
-          <span className="text-[#111111] font-display font-bold text-lg tracking-tight">브릿지</span>
+          <span className="text-[#111111] font-display font-bold text-lg tracking-tight">비즈버디</span>
           <span className="ml-auto text-[9px] font-mono text-[#6E62C2] bg-[#f0eef9] px-1.5 py-0.5 rounded-full font-semibold">BETA</span>
         </div>
       </div>
@@ -1684,7 +1684,7 @@ function MyPage({ company, onSave }: { company: Company; onSave: (c: Company) =>
 
 // ─── App Root ─────────────────────────────────────────────────────────────────
 
-export default function BridgePage() {
+export default function BizBuddyPage() {
   const [page, setPage] = useState<Page>("dashboard");
   const [company, setCompany] = useState<Company>(DEFAULT_COMPANY);
   const [taskList, setTaskList] = useState<Task[]>(tasks);

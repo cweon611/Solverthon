@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 1470–1683행 MyPage.
+// design/BizBuddyPage.tsx 1470–1683행 MyPage.
 // 대표자 연령 → 생년월일 date 입력(§4.5-14) · 개업일 date, 업력은 계산(§4.5-15) · 판정 이력 useHistory()(§4.5-10)
 // · 엑셀 내보내기 P0 disabled(§4.5-12) · 계정 관리 → 데이터 관리(§4.5-11). 스타일 동일.
 
@@ -131,7 +131,7 @@ export function MyPageScreen() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `bridge-history-${toIso(today)}.csv`;
+    a.download = `bizbuddy-history-${toIso(today)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -141,7 +141,7 @@ export function MyPageScreen() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `bridge-export-${toIso(today)}.json`;
+    a.download = `bizbuddy-export-${toIso(today)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };

@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 
-// design/BridgePage.tsx 169–176행 아이콘 8종 그대로 + Sparkles·Layers·FileCheck 3종 추가(§4.2, 동일 스타일 16×16 stroke 1.5)
+// design/BizBuddyPage.tsx 169–176행 아이콘 8종 그대로 + Sparkles·Layers·FileCheck 3종 추가(§4.2, 동일 스타일 16×16 stroke 1.5)
 
 export const GridIcon        = (): ReactElement => <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4"><rect x="1" y="1" width="6" height="6" rx="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5"/></svg>;
 export const CheckCircleIcon = (): ReactElement => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4"><circle cx="8" cy="8" r="6.5"/><path d="M5 8.5l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>;

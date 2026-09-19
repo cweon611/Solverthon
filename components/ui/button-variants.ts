@@ -1,4 +1,4 @@
-// 브릿지 버튼 클래스 테이블. JSX·React import 없음 → node 환경 vitest로 검증한다.
+// 비즈버디 버튼 클래스 테이블. JSX·React import 없음 → node 환경 vitest로 검증한다.
 //
 // 이 테이블은 shadcn의 stock Button base 문자열을 쓰지 않는다. stock base는
 //   (1) disabled 상태에서 포인터 이벤트를 통째로 죽인다 — 이 앱의 disabled 자리 19곳 중

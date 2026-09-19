@@ -1,6 +1,6 @@
 "use client";
 
-// lib/store/TasksProvider.tsx — 할 일의 사용자 조작 (localStorage "bridge:tasks:v1")
+// lib/store/TasksProvider.tsx — 할 일의 사용자 조작 (localStorage "bizbuddy:tasks:v1")
 // 생성된 항목은 원본을 건드리지 않고 doneIds·hiddenIds·overrides로 덮어쓴다 (§6.3·§8 S4).
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";

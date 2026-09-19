@@ -3,7 +3,7 @@
 
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-export const SESSION_COOKIE = "bridge_session";
+export const SESSION_COOKIE = "bizbuddy_session";
 export const SESSION_TTL_S = 60 * 60 * 24 * 30; // 30일
 
 export interface SessionPayload {

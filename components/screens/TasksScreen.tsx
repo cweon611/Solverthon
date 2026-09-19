@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 645–824행 TasksPage. FormRow·TaskForm은 components/ui/TaskForm.tsx로 호이스팅(§4.5-2).
+// design/BizBuddyPage.tsx 645–824행 TasksPage. FormRow·TaskForm은 components/ui/TaskForm.tsx로 호이스팅(§4.5-2).
 // 상태는 공유 useTasks()(§4.5-4). id는 문자열(§4.5-18).
 
 import { TriangleAlertIcon } from "lucide-react";

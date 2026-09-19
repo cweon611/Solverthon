@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 1193–1317행 SimulatorPage. employeeRules(법적 사실 오류) 삭제 → useSimulation() 결과(§4.5-9).
+// design/BizBuddyPage.tsx 1193–1317행 SimulatorPage. employeeRules(법적 사실 오류) 삭제 → useSimulation() 결과(§4.5-9).
 // 인원을 줄이는 경우는 제목만 "사라지는 법정 의무 / 새로 열리는 지원 자격"으로 바뀐다(§8 S7 허용된 추가).
 
 import { useState } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-// lib/store/HistoryProvider.tsx — 판정 이력 (localStorage "bridge:history:v1")
+// lib/store/HistoryProvider.tsx — 판정 이력 (localStorage "bizbuddy:history:v1")
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
 

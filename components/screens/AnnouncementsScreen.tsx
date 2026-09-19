@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 1321–1464행 AnnouncementsPage + 라벨/색 맵.
+// design/BizBuddyPage.tsx 1321–1464행 AnnouncementsPage + 라벨/색 맵.
 // 정렬 §4.5-7 · 마감 카드 테두리 항상 포함 §4.5-19 · fieldColors "기타" §4.5-20 · 원문 보기 외부 링크 §4.5-8.
 
 import Link from "next/link";

@@ -17,4 +17,4 @@ alter table public.app_users enable row level security;
 revoke all on public.app_users from anon, authenticated;
 -- RLS 정책을 하나도 만들지 않으므로 service role 외에는 어떤 행도 볼 수 없다.
 
-comment on table public.app_users is '브릿지 회원 계정. 비밀번호는 scrypt 해시. 회사 프로필은 저장하지 않음.';
+comment on table public.app_users is '비즈버디 회원 계정. 비밀번호는 scrypt 해시. 회사 프로필은 저장하지 않음.';

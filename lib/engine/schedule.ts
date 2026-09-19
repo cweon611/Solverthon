@@ -8,7 +8,7 @@ import { addDays, dDay, fmtDate, fromIso, lastDayOfMonth, startOfDay, toIso } fr
 
 export { dDay } from "./format";
 
-/** localStorage "bridge:tasks:v1" + 프로필 생성일 — 생성된 할 일에 사용자의 조작을 덮어쓴다 */
+/** localStorage "bizbuddy:tasks:v1" + 프로필 생성일 — 생성된 할 일에 사용자의 조작을 덮어쓴다 */
 export interface TaskState {
   doneIds: string[];
   hiddenIds: string[];

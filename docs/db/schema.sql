@@ -1,5 +1,5 @@
 -- ═══ 0001_init.sql ═══
--- 브릿지 카탈로그 스키마 (PRD §5.5)
+-- 비즈버디 카탈로그 스키마 (PRD §5.5)
 -- 적용: Supabase 대시보드 → SQL Editor에 붙여넣고 실행. 여러 번 실행해도 안전하다.
 --
 -- 접근 모델: 앱 서버만 secret key(service_role)로 접근한다. 브라우저는 Supabase에 직접 붙지 않는다(§3.4).
@@ -169,7 +169,7 @@ alter table public.app_users enable row level security;
 revoke all on public.app_users from anon, authenticated;
 -- RLS 정책을 하나도 만들지 않으므로 service role 외에는 어떤 행도 볼 수 없다.
 
-comment on table public.app_users is '브릿지 회원 계정. 비밀번호는 scrypt 해시. 회사 프로필은 저장하지 않음.';
+comment on table public.app_users is '비즈버디 회원 계정. 비밀번호는 scrypt 해시. 회사 프로필은 저장하지 않음.';
 
 -- ═══ 0003_profiles.sql ═══
 -- 0003_profiles.sql — 계정별 데이터 원본 (프로필·할 일·설정·이력·신청서 초안) JSON 한 덩어리
@@ -185,7 +185,7 @@ create table if not exists public.app_profiles (
 alter table public.app_profiles enable row level security;
 revoke all on public.app_profiles from anon, authenticated;
 
-comment on table public.app_profiles is '브릿지 계정 데이터(프로필·할 일·설정·이력·초안). 계정당 1행.';
+comment on table public.app_profiles is '비즈버디 계정 데이터(프로필·할 일·설정·이력·초안). 계정당 1행.';
 
 -- ═══ 0004_attachments.sql ═══
 -- 0004_attachments.sql — 첨부파일(hwpx·pdf) 본문 발췌

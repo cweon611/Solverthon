@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 892–915행 MiniForm(CalendarPage 내부)을 모듈 최상위로 호이스팅(§4.5-2).
+// design/BizBuddyPage.tsx 892–915행 MiniForm(CalendarPage 내부)을 모듈 최상위로 호이스팅(§4.5-2).
 
 import { addDays, fmtDate } from "@/lib/engine/format";
 import { useToday } from "@/lib/store/today";

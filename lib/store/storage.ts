@@ -4,12 +4,12 @@
 // localStorage는 작업 사본이다. 로그인한 계정의 원본은 서버(app_profiles)에 있고 sync.ts가 맞춘다.
 
 export const STORAGE_KEYS = {
-  profile: "bridge:profile:v1",
-  tasks: "bridge:tasks:v1",
-  settings: "bridge:settings:v1",
-  history: "bridge:history:v1",
-  drafts: "bridge:drafts:v1", // 신청서 초안 (공고 id별)
-  owner: "bridge:owner:v1", // 이 기기 데이터의 주인(계정 id). 다른 계정이 로그인하면 지운다
+  profile: "bizbuddy:profile:v1",
+  tasks: "bizbuddy:tasks:v1",
+  settings: "bizbuddy:settings:v1",
+  history: "bizbuddy:history:v1",
+  drafts: "bizbuddy:drafts:v1", // 신청서 초안 (공고 id별)
+  owner: "bizbuddy:owner:v1", // 이 기기 데이터의 주인(계정 id). 다른 계정이 로그인하면 지운다
 } as const;
 
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];
@@ -44,7 +44,7 @@ export function removeKey(key: StorageKey): void {
   }
 }
 
-/** 프로필 초기화 — bridge:* 전체 삭제 (§8 S8) */
+/** 프로필 초기화 — bizbuddy:* 전체 삭제 (§8 S8) */
 export function clearAll(): void {
   for (const key of Object.values(STORAGE_KEYS)) removeKey(key);
 }

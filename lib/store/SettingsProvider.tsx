@@ -1,6 +1,6 @@
 "use client";
 
-// lib/store/SettingsProvider.tsx — 알림 설정 (localStorage "bridge:settings:v1")
+// lib/store/SettingsProvider.tsx — 알림 설정 (localStorage "bizbuddy:settings:v1")
 // 이 버전은 대시보드 배너로만 알린다. 채널 토글은 저장만 하고 발송하지 않는다 (§8 S8).
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";

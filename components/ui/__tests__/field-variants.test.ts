@@ -33,13 +33,13 @@ const INPUT_WANT: Record<InputVariant, string> = {
   // InterviewScreen.tsx:20 (const INPUT)
   chatLg:
     "flex-1 border border-[#E4E6EA] rounded-xl px-4 py-2.5 text-sm text-[#111111] placeholder-[#888888] focus:outline-none focus:border-[#6E62C2] focus:ring-2 focus:ring-[#6E62C2]/10 disabled:bg-[#F5F6F8]",
-  // TaskForm.tsx:15 (const inputCls) — design/BridgePage.tsx:688
+  // TaskForm.tsx:15 (const inputCls) — design/BizBuddyPage.tsx:688
   rowSm:
     "flex-1 border border-[#E4E6EA] rounded-lg px-3 py-1.5 text-sm text-[#111111] focus:outline-none focus:border-[#6E62C2] focus:ring-1 focus:ring-[#6E62C2]/20",
   // MyPageScreen.tsx:37-38 (const inputCls)
   fieldSm:
     "w-full border border-[#E4E6EA] rounded-lg px-3 py-1.5 text-sm text-[#111111] focus:outline-none focus:border-[#6E62C2] focus:ring-1 focus:ring-[#6E62C2]/20",
-  // MiniForm.tsx:10 (const inputCls) — design/BridgePage.tsx:892
+  // MiniForm.tsx:10 (const inputCls) — design/BizBuddyPage.tsx:892
   miniXs:
     "w-full border border-[#E4E6EA] rounded-lg px-3 py-1.5 text-xs text-[#111111] focus:outline-none focus:border-[#6E62C2] focus:ring-1 focus:ring-[#6E62C2]/20",
 };
@@ -48,10 +48,10 @@ const INPUT_WANT: Record<InputVariant, string> = {
 const INPUT_MONO_WANT = `${INPUT_WANT.authLg} font-mono`;
 
 const SELECT_WANT: Record<SelectFieldVariant, string> = {
-  // MiniForm.tsx:11 (const selectCls) — design/BridgePage.tsx:893
+  // MiniForm.tsx:11 (const selectCls) — design/BizBuddyPage.tsx:893
   miniXs:
     "w-full border border-[#E4E6EA] rounded-lg px-3 py-1.5 text-xs text-[#111111] focus:outline-none focus:border-[#6E62C2] bg-white cursor-pointer",
-  // TaskForm.tsx:16 (const selectCls) — design/BridgePage.tsx:689
+  // TaskForm.tsx:16 (const selectCls) — design/BizBuddyPage.tsx:689
   rowSm:
     "border border-[#E4E6EA] rounded-lg px-3 py-1.5 text-sm text-[#111111] focus:outline-none focus:border-[#6E62C2] bg-white cursor-pointer",
   // MyPageScreen.tsx:199,204 — select인데 inputCls를 입은 두 개

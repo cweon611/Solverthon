@@ -1,6 +1,6 @@
 "use client";
 
-// lib/store/ProfileProvider.tsx — 기업 프로필 (localStorage "bridge:profile:v1")
+// lib/store/ProfileProvider.tsx — 기업 프로필 (localStorage "bizbuddy:profile:v1")
 // 서버로 전송하지 않는다 (§0.1-4).
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-// 브릿지 Select.
+// 비즈버디 Select.
 //
 // 트리거는 지금 화면에 있는 네이티브 <select>와 같은 상자를 그린다. 계열 이름도
 // field-variants.ts의 selectField와 똑같이 miniXs · rowSm · asInput 세 가지로 두어
@@ -13,7 +13,7 @@
 // 드롭다운 패널(OnboardingScreen:192 데모 프로필 목록 = 흰 카드 + shadow-lg)과 같은 계열로
 // 잡고, 반경만 앱 표준인 xl(12px)로 맞췄다. 열림/닫힘 애니메이션은 tw-animate-css.
 //
-// 색은 globals.css가 브릿지 값으로 연결해 둔 시맨틱 토큰을 쓴다:
+// 색은 globals.css가 비즈버디 값으로 연결해 둔 시맨틱 토큰을 쓴다:
 //   border-input=#E4E6EA · ring-ring=#6E62C2 · bg-popover=#FFFFFF · text-foreground=#111111
 //   bg-accent=#F5F6F8(행 hover) · text-muted-foreground=#888888 · bg-muted=#F5F6F8(구분선)
 // 다크 모드 코드 없음 — 이 앱은 다크 모드를 지원하지 않는다.

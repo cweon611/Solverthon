@@ -1,4 +1,4 @@
-# 브릿지 DB — ERD
+# 비즈버디 DB — ERD
 
 Supabase(PostgreSQL 17 + pgvector). 스키마 전체는 [`schema.sql`](./schema.sql), 원본 마이그레이션은 [`../../supabase/migrations/`](../../supabase/migrations/)에 있습니다.
 

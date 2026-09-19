@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 1687–1707행 BridgePage 루트 → 앱 셸(§4.2).
+// design/BizBuddyPage.tsx 1687–1707행 BizBuddyPage 루트 → 앱 셸(§4.2).
 // page 상태 → 라우팅. main의 overflow 클래스는 pathname === '/calendar' 조건 유지.
 // 세션이 없으면 /login, 세션은 있는데 이 기기에 프로필이 없으면 /onboarding/chat 으로 보낸다.
 // 읽는 중에는 스켈레톤만 그리고 잘못된 리다이렉트를 하지 않는다 (§4.3).

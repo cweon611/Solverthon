@@ -11,4 +11,4 @@ create table if not exists public.app_profiles (
 alter table public.app_profiles enable row level security;
 revoke all on public.app_profiles from anon, authenticated;
 
-comment on table public.app_profiles is '브릿지 계정 데이터(프로필·할 일·설정·이력·초안). 계정당 1행.';
+comment on table public.app_profiles is '비즈버디 계정 데이터(프로필·할 일·설정·이력·초안). 계정당 1행.';

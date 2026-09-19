@@ -54,7 +54,7 @@ describe("session", () => {
     expect(verifySession("nodot", secret)).toBeNull();
   });
   it("쿠키 문자열", () => {
-    expect(sessionCookie("abc", true)).toBe("bridge_session=abc; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000; Secure");
-    expect(sessionCookie(null, false)).toBe("bridge_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
+    expect(sessionCookie("abc", true)).toBe("bizbuddy_session=abc; Path=/; HttpOnly; SameSite=Lax; Max-Age=2592000; Secure");
+    expect(sessionCookie(null, false)).toBe("bizbuddy_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
   });
 });

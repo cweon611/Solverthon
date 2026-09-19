@@ -42,7 +42,7 @@ const SIZE_XS = "rounded-lg px-3 py-1.5 text-xs";
 
 /** ring-2 / 10% — 앱 이후에 생긴 다수파(auth · flow · chat · draft · parse). */
 const FOCUS_RING_2 = "focus:outline-none focus:border-[#6E62C2] focus:ring-2 focus:ring-[#6E62C2]/10";
-/** ring-1 / 20% — design/BridgePage.tsx:688,892 원본 계열(TaskForm · MiniForm · MyPage). */
+/** ring-1 / 20% — design/BizBuddyPage.tsx:688,892 원본 계열(TaskForm · MiniForm · MyPage). */
 const FOCUS_RING_1 = "focus:outline-none focus:border-[#6E62C2] focus:ring-1 focus:ring-[#6E62C2]/20";
 /** 링 없음 — 테두리 색만 바뀐다(select 2종 · DedupeDemo textarea 2종). */
 const FOCUS_BORDER_ONLY = "focus:outline-none focus:border-[#6E62C2]";

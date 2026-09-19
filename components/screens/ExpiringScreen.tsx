@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 1107–1174행 ExpiringPage. expiresIn null(직원수형 "채용 시") 처리(§4.5-18), 버튼은 외부 링크(§4.5-8).
+// design/BizBuddyPage.tsx 1107–1174행 ExpiringPage. expiresIn null(직원수형 "채용 시") 처리(§4.5-18), 버튼은 외부 링크(§4.5-8).
 // 하단 "판정 기준" 문구는 유지(§4.2).
 
 import { EXPIRY_AMBER, EXPIRY_ROSE, PHOTOS } from "@/lib/constants";

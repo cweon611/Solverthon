@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 206–278행 Sidebar.
+// design/BizBuddyPage.tsx 206–278행 Sidebar.
 // page/setPage → usePathname() + <Link>(§4.2). 배지는 훅에서 계산. 푸터 문구 §4.5-3 + /about 링크(허용된 추가).
 
 import Image from "next/image";

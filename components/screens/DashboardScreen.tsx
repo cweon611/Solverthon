@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 282–395행 Dashboard. 배너·숫자·목록 전부 훅(엔진 결과)에서 공급(§4.2).
+// design/BizBuddyPage.tsx 282–395행 Dashboard. 배너·숫자·목록 전부 훅(엔진 결과)에서 공급(§4.2).
 
 import Link from "next/link";
 

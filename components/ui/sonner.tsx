@@ -1,6 +1,6 @@
 "use client";
 
-// 브릿지 토스트. 이 앱에 없던 UI라 전부 새로 칠한다.
+// 비즈버디 토스트. 이 앱에 없던 UI라 전부 새로 칠한다.
 //
 // next-themes 의존은 걷어냈다 — 이 앱은 다크 모드가 없어 theme는 light 고정이다.
 // (`npx shadcn add sonner`가 package.json에 next-themes를 넣어 뒀는데, 이제 저장소 안에서

@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 645행 EMPTY_DRAFT · 681–735행 FormRow·TaskForm을 모듈 최상위로 호이스팅(§4.5-2).
+// design/BizBuddyPage.tsx 645행 EMPTY_DRAFT · 681–735행 FormRow·TaskForm을 모듈 최상위로 호이스팅(§4.5-2).
 // 렌더마다 새 컴포넌트 타입이 생겨 입력마다 리마운트되던 포커스 손실 버그 수정.
 
 import type { ReactNode } from "react";

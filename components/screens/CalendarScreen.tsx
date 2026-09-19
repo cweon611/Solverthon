@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 828–1103행 CalendarPage. parseDate/fmtDate/DAYS → lib/engine/format.ts, MiniForm 호이스팅(§4.5-2).
+// design/BizBuddyPage.tsx 828–1103행 CalendarPage. parseDate/fmtDate/DAYS → lib/engine/format.ts, MiniForm 호이스팅(§4.5-2).
 // 날짜 매칭은 dueDateIso(§4.5-16), "중요"는 importance === 'high'(§4.5-17).
 
 import { useState } from "react";

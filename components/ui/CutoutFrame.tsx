@@ -1,7 +1,7 @@
 import { Img } from "./Img";
 
 // 3D cutout frame — white card with shadow + cropped photo, simulating a product render card
-// design/BridgePage.tsx 192–202행 그대로
+// design/BizBuddyPage.tsx 192–202행 그대로
 export function CutoutFrame({ src, alt, className }: { src: string; alt: string; className?: string }) {
   return (
     <div className={`relative overflow-hidden rounded-2xl bg-[#F5F6F8] shadow-xl shadow-black/10 ${className ?? ""}`}>
