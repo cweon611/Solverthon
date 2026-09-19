@@ -356,6 +356,6 @@ export interface SimulationView {
 
 // 카탈로그 메타 (사이드바 푸터 "공고 동기화" 표기용)
 export interface CatalogMeta {
-  mode: "seed" | "supabase";
+  mode: "seed" | "supabase" | "local";
   syncedAt: string | null; // ISO datetime · seed 모드는 null(요청 시점 기준)
 }
