@@ -36,7 +36,7 @@ export function LoginScreen() {
   const afterLogin = async () => {
     await waitForSync(); // 서버에 저장된 데이터를 먼저 내려받는다
     const profile = readJson<CompanyProfile | null>(STORAGE_KEYS.profile, null);
-    router.replace(profile ? "/dashboard" : "/onboarding/chat");
+    router.replace(profile ? "/dashboard" : "/onboarding");
   };
 
   const submit = async (e: FormEvent) => {

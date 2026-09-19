@@ -9,6 +9,7 @@ export const STORAGE_KEYS = {
   settings: "bizbuddy:settings:v1",
   history: "bizbuddy:history:v1",
   drafts: "bizbuddy:drafts:v1", // 신청서 초안 (공고 id별)
+  survey: "bizbuddy:survey:v1", // 작성 중인 회원 정보 설문 (기기 로컬 전용, 서버로 보내지 않는다)
   owner: "bizbuddy:owner:v1", // 이 기기 데이터의 주인(계정 id). 다른 계정이 로그인하면 지운다
 } as const;
 

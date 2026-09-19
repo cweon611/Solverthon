@@ -1,17 +1,6 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-import { InterviewScreen } from "@/components/screens/InterviewScreen";
-import { OnboardingShell } from "@/components/shell/OnboardingShell";
-
-export const metadata: Metadata = {
-  title: "대화로 시작하기 — 비즈버디",
-  description: "AI가 묻는 질문에 답하면 회사 정보와 사업 방향을 정리해 드립니다.",
-};
-
+// 예전 AI 대화 가입 주소. 회원 정보는 이제 설문(/onboarding)으로만 받는다
 export default function Page() {
-  return (
-    <OnboardingShell>
-      <InterviewScreen />
-    </OnboardingShell>
-  );
+  redirect("/onboarding");
 }

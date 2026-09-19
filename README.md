@@ -95,24 +95,21 @@ Node.js 20.9 이상이 필요합니다. 배포는 Node 24를 권장합니다.
 
 ## AI 보조 기능 (Gemini)
 
-판정은 여전히 `lib/engine`의 결정론적 코드가 한다. 아래 4가지는 그 결과를 **설명하고, 뼈대를 만들고, 숫자를 읽어주고, 질문하는** 보조 기능이다. 키는 `GEMINI_API`(서버 전용), 모델은 `GEMINI_MODEL`(기본 `gemini-3.6-flash`, 혼잡 시 3.7/3.8로 자동 폴백, 사고 깊이 기본 low).
+판정은 여전히 `lib/engine`의 결정론적 코드가 한다. 아래 3가지는 그 결과를 **설명하고, 뼈대를 만들고, 숫자를 읽어주는** 보조 기능이다. 회원 정보 수집에는 AI를 쓰지 않는다(설문). 키는 `GEMINI_API`(서버 전용), 모델은 `GEMINI_MODEL`(기본 `gemini-3.6-flash`, 혼잡 시 3.7/3.8로 자동 폴백, 사고 깊이 기본 low).
 
 | 기능 | 화면 | API | 서버로 가는 것 | 서버로 안 가는 것 |
 |---|---|---|---|---|
 | 요건 코치 | 판정함 → 조건부·제외 카드 펼침 | `POST /api/ai/coach` | 공고 id, 요건 행(라벨·기준·원문·상태) | 회사의 현재 값, 프로필 |
 | 신청서 뼈대 | 판정함·공고 목록 → "신청서 초안" → `/grants/[id]/draft` | `POST /api/ai/draft` (SSE) | 공고 id | 프로필 — `{{키}}` 치환은 브라우저에서 |
 | 현금흐름 해설 | 사이드바 → 현금흐름 분석 `/cashflow` | `POST /api/ai/cashflow` | 월별 합계·상위 항목 집계 숫자 | 엑셀 파일, 개별 거래, 회사명·거래처명 |
-| 대화형 온보딩(회원가입) | `/login` → "회원가입" → `/onboarding/chat`. 신규 가입은 대화로만 받고, 폼(`/onboarding?edit=1`)은 수정 전용 | `POST /api/ai/interview` | 대화 기록(저장·로그 없음) | — 추출값 저장은 localStorage에만 |
 
 - 프롬프트: `lib/ai/geminiPrompts.ts` · 출력 스키마: `lib/ai/geminiSchemas.ts` · 클라이언트: `lib/ai/gemini.ts`
 - 신청서 템플릿의 `{{company_name}}` 같은 프리필 키는 `lib/ai/prefill.ts`가 브라우저에서 프로필로 채운다. `[[ ]]`는 사용자가 쓸 빈칸.
 - 현금흐름 집계는 `lib/engine/cashflow.ts`(순수 TS, 테스트 있음). 지원 레이아웃: `[날짜, 구분, 항목, 금액]` · `[날짜, 항목, 수입, 지출]` · `[날짜, 항목, 금액(부호)]`.
-- 인터뷰 추출값은 `lib/ai/interviewCoerce.ts`가 코드표·날짜·범위를 검증한다. LLM 출력을 그대로 믿지 않는다.
-- 대화형 온보딩은 사용자가 말한 회사 정보가 AI 응답 생성을 위해 서버를 **경유**한다(저장·로그 없음). 명세 §0.1-4 "프로필은 브라우저를 떠나지 않는다"의 예외이며, 화면에 고지했다. 폼 입력은 그대로 남아 있다.
 
 ## 진입 흐름 · 계정
 
-`/` → `/login`. 아이디·비밀번호·사업자번호 세 가지가 모두 맞아야 로그인된다. `/signup`에서 같은 세 가지로 가입하면 바로 AI 대화(`/onboarding/chat`)로 넘어가 회사 정보를 만든다. 폼(`/onboarding?edit=1`)은 수정 전용이다.
+`/` → `/login`. 아이디·비밀번호·사업자번호 세 가지가 모두 맞아야 로그인된다. `/signup`에서 같은 세 가지로 가입하면 바로 회원 정보 설문(`/onboarding`)으로 넘어간다. 설문은 16문항(필수 5개)이고, 답하는 동안 옆 패널에서 판정 미리보기와 "이 항목에 답하면 확정되는 공고 수"를 보여준다. 작성 중인 답은 `bizbuddy:survey:v1`(기기 로컬)에 남아 새로고침해도 이어진다. 프로필 수정(`/onboarding?edit=1`)은 같은 설문을 확인 화면부터 연다. 로직: `lib/survey/survey.ts`, 화면: `components/screens/SurveyScreen.tsx`.
 
 - 계정 테이블: `supabase/migrations/0002_auth.sql` (`app_users`: login_id · scrypt 해시 · biz_no). **SQL Editor에서 한 번 실행해야 한다.**
 - 세션: HMAC 서명 HttpOnly 쿠키 30일 (`AUTH_SECRET`). `/api/auth/me`는 서명만 검증하고 DB를 읽지 않는다.

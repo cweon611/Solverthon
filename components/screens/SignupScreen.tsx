@@ -1,6 +1,6 @@
 "use client";
 
-// 회원가입 — 아이디·비밀번호·사업자번호만 받는다. 회사 정보는 다음 단계에서 AI와 대화해 만든다 (폼 없음).
+// 회원가입 — 아이디·비밀번호·사업자번호만 받는다. 회사 정보는 다음 단계의 설문(/onboarding)으로 받는다.
 
 import Image from "next/image";
 import Link from "next/link";
@@ -46,7 +46,7 @@ export function SignupScreen() {
       const body = await res.json().catch(() => null);
       if (!res.ok) throw new Error(body?.error?.message ?? `가입 실패 (${res.status})`);
       await refresh();
-      router.replace("/onboarding/chat");
+      router.replace("/onboarding");
     } catch (err) {
       setError(err instanceof Error ? err.message : "알 수 없는 오류");
     } finally {
@@ -63,7 +63,7 @@ export function SignupScreen() {
             <Link href="/login" className={cn(button({ variant: "link", text: "11", hand: false }), "ml-auto font-semibold")}>← 로그인</Link>
           </div>
           <h1 className="text-2xl font-display font-bold text-[#111111] mt-5">회원가입</h1>
-          <p className="text-[#888888] text-sm mt-1">계정 세 가지만 정하면 됩니다. 회사 정보는 다음 단계에서 AI와 대화하며 만듭니다.</p>
+          <p className="text-[#888888] text-sm mt-1">계정 세 가지만 정하면 됩니다. 회사 정보는 다음 단계에서 3분 설문으로 받습니다.</p>
         </CardHeader>
 
         <form onSubmit={submit} className="px-7 py-6 space-y-3">
@@ -103,7 +103,7 @@ export function SignupScreen() {
 
           <Button type="submit" disabled={!canSubmit || status === "unavailable"}
             variant="primary" pad="5x3" text="sm" radius="2xl" elevate="brand" motion="colors" block off="o50" className="mt-2">
-            {busy ? "만드는 중…" : "가입하고 AI와 대화 시작 →"}
+            {busy ? "만드는 중…" : "가입하고 설문 시작 →"}
           </Button>
         </form>
 

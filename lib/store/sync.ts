@@ -161,7 +161,7 @@ if (typeof window !== "undefined") {
   onAnyChange((key: StorageKey) => {
     const s = getSessionSnapshot();
     if (s.status !== "authed" || !s.user || snap.status !== "ready" || snap.userId !== s.user.id) return;
-    if (key === STORAGE_KEYS.owner) return;
+    if (key === STORAGE_KEYS.owner || key === STORAGE_KEYS.survey) return;
     const userId = s.user.id;
     if (debounce) clearTimeout(debounce);
     // 프로필은 바로, 나머지는 1.5초 모아서

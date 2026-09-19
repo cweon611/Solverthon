@@ -152,7 +152,7 @@ export function MyPageScreen() {
     try {
       await resetAll(); // 서버 원본과 이 기기 사본을 모두 비운다. 계정은 남는다
       toast.success("프로필을 초기화했습니다.", { description: "처음 화면부터 다시 시작합니다." });
-      router.replace("/onboarding/chat");
+      router.replace("/onboarding");
     } catch {
       toast.error("초기화하지 못했습니다.", { description: "잠시 후 다시 시도해 주세요." });
     }
@@ -247,7 +247,7 @@ export function MyPageScreen() {
           </Field>
           {profile?.business_direction && (
             <div className="col-span-2">
-              <Field label="사업 방향 (AI 대화에서 정리)" display={profile.business_direction} editing={false} />
+              <Field label="사업 방향 (설문에서 입력)" display={profile.business_direction} editing={false} />
             </div>
           )}
         </CardContent>

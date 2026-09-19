@@ -37,7 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           children은 서버에서 만든 그대로 슬롯으로 통과하므로 클라이언트 경계가 넓어지지 않는다.
           · TooltipProvider: <Tooltip> 하나라도 공급자 밖에 있으면 예외가 난다. 앱에 하나만 둔다.
           · Toaster: 토스트가 붙는 자리. 라우트 이동 뒤에도 살아 있어야 해서 루트에 둔다
-            (초기화 후 /onboarding/chat으로 넘어가며 뜨는 토스트가 이 배치에 기댄다). */}
+            (초기화 후 /onboarding으로 넘어가며 뜨는 토스트가 이 배치에 기댄다). */}
       <body className="h-full font-sans text-ink bg-surface">
         <TooltipProvider>{children}</TooltipProvider>
         <Toaster />

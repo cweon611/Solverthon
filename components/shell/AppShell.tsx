@@ -2,7 +2,7 @@
 
 // design/BizBuddyPage.tsx 1687–1707행 BizBuddyPage 루트 → 앱 셸(§4.2).
 // page 상태 → 라우팅. main의 overflow 클래스는 pathname === '/calendar' 조건 유지.
-// 세션이 없으면 /login, 세션은 있는데 이 기기에 프로필이 없으면 /onboarding/chat 으로 보낸다.
+// 세션이 없으면 /login, 세션은 있는데 이 기기에 프로필이 없으면 /onboarding(설문)으로 보낸다.
 // 읽는 중에는 스켈레톤만 그리고 잘못된 리다이렉트를 하지 않는다 (§4.3).
 
 import { usePathname, useRouter } from "next/navigation";
@@ -54,7 +54,7 @@ function ShellGuard({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (status === "anon" || status === "unavailable") router.replace("/login");
-    else if (status === "authed" && settled && isLoaded && !profile) router.replace("/onboarding/chat");
+    else if (status === "authed" && settled && isLoaded && !profile) router.replace("/onboarding");
   }, [status, settled, isLoaded, profile, router]);
 
   // 세션·서버 동기화·localStorage를 읽기 전에는 판단하지 않는다

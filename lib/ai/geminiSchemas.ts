@@ -1,4 +1,4 @@
-// lib/ai/geminiSchemas.ts — AI 보조 기능 4종의 출력 스키마 (zod 하나로 정의, JSON Schema는 파생)
+// lib/ai/geminiSchemas.ts — AI 보조 기능 3종의 출력 스키마 (zod 하나로 정의, JSON Schema는 파생)
 // Gemini responseJsonSchema는 nullable을 anyOf로 받으므로 되도록 ""(빈 문자열)로 "모름"을 표현한다.
 
 import { z } from "zod";
@@ -62,40 +62,6 @@ export const DraftOutputZ = z.object({
   warnings: z.array(z.string()).describe("마감·제출 방식·중복 수혜 제한 등 놓치기 쉬운 것"),
 });
 export type DraftOutput = z.infer<typeof DraftOutputZ>;
-
-// ─── 3. 대화형 온보딩 ─────────────────────────────────────────────────────────
-const CERTS = ["venture", "innobiz", "mainbiz", "research_institute", "social_enterprise", "women_enterprise", "disabled_enterprise"] as const;
-const TRI = ["true", "false", ""] as const; // "" = 모름
-const PRIORS = ["pre_startup_pkg", "early_startup_pkg", "leap_pkg", "youth_academy", "tips"] as const;
-
-export const InterviewExtractedZ = z.object({
-  name: z.string().describe("회사명. 모르면 빈 문자열"),
-  business_type: z.enum(["individual", "corporation", ""]).describe("개인사업자 individual · 법인 corporation · 모르면 빈 문자열"),
-  industry_code: z.string().describe("업종 코드표의 코드만. 모르면 빈 문자열"),
-  region_code: z.string().describe("지역 코드표의 코드만. 모르면 빈 문자열"),
-  founded_at: z.string().describe("개업일 YYYY-MM-DD. 연·월만 알면 01일. 모르면 빈 문자열"),
-  employee_count: z.string().describe("상시근로자 수(대표 제외) 정수 문자열. 모르면 빈 문자열"),
-  ceo_birth_date: z.string().describe("대표자 생년월일 YYYY-MM-DD. 연도만 알면 YYYY-01-01. 모르면 빈 문자열"),
-  ceo_gender: z.enum(["male", "female", ""]),
-  annual_revenue_eok: z.string().describe("연매출 억원 단위 숫자 문자열. 예 '3.5'. 모르면 빈 문자열"),
-  hiring_planned: z.enum(TRI),
-  has_online_sales: z.enum(TRI),
-  handles_personal_data: z.enum(TRI),
-  is_food_business: z.enum(TRI),
-  certifications: z.array(z.enum(CERTS)).describe("사용자가 보유한다고 말한 인증만"),
-  has_tax_arrears: z.enum(TRI).describe("국세·지방세 체납이 있으면 true, 없다고 하면 false, 모르면 빈 문자열"),
-  prior_support_status: z.enum(["none", "some", ""]).describe("정부 창업지원사업을 받은 적 없다고 하면 none, 받았다면 some, 모르면 빈 문자열"),
-  prior_support: z.array(z.enum(PRIORS)).describe("받았다고 말한 사업만: 예비창업패키지 pre_startup_pkg · 초기창업패키지 early_startup_pkg · 창업도약패키지 leap_pkg · 청년창업사관학교 youth_academy · TIPS tips"),
-  business_direction: z.string().describe("창업가가 말한 사업 방향·계획·고민. 사용자 표현 위주. 모르면 빈 문자열"),
-});
-export type InterviewExtractedRaw = z.infer<typeof InterviewExtractedZ>;
-
-export const InterviewOutputZ = z.object({
-  reply: z.string().describe("사용자에게 보낼 다음 말. 질문 하나만. 2문장 이내"),
-  done: z.boolean().describe("필수 항목과 사업 방향이 채워져 마무리했으면 true"),
-  extracted: InterviewExtractedZ.describe("지금까지 대화 전체에서 파악한 값을 누적해 매번 전부 채운다"),
-});
-export type InterviewOutput = z.infer<typeof InterviewOutputZ>;
 
 // ─── 4. 현금흐름 해설 ─────────────────────────────────────────────────────────
 export const CashflowInsightZ = z.object({
