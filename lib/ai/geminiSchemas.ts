@@ -66,6 +66,7 @@ export type DraftOutput = z.infer<typeof DraftOutputZ>;
 // ─── 3. 대화형 온보딩 ─────────────────────────────────────────────────────────
 const CERTS = ["venture", "innobiz", "mainbiz", "research_institute", "social_enterprise", "women_enterprise", "disabled_enterprise"] as const;
 const TRI = ["true", "false", ""] as const; // "" = 모름
+const PRIORS = ["pre_startup_pkg", "early_startup_pkg", "leap_pkg", "youth_academy", "tips"] as const;
 
 export const InterviewExtractedZ = z.object({
   name: z.string().describe("회사명. 모르면 빈 문자열"),
@@ -82,6 +83,9 @@ export const InterviewExtractedZ = z.object({
   handles_personal_data: z.enum(TRI),
   is_food_business: z.enum(TRI),
   certifications: z.array(z.enum(CERTS)).describe("사용자가 보유한다고 말한 인증만"),
+  has_tax_arrears: z.enum(TRI).describe("국세·지방세 체납이 있으면 true, 없다고 하면 false, 모르면 빈 문자열"),
+  prior_support_status: z.enum(["none", "some", ""]).describe("정부 창업지원사업을 받은 적 없다고 하면 none, 받았다면 some, 모르면 빈 문자열"),
+  prior_support: z.array(z.enum(PRIORS)).describe("받았다고 말한 사업만: 예비창업패키지 pre_startup_pkg · 초기창업패키지 early_startup_pkg · 창업도약패키지 leap_pkg · 청년창업사관학교 youth_academy · TIPS tips"),
   business_direction: z.string().describe("창업가가 말한 사업 방향·계획·고민. 사용자 표현 위주. 모르면 빈 문자열"),
 });
 export type InterviewExtractedRaw = z.infer<typeof InterviewExtractedZ>;

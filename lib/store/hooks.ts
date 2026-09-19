@@ -7,6 +7,7 @@ import { useMemo } from "react";
 
 import { pickTopAlert } from "@/lib/engine/alerts";
 import { evaluateProgram, toFlatProfile, type ProgramVerdict } from "@/lib/engine/evaluate";
+import { computeFit } from "@/lib/engine/rank";
 import { computeExpiringList } from "@/lib/engine/expiry";
 import { lastDayOfMonth } from "@/lib/engine/format";
 import { generateTasks, type TaskState } from "@/lib/engine/schedule";
@@ -99,16 +100,18 @@ function useEngine(): {
   return { programs, verdicts, flat, today };
 }
 
-/** 판정함(S3) — 마감된 공고는 제외한다 (§8 S3) */
+/** 판정함(S3) — 마감된 공고는 제외한다 (§8 S3). 대상 공고는 맞춤도 높은 순 (rank.ts) */
 export function useVerdicts(): Grant[] {
-  const { programs, verdicts, today } = useEngine();
+  const { programs, verdicts, flat, today } = useEngine();
   return useMemo(
     () =>
       programs
         .map((p, i) => ({ p, v: verdicts[i] }))
         .filter(({ p }) => announcementStatus(p, today) !== "closed")
-        .map(({ p, v }) => toGrant(p, v, false)),
-    [programs, verdicts, today],
+        .map(({ p, v }) => toGrant(p, v, false, computeFit(p, v, flat)))
+        // sort는 안정 정렬 — 점수가 같으면 카탈로그 순서를 유지한다
+        .sort((a, b) => (b.fit?.score ?? 0) - (a.fit?.score ?? 0)),
+    [programs, verdicts, flat, today],
   );
 }
 

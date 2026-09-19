@@ -1,6 +1,7 @@
 // lib/view/toGrant.ts — 엔진 판정 결과 → 판정함 뷰모델 (§5.4 매핑 규칙)
 
 import type { ProgramVerdict } from "@/lib/engine/evaluate";
+import type { Fit } from "@/lib/engine/rank";
 import { fmtDate, fromIso } from "@/lib/engine/format";
 import { resolveApplyUrl, resolveOriginalUrl } from "@/lib/sourceLinks";
 import type { EligibilityCriteria, Grant, Program } from "@/lib/types";
@@ -21,10 +22,12 @@ function toCriteria(verdict: ProgramVerdict): EligibilityCriteria[] {
     pass: c.state === "pass",
     state: c.state,
     sourceText: c.sourceText,
+    basis: c.basis,
+    missingInput: c.missingInput,
   }));
 }
 
-export function toGrant(program: Program, verdict: ProgramVerdict, closed = false): Grant {
+export function toGrant(program: Program, verdict: ProgramVerdict, closed = false, fit?: Fit): Grant {
   const criteria = toCriteria(verdict);
   const base: Grant = {
     id: program.id,
@@ -42,6 +45,7 @@ export function toGrant(program: Program, verdict: ProgramVerdict, closed = fals
     reviewStatus: program.review_status,
     hasDocuments: (program.required_documents ?? []).length > 0,
     isSynthetic: program.is_synthetic,
+    fit,
   };
 
   if (verdict.overall === "eligible") return base;
@@ -50,7 +54,8 @@ export function toGrant(program: Program, verdict: ProgramVerdict, closed = fals
     // 확인이 필요한 행만 모아 한 문장으로 만든다 — S3는 이 문자열 하나만 렌더한다
     const checkReasons = verdict.criteria
       .filter((c) => c.state === "check")
-      .map((c) => `${c.label}: ${c.sourceText.slice(0, CHECK_REASON_LEN)}`);
+      // 입력으로 확정할 수 있는 행은 "무엇을 입력하면 되는지"를, 아니면 원문 앞부분을 보여준다
+      .map((c) => `${c.label}: ${c.missingInput ? `${c.missingInput} 입력 시 확정` : c.sourceText.slice(0, CHECK_REASON_LEN)}`);
     return {
       ...base,
       status: "conditional",

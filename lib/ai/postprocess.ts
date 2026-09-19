@@ -2,7 +2,7 @@
 // 파서는 모든 value를 문자열로 주므로 여기서 타입을 맞추고, 매핑 실패는 전부 unmapped로 보낸다.
 // 판정은 하지 않는다. 여기서 만든 조건은 lib/engine이 평가한다.
 
-import { BOOLEAN_FIELDS, DOC_ALIASES, NUMERIC_FIELDS, isConditionField } from "@/lib/constants";
+import { BOOLEAN_FIELDS, DOC_ALIASES, NUMERIC_FIELDS, TRI_BOOLEAN_FIELDS, isConditionField } from "@/lib/constants";
 import type {
   Condition,
   ConditionGroup,
@@ -66,7 +66,7 @@ export function coerceValue(c: ParsedCondition): Condition["value"] | null {
     return Number.isFinite(n) ? n : null;
   }
 
-  if (BOOLEAN_FIELDS.includes(field)) {
+  if (BOOLEAN_FIELDS.includes(field) || TRI_BOOLEAN_FIELDS.includes(field)) {
     if (/^(true|참|예|y|yes)$/i.test(raw)) return true;
     if (/^(false|거짓|아니오|n|no)$/i.test(raw)) return false;
     return null;

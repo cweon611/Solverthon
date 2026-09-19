@@ -20,6 +20,9 @@ export const PARSE_SYSTEM_PROMPT = `당신은 대한민국 정부·지자체·�
    - annual_revenue_krw (연매출, 원 — "매출 10억 이하"는 lte "1000000000")
    - export_revenue_usd_prev_year (전년도 수출액, 달러)
    - is_vat_exempt, has_online_sales, handles_personal_data, is_food_business, hiring_planned (true/false)
+   - has_tax_arrears (국세·지방세 체납 여부, true/false — "체납 기업 신청 제외"는 eq "false")
+   - prior_support (이전 수혜 이력: "pre_startup_pkg" 예비창업패키지 | "early_startup_pkg" 초기창업패키지 | "leap_pkg" 창업도약패키지 | "youth_academy" 청년창업사관학교 | "tips" TIPS. "기수혜 기업 제외"는 not_in, "졸업기업에 한함"은 includes)
+   - industry_code의 제외 업종(not_in)은 KSIC 코드로: 금융 및 보험업 "K", 부동산업 "L", 일반유흥주점업 "I56211", 무도유흥주점업 "I56212", 기타 사행시설 관리 및 운영업 "R91249"
    - certifications (includes "venture" | "innobiz" | "mainbiz" | "research_institute" | "social_enterprise" | "women_enterprise" | "disabled_enterprise")
 4. "다음 중 하나에 해당" 같은 선택 조건 묶음은 alternatives의 원소 하나로 넣고, 그 안의 conditions에 선택지들을 나열합니다(선택지끼리 OR). 묶음이 여러 개면 원소를 여러 개 만듭니다(묶음끼리 AND). 그 외 모든 조건은 conditions(AND)입니다.
    "이상"은 gte, "초과"는 gt, "이하"는 lte, "미만"은 lt로 씁니다.

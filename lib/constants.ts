@@ -1,8 +1,8 @@
 // lib/constants.ts — 코드표·토큰 (PRD 부록 C)
 
-import type { Certification, ConditionField, FieldMeta } from "@/lib/types";
+import type { Certification, ConditionField, FieldMeta, PriorSupport } from "@/lib/types";
 
-// ─── Unsplash image URLs (design/BridgePage.tsx 156–165행 그대로) ─────────────
+// ─── Unsplash image URLs (design/BizBuddyPage.tsx 156–165행 그대로) ─────────────
 // lifestyle: natural light, real people
 // 3d-cutout: object-only, transparent-bg style shots
 // P2: /public/photos/ 로 내려받기
@@ -63,7 +63,10 @@ export const INDUSTRIES: { code: string; label: string }[] = [
   { code: "C26", label: "전자부품 제조업" },
   { code: "C10", label: "식료품 제조업" },
   { code: "G47", label: "소매업(온라인 포함)" },
-  { code: "I56", label: "음식점업" },
+  { code: "I561", label: "음식점업 (한식·분식·치킨 등)" },
+  { code: "I5622", label: "카페·비알코올 음료점업" },
+  { code: "I5621", label: "주점업" },
+  { code: "I56", label: "음식점·주점업 (세부 모름)" },
   { code: "M70", label: "전문서비스업" },
   { code: "M71", label: "광고·시장조사업" },
   { code: "M72", label: "디자인·연구개발업" },
@@ -96,6 +99,20 @@ export const INDUSTRIES: { code: string; label: string }[] = [
 
 export const INDUSTRY_LABEL: Record<string, string> = Object.fromEntries(INDUSTRIES.map((i) => [i.code, i.label]));
 
+// 업종 검색 보조어 — 일상어로 찾을 수 있게 한다. 값은 위 표의 code
+export const INDUSTRY_KEYWORDS: Record<string, string[]> = {
+  J62: ["소프트웨어", "앱", "sw", "개발", "it", "플랫폼", "saas", "웹"],
+  J63: ["정보서비스", "포털", "데이터", "ai 서비스"],
+  G47: ["쇼핑몰", "온라인 판매", "스마트스토어", "소매", "커머스", "편의점"],
+  I561: ["식당", "음식점", "분식", "치킨", "한식"],
+  I5622: ["카페", "커피", "베이커리 카페", "음료"],
+  I5621: ["술집", "호프", "주점", "바"],
+  C10: ["식품 제조", "반찬", "밀키트", "가공식품"],
+  M72: ["디자인", "연구개발", "r&d"],
+  P85: ["학원", "교육", "강의"],
+  R90: ["공연", "예술", "콘텐츠 창작"],
+};
+
 // ─── 인증 라벨 (부록 C) ─────────────────────────────────────────────────────
 export const CERT_LABEL: Record<Certification, string> = {
   venture: "벤처기업 인증",
@@ -105,6 +122,15 @@ export const CERT_LABEL: Record<Certification, string> = {
   social_enterprise: "사회적기업",
   women_enterprise: "여성기업 확인",
   disabled_enterprise: "장애인기업 확인",
+};
+
+// ─── 이전 수혜 이력 라벨 ────────────────────────────────────────────────────
+export const PRIOR_SUPPORT_LABEL: Record<PriorSupport, string> = {
+  pre_startup_pkg: "예비창업패키지",
+  early_startup_pkg: "초기창업패키지",
+  leap_pkg: "창업도약패키지",
+  youth_academy: "청년창업사관학교",
+  tips: "TIPS",
 };
 
 // ─── 조건 필드 메타 (§5.1) ──────────────────────────────────────────────────
@@ -126,6 +152,8 @@ export const FIELD_META: FieldMeta = {
   has_online_sales: { label: "온라인 판매", mutability: "fixed" },
   handles_personal_data: { label: "개인정보 처리", mutability: "fixed" },
   is_food_business: { label: "식품 영업", mutability: "fixed" },
+  has_tax_arrears: { label: "세금 체납", mutability: "fixed" },
+  prior_support: { label: "이전 수혜 이력", mutability: "fixed" },
 };
 
 export const CONDITION_FIELDS = Object.keys(FIELD_META) as ConditionField[];
@@ -151,6 +179,9 @@ export const BOOLEAN_FIELDS: ConditionField[] = [
   "handles_personal_data",
   "is_food_business",
 ];
+
+// 참/거짓/모름 세 값을 갖는 필드 — BOOLEAN_FIELDS와 달리 null이면 확인 필요다
+export const TRI_BOOLEAN_FIELDS: ConditionField[] = ["has_tax_arrears"];
 
 // ─── 서류명 동의어 (§7.1 후처리) ────────────────────────────────────────────
 // key·value 모두 정규화(공백·괄호 제거) 전의 표기. 매칭은 normalizeDocName() 후 비교한다.

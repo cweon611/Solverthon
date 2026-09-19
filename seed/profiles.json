@@ -24,7 +24,9 @@
     },
     "created_at": "+0d",
     "updated_at": "+0d",
-    "demo_label": "① 광주 소프트웨어 4인 (업력 2년 11개월)"
+    "demo_label": "① 광주 소프트웨어 4인 (업력 2년 11개월)",
+    "has_tax_arrears": false,
+    "prior_support": []
   },
   {
     "id": "demo-2",
@@ -51,7 +53,9 @@
     },
     "created_at": "+0d",
     "updated_at": "+0d",
-    "demo_label": "② 광주 제조업 1인 (첫 채용 예정)"
+    "demo_label": "② 광주 제조업 1인 (첫 채용 예정)",
+    "has_tax_arrears": false,
+    "prior_support": []
   },
   {
     "id": "demo-3",
@@ -78,6 +82,8 @@
     },
     "created_at": "+0d",
     "updated_at": "+0d",
-    "demo_label": "③ 전남 식품 제조 2인 (개업 2개월)"
+    "demo_label": "③ 전남 식품 제조 2인 (개업 2개월)",
+    "has_tax_arrears": false,
+    "prior_support": []
   }
 ]

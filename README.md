@@ -1,4 +1,4 @@
-# 브릿지 (Bridge)
+# 비즈버디 (BizBuddy)
 
 초기 창업기업을 위한 푸시형 지원사업 · 법정의무 · 자격소멸 알리미
 
@@ -56,6 +56,7 @@ npm run dev                  # http://localhost:3000
 | `npm run dev` · `build` · `start` | 개발 · 빌드 · 실행 |
 | `npm test` | 엔진·후처리·시드 단위 테스트 |
 | `npm run typecheck` · `lint` | 타입 검사 · 린트 |
+| `npm run match:report` | 매칭 품질 리포트 → `docs/matching/REPORT.md` (`-- --baseline docs/matching/baseline-programs.json`으로 이전 카탈로그와 비교) |
 | `npm run smoke` | 통합 스모크 (`-- --base <url>`로 배포본 검사) |
 | `npm run seed:db` | 시드를 Supabase에 적재 (멱등) |
 | `npm run seed:embed` | 시드 임베딩 생성 · 중복 임계값 검증 |
@@ -69,7 +70,7 @@ npm run dev                  # http://localhost:3000
 | 저장 위치 | 무엇을 |
 |---|---|
 | Supabase (서버에서만 접근) | 지원사업 · 법정의무 · 서류 카탈로그, 임베딩, 중복 쌍, 수집 로그 |
-| localStorage (`bridge:*:v1`) | 기업 프로필, 할 일, 알림 설정, 판정 이력 |
+| localStorage (`bizbuddy:*:v1`) | 기업 프로필, 할 일, 알림 설정, 판정 이력 |
 
 **기업 프로필은 서버로 전송되지 않습니다.** 판정은 브라우저에서 실행됩니다. 서버로 가는 사용자 입력은 AI 데모에 붙여넣은 공고 원문뿐입니다.
 
@@ -90,7 +91,7 @@ Node.js 20.9 이상이 필요합니다. 배포는 Node 24를 권장합니다.
 
 ## 문서
 
-구현 명세는 `브릿지_PRD.md`에 있습니다. 디자인 원본은 `design/`에 참조용으로 보존되어 있으며 앱 코드에서 import하지 않습니다.
+구현 명세는 `비즈버디_PRD.md`에 있습니다. 디자인 원본은 `design/`에 참조용으로 보존되어 있으며 앱 코드에서 import하지 않습니다.
 
 ## AI 보조 기능 (Gemini)
 

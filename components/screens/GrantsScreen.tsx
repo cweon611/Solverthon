@@ -1,6 +1,6 @@
 "use client";
 
-// design/BridgePage.tsx 399–641행 GrantsPage + statusLabel/statusStyle.
+// design/BizBuddyPage.tsx 399–641행 GrantsPage + statusLabel/statusStyle.
 // 법정의무 탭은 공유 useTasks() 사용(§4.5-4). 회사명·직원·업력 보간(§4.5-6). 버튼은 외부 링크(§4.5-8).
 
 import Link from "next/link";
@@ -13,6 +13,7 @@ import type { GrantStatus } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 import { ConditionCoach } from "@/components/ui/ConditionCoach";
+import { CriteriaTable } from "@/components/ui/CriteriaTable";
 import { CutoutFrame } from "@/components/ui/CutoutFrame";
 import { Disclaimer } from "@/components/ui/Disclaimer";
 import { ExtLink } from "@/components/ui/ExtLink";
@@ -41,7 +42,6 @@ export function GrantsScreen() {
   const [category, setCategory] = useState<"grants" | "obligations">("grants");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [expandedPassId, setExpandedPassId] = useState<string | null>(null);
-  const [openRow, setOpenRow] = useState<string | null>(null);
 
   const passGrants        = grants.filter(g => g.status === "pass");
   const conditionalGrants = grants.filter(g => g.status === "conditional");
@@ -114,6 +114,14 @@ export function GrantsScreen() {
                             )}
                           </div>
                           <h3 className="text-[#111111] font-bold text-base leading-snug">{grant.name}</h3>
+                          {grant.fit && grant.fit.reasons.length > 0 && (
+                            <p className="text-[11px] text-[#6E62C2] mt-1.5 flex flex-wrap items-center gap-1">
+                              <span className="font-semibold">우리 회사 맞춤</span>
+                              {grant.fit.reasons.map((r) => (
+                                <span key={r} className="bg-[#6E62C2]/10 rounded-md px-1.5 py-0.5">{r}</span>
+                              ))}
+                            </p>
+                          )}
                         </div>
                         <div className="text-right shrink-0">
                           <p className="text-[#111111] text-lg font-bold font-mono leading-none">{grant.amount}</p>
@@ -146,34 +154,9 @@ export function GrantsScreen() {
                           )}
                         </Button>
 
-                        {/* 펼쳐진 상세 자격 요건 테이블 */}
+                        {/* 펼쳐진 상세 자격 요건 테이블 — 행을 누르면 공고 원문과 상위 근거 */}
                         {expandedPassId === grant.id && grant.eligibility && (
-                          <div className="mt-2 border border-[#B2D1BF] rounded-xl overflow-hidden">
-                            <div className="grid grid-cols-3 bg-[#D8EAE0]/60 px-4 py-2 text-[10px] font-semibold text-[#2A5A46] uppercase tracking-wide">
-                              <span>요건 항목</span>
-                              <span>기준 조건</span>
-                              <span>우리 회사</span>
-                            </div>
-                            {grant.eligibility.map((item, i) => (
-                              <div key={i} className={`border-t border-[#D8EAE0] ${i % 2 === 0 ? "bg-white" : "bg-[#EEF4F0]/30"}`}>
-                                <Button onClick={() => setOpenRow(openRow === `${grant.id}:${i}` ? null : `${grant.id}:${i}`)}
-                                  variant="rowDisclosure" pad="4x3" block motion="colors"
-                                  className="grid grid-cols-3 items-center hover:bg-[#D8EAE0]/30">
-                                  <span className="text-[#444444] text-xs font-medium">{item.label}</span>
-                                  <span className="text-[#888888] text-xs">{item.required}</span>
-                                  <div className="flex items-center gap-1.5">
-                                    <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold shrink-0 ${item.pass ? "bg-[#3D7260] text-white" : "bg-rose-400 text-white"}`}>
-                                      {item.pass ? "✓" : "✕"}
-                                    </span>
-                                    <span className={`text-xs font-medium ${item.pass ? "text-[#2A5A46]" : "text-rose-600"}`}>{item.current}</span>
-                                  </div>
-                                </Button>
-                                {openRow === `${grant.id}:${i}` && item.sourceText && (
-                                  <p className="text-[11px] text-[#888888] bg-[#F5F6F8] rounded-lg px-3 py-2 italic mx-4 mb-3">{item.sourceText}</p>
-                                )}
-                              </div>
-                            ))}
-                          </div>
+                          <div className="mt-2"><CriteriaTable rows={grant.eligibility} tone="pass" rowKey={grant.id} /></div>
                         )}
                       </div>
 
@@ -247,13 +230,18 @@ export function GrantsScreen() {
                         <div className="pt-3 space-y-2">
                           {grant.status === "conditional" && (
                             <Alert tone="warning" pad="xsTall">
-                              <p className="text-amber-700 text-xs font-semibold">△ 조건 하나 부족 — {grant.nearMissReason}</p>
+                              <p className="text-amber-700 text-xs font-semibold">
+                                {grant.subStatus === "needs_check" ? "? 확인이 필요한 요건" : "△ 조건 하나 부족"} — {grant.nearMissReason}
+                              </p>
                             </Alert>
                           )}
                           {grant.status === "fail" && (
                             <Alert pad="xsTall">
                               <p className="text-rose-700 text-xs font-semibold">✕ 자격 미충족 — {grant.failReason}</p>
                             </Alert>
+                          )}
+                          {grant.eligibility && grant.eligibility.length > 0 && (
+                            <CriteriaTable rows={grant.eligibility} rowKey={grant.id} />
                           )}
                           <div className="flex gap-2 text-xs flex-wrap">
                             <ExtLink href={grant.originalUrl} className={PILL_SOFT}>

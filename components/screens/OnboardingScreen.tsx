@@ -25,11 +25,11 @@ import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { progressIndicatorClass, progressTrackClass } from "@/components/ui/variants";
 import { useSession } from "@/lib/auth/AuthProvider";
-import { CERT_LABEL, INDUSTRIES, REGIONS } from "@/lib/constants";
+import { CERT_LABEL, INDUSTRIES, INDUSTRY_KEYWORDS, PRIOR_SUPPORT_LABEL, REGIONS } from "@/lib/constants";
 import { loadDemoProfiles, toStoredProfile } from "@/lib/data/demoProfiles";
 import { fmtDate, fromIso, monthsBetween, toIso } from "@/lib/engine/format";
 import { useHistory, useProfile, useToday } from "@/lib/store/hooks";
-import type { Certification, CompanyProfile } from "@/lib/types";
+import type { Certification, CompanyProfile, PriorSupport } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const TOTAL_STEPS = 8;
@@ -54,6 +54,8 @@ interface Draft {
   handles_personal_data: boolean;
   is_food_business: boolean;
   certifications: Certification[];
+  has_tax_arrears: boolean | null; // null = 모름
+  prior_support: PriorSupport[] | null; // null = 모름, [] = 받은 적 없음
 }
 
 const EMPTY_DRAFT: Draft = {
@@ -61,6 +63,7 @@ const EMPTY_DRAFT: Draft = {
   employee_count: 0, hiring_planned: false, ceo_birth_date: "", ceo_gender: null,
   revenueEok: "", revenueUnknown: false, exportUsd: "", exportUnknown: false, is_vat_exempt: false,
   has_online_sales: false, handles_personal_data: false, is_food_business: false, certifications: [],
+  has_tax_arrears: null, prior_support: null,
 };
 
 function toDraft(p: CompanyProfile): Draft {
@@ -76,6 +79,8 @@ function toDraft(p: CompanyProfile): Draft {
     is_vat_exempt: p.is_vat_exempt, has_online_sales: p.flags.has_online_sales,
     handles_personal_data: p.flags.handles_personal_data, is_food_business: p.flags.is_food_business,
     certifications: p.certifications,
+    has_tax_arrears: p.has_tax_arrears ?? null,
+    prior_support: p.prior_support ?? null,
   };
 }
 
@@ -105,6 +110,8 @@ function toProfile(d: Draft, existing: CompanyProfile | null): CompanyProfile {
     export_revenue_usd_prev_year: d.exportUnknown || d.exportUsd === "" ? null : Number(d.exportUsd),
     is_vat_exempt: d.is_vat_exempt,
     certifications: d.certifications,
+    has_tax_arrears: d.has_tax_arrears,
+    prior_support: d.prior_support,
     flags: {
       hiring_planned: d.hiring_planned,
       has_online_sales: d.has_online_sales,
@@ -160,7 +167,10 @@ export function OnboardingScreen() {
   const industries = useMemo(() => {
     const q = industryQuery.trim().toLowerCase();
     if (!q) return INDUSTRIES;
-    return INDUSTRIES.filter((i) => i.label.toLowerCase().includes(q) || i.code.toLowerCase().includes(q));
+    // 코드·이름 외에 일상어("카페", "쇼핑몰")로도 찾는다
+    return INDUSTRIES.filter((i) =>
+      i.label.toLowerCase().includes(q) || i.code.toLowerCase().includes(q) ||
+      (INDUSTRY_KEYWORDS[i.code] ?? []).some((k) => k.includes(q) || q.includes(k)));
   }, [industryQuery]);
 
   const ageMonths = useMemo(() => {
@@ -274,7 +284,7 @@ export function OnboardingScreen() {
                   목록 왼쪽의 알파벳+숫자는 통계청 한국표준산업분류(KSIC) 코드입니다. 사업자등록증의 업태·종목과 가장 가까운 항목을 고르세요.
                 </HelpTip>
               </div>
-              <Input variant="flowLg" placeholder="업종 검색 (예: 소프트웨어, 제조)" value={industryQuery}
+              <Input variant="flowLg" placeholder="업종 검색 (예: 카페, 쇼핑몰, 소프트웨어, 제조)" value={industryQuery}
                 onChange={(e) => setIndustryQuery(e.target.value)} />
               {/* 업종 행은 ON에만 굵기가 붙는 1회용 모양이라 표로 옮기지 않는다(button-variants.ts 하단). */}
               <div className="max-h-52 overflow-y-auto space-y-1 pr-1">
@@ -429,6 +439,36 @@ export function OnboardingScreen() {
                     <p className="text-[11px] text-[#888888] mt-0.5">{o.desc}</p>
                   </button>
                 ))}
+              </div>
+              <div className="space-y-2">
+                <p className="text-[11px] text-[#888888]">국세·지방세 체납 <span className="text-[#6E62C2]">— 대부분의 지원사업이 체납 기업을 제외합니다</span></p>
+                <div className="flex gap-2">
+                  {([{ v: false, label: "체납 없음" }, { v: true, label: "체납 있음" }, { v: null, label: "모름" }] as const).map((o) => (
+                    <button key={o.label} onClick={() => set("has_tax_arrears", o.v)} className={chip({ on: draft.has_tax_arrears === o.v })}>
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-[11px] text-[#888888]">이전에 받은 창업 지원 <span className="text-[#6E62C2]">— 같은 사업은 중복 수혜가 제한됩니다</span></p>
+                <div className="flex flex-wrap gap-2">
+                  <button onClick={() => set("prior_support", [])} className={chip({ on: draft.prior_support !== null && draft.prior_support.length === 0 })}>
+                    받은 적 없음
+                  </button>
+                  {(Object.keys(PRIOR_SUPPORT_LABEL) as PriorSupport[]).map((k) => {
+                    const on = draft.prior_support?.includes(k) ?? false;
+                    const cur = draft.prior_support ?? [];
+                    return (
+                      <button key={k} onClick={() => set("prior_support", on ? cur.filter((x) => x !== k) : [...cur, k])} className={chip({ on })}>
+                        {PRIOR_SUPPORT_LABEL[k]}
+                      </button>
+                    );
+                  })}
+                  <button onClick={() => set("prior_support", null)} className={chip({ on: draft.prior_support === null })}>
+                    모름
+                  </button>
+                </div>
               </div>
               <div className="space-y-2">
                 <p className="text-[11px] text-[#888888]">보유 인증</p>

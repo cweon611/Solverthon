@@ -9,6 +9,7 @@ const raw: InterviewExtractedRaw = {
   founded_at: "2023-10-01", employee_count: "4", ceo_birth_date: "1990-05-01", ceo_gender: "",
   annual_revenue_eok: "3.2", hiring_planned: "true", has_online_sales: "", handles_personal_data: "false",
   is_food_business: "", certifications: ["venture", "venture"], business_direction: "재고 관리 SaaS",
+  has_tax_arrears: "false", prior_support_status: "some", prior_support: ["early_startup_pkg"],
 };
 
 describe("interviewCoerce", () => {
@@ -22,6 +23,14 @@ describe("interviewCoerce", () => {
     expect(ex.has_online_sales).toBeNull();
     expect(ex.handles_personal_data).toBe(false);
     expect(ex.certifications).toEqual(["venture"]);
+    expect(ex.has_tax_arrears).toBe(false);
+    expect(ex.prior_support).toEqual(["early_startup_pkg"]);
+  });
+
+  it("수혜 이력: 없음 → [] · 받았다는데 무엇인지 모름 → null(모름)", () => {
+    expect(coerceExtracted({ ...raw, prior_support_status: "none", prior_support: [] }, today).prior_support).toEqual([]);
+    expect(coerceExtracted({ ...raw, prior_support_status: "some", prior_support: [] }, today).prior_support).toBeNull();
+    expect(coerceExtracted({ ...raw, prior_support_status: "", prior_support: [] }, today).prior_support).toBeNull();
   });
 
   it("코드표에 없는 코드·미래 날짜·음수는 버린다", () => {

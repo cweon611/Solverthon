@@ -14,7 +14,7 @@ import type { ChatTurn } from "@/lib/ai/gemini";
 import { useSession } from "@/lib/auth/AuthProvider";
 import { formatBizNo } from "@/lib/auth/bizNo";
 import { EMPTY_EXTRACT, extractToProfile, mergeExtract, missingRequired, type InterviewExtract } from "@/lib/ai/interviewCoerce";
-import { CERT_LABEL, INDUSTRIES, REGIONS } from "@/lib/constants";
+import { CERT_LABEL, INDUSTRIES, PRIOR_SUPPORT_LABEL, REGIONS } from "@/lib/constants";
 import { fmtDate, fromIso, isoToDot } from "@/lib/engine/format";
 import { useHistory, useProfile, useToday } from "@/lib/store/hooks";
 
@@ -41,6 +41,8 @@ function fieldRows(ex: InterviewExtract): { label: string; value: string | null;
     { label: "개인정보 처리", value: ex.handles_personal_data === null ? null : ex.handles_personal_data ? "예" : "아니오", required: false },
     { label: "식품 취급", value: ex.is_food_business === null ? null : ex.is_food_business ? "예" : "아니오", required: false },
     { label: "보유 인증", value: ex.certifications.length ? ex.certifications.map((c) => CERT_LABEL[c]).join(", ") : null, required: false },
+    { label: "세금 체납", value: ex.has_tax_arrears === null ? null : ex.has_tax_arrears ? "있음" : "없음", required: false },
+    { label: "이전 창업지원 수혜", value: ex.prior_support === null ? null : ex.prior_support.length ? ex.prior_support.map((k) => PRIOR_SUPPORT_LABEL[k]).join(", ") : "없음", required: false },
   ];
 }
 

@@ -8,6 +8,7 @@ import {
   FIELD_META,
   INDUSTRY_LABEL,
   NEAR_MISS_TIME_MONTHS,
+  PRIOR_SUPPORT_LABEL,
   REGION_ALL,
   REGION_LABEL,
   isConditionField,
@@ -16,6 +17,7 @@ import type {
   Certification,
   CompanyProfile,
   Condition,
+  ConditionBasis,
   ConditionField,
   ConditionGroup,
   FlatProfile,
@@ -35,6 +37,9 @@ export interface CriterionResult {
   current: string; // 포맷한 내 값 ("약 3년 2개월 (2023.06 창업)")
   state: State;
   sourceText: string;
+  basis?: ConditionBasis;
+  /** check 행을 확정하려면 입력해야 하는 항목 라벨 ("대표자 생년월일") — 매핑된 필드가 비어 있을 때만 */
+  missingInput?: string;
 }
 
 export interface NearMiss {
@@ -72,6 +77,9 @@ export function toFlatProfile(p: CompanyProfile, today: Date): FlatProfile {
     has_online_sales: p.flags.has_online_sales,
     handles_personal_data: p.flags.handles_personal_data,
     is_food_business: p.flags.is_food_business,
+    // 구버전 프로필에는 두 필드가 없다 → 모름(null)
+    has_tax_arrears: p.has_tax_arrears ?? null,
+    prior_support: p.prior_support ?? null,
   };
 }
 
@@ -86,9 +94,30 @@ function toStringArray(value: Condition["value"]): string[] {
   return [String(value)];
 }
 
-/** industry_code는 prefix 매칭: 조건 "C"는 "C26"에 매칭, "C10"은 "C26"에 매칭하지 않는다(§6.1) */
-function industryMatches(conditionCode: string, profileCode: string): boolean {
-  return profileCode.startsWith(conditionCode);
+/**
+ * industry_code는 prefix 매칭: 조건 "C"는 "C26"에 매칭, "C10"은 "C26"에 매칭하지 않는다(§6.1).
+ * 프로필이 조건보다 덜 구체적이면(프로필 "I56" · 조건 "I56211") 맞는지 알 수 없다 → "unknown".
+ * 예전에는 이 경우를 "불일치"로 처리해서, 업종을 대분류로만 고른 사용자가 업종 제한 공고에서 조용히 떨어지거나
+ * (in) 제외 업종 검사를 그냥 통과했다(not_in).
+ */
+type Match = "yes" | "no" | "unknown";
+
+function industryMatch(conditionCode: string, profileCode: string): Match {
+  if (profileCode.startsWith(conditionCode)) return "yes";
+  if (conditionCode.startsWith(profileCode)) return "unknown";
+  return "no";
+}
+
+function anyIndustryMatch(codes: string[], profileCode: string): Match {
+  const results = codes.map((code) => industryMatch(code, profileCode));
+  if (results.includes("yes")) return "yes";
+  if (results.includes("unknown")) return "unknown";
+  return "no";
+}
+
+function matchToState(m: Match, positive: boolean): State {
+  if (m === "unknown") return "check";
+  return (m === "yes") === positive ? "pass" : "fail";
 }
 
 export function evaluateCondition(c: Condition, p: FlatProfile): State {
@@ -96,7 +125,7 @@ export function evaluateCondition(c: Condition, p: FlatProfile): State {
   if (!isConditionField(c.field)) return "check";
 
   const value = p[c.field];
-  const isBooleanField = BOOLEAN_FIELDS.includes(c.field);
+  const isBooleanField = BOOLEAN_FIELDS.includes(c.field); // TRI_BOOLEAN_FIELDS는 여기 없다 → null이면 check
   if (!isBooleanField && (value === null || value === undefined)) return "check";
 
   switch (c.op) {
@@ -117,10 +146,11 @@ export function evaluateCondition(c: Condition, p: FlatProfile): State {
 
     case "eq":
     case "neq": {
-      let same: boolean;
       if (c.field === "industry_code") {
-        same = industryMatches(String(c.value), String(value));
-      } else if (typeof value === "boolean") {
+        return matchToState(industryMatch(String(c.value), String(value)), c.op === "eq");
+      }
+      let same: boolean;
+      if (typeof value === "boolean") {
         same = value === (c.value === true || c.value === "true");
       } else {
         same = String(value) === String(c.value);
@@ -136,10 +166,11 @@ export function evaluateCondition(c: Condition, p: FlatProfile): State {
       if (c.field === "region_code" && list.includes(REGION_ALL)) {
         return c.op === "in" ? "pass" : "fail";
       }
-      let contained: boolean;
       if (c.field === "industry_code") {
-        contained = list.some((code) => industryMatches(code, String(value)));
-      } else if (Array.isArray(value)) {
+        return matchToState(anyIndustryMatch(list, String(value)), c.op === "in");
+      }
+      let contained: boolean;
+      if (Array.isArray(value)) {
         contained = value.some((v) => list.includes(String(v)));
       } else {
         contained = list.includes(String(value));
@@ -212,6 +243,12 @@ function formatFieldValue(field: ConditionField, p: FlatProfile): string {
       const list = (v as Certification[]).map((c) => CERT_LABEL[c] ?? c);
       return list.length > 0 ? list.join(", ") : "미보유";
     }
+    case "has_tax_arrears":
+      return v ? "체납 있음" : "체납 없음";
+    case "prior_support": {
+      const list = (v as string[]).map((s) => PRIOR_SUPPORT_LABEL[s as keyof typeof PRIOR_SUPPORT_LABEL] ?? s);
+      return list.length > 0 ? list.join(", ") : "수혜 이력 없음";
+    }
     default:
       return String(v);
   }
@@ -233,6 +270,25 @@ function leafLabel(c: Condition): string {
   return isConditionField(c.field) ? FIELD_META[c.field].label : c.field;
 }
 
+/** 이 필드가 비어서 check가 됐다면, 무엇을 입력하면 확정되는지 */
+const INPUT_LABEL: Partial<Record<ConditionField, string>> = {
+  ceo_age: "대표자 생년월일",
+  ceo_gender: "대표자 성별",
+  annual_revenue_krw: "연매출",
+  export_revenue_usd_prev_year: "전년도 수출액",
+  has_tax_arrears: "세금 체납 여부",
+  prior_support: "이전 수혜 이력",
+  industry_code: "세부 업종",
+};
+
+function missingInputFor(c: Condition, p: FlatProfile, state: State): string | undefined {
+  if (state !== "check" || !isConditionField(c.field)) return undefined;
+  const v = p[c.field];
+  if (c.field === "industry_code") return INPUT_LABEL.industry_code; // 값은 있지만 덜 구체적
+  if (v === null || v === undefined) return INPUT_LABEL[c.field] ?? FIELD_META[c.field].label;
+  return undefined;
+}
+
 function rowFromLeaf(c: Condition, p: FlatProfile): Row {
   const state = evaluateCondition(c, p);
   return {
@@ -244,6 +300,8 @@ function rowFromLeaf(c: Condition, p: FlatProfile): Row {
       current: isConditionField(c.field) ? formatFieldValue(c.field, p) : "확인 필요",
       state,
       sourceText: c.source_text,
+      basis: c.basis,
+      missingInput: missingInputFor(c, p, state),
     },
   };
 }
@@ -255,15 +313,19 @@ function rowFromGroup(g: ConditionGroup, p: FlatProfile): Row {
   const first = leaves[0];
   const passing = leaves.find((l) => evaluateCondition(l, p) === "pass");
   const shown = passing ?? first;
+  const checking = state === "check" ? leaves.find((l) => evaluateCondition(l, p) === "check") : undefined;
   return {
     leaves,
     result: {
       field: shown && isConditionField(shown.field) ? shown.field : null,
-      label: leaves.map(leafLabel).join(" 또는 "),
+      // 같은 필드를 여러 번 쓰는 OR(예: 업종별 인원 기준)는 라벨을 한 번만 쓴다
+      label: [...new Set(leaves.map(leafLabel))].join(" 또는 "),
       required: leaves.map((l) => l.label).join(" 또는 "),
       current: shown && isConditionField(shown.field) ? formatFieldValue(shown.field, p) : "확인 필요",
       state,
       sourceText: first?.source_text ?? "",
+      basis: leaves.find((l) => l.basis)?.basis,
+      missingInput: checking ? missingInputFor(checking, p, "check") : undefined,
     },
   };
 }

@@ -1,14 +1,14 @@
-# 「브릿지(Bridge)」 PRD v2.0 — AI 코딩 에이전트용 구현 명세
+# 「비즈버디(BizBuddy)」 PRD v2.0 — AI 코딩 에이전트용 구현 명세
 
 **초기 창업기업을 위한 푸시형 지원사업 · 법정의무 · 자격소멸 알리미**
 
 | 항목 | 내용 |
 |---|---|
-| 문서 버전 | **v2.1** (2026-09-03) — v2.0 + §15 확장 기능(AI 코치·신청서 뼈대·현금흐름 진단, Phase 8). v1.0은 `docs/archive/브릿지_PRD_v1.0.md`에 보존 |
+| 문서 버전 | **v2.1** (2026-09-03) — v2.0 + §15 확장 기능(AI 코치·신청서 뼈대·현금흐름 진단, Phase 8). v1.0은 `docs/archive/비즈버디_PRD_v1.0.md`에 보존 |
 | 대회 | 2026 전남광주 청년 AI 솔버톤 / **B트랙 (기업 실무 현안)** |
 | 연관 세부주제 | B-08 정부지원사업 공고 자동 분석 (확장·재해석: 법정의무 + 자격 소멸 예측 + 인원 시뮬레이션) |
 | 팀 / 참가자 | 코스모스 / 이승민 |
-| 저장소 | 로컬 폴더 `bridge/` — Next.js **16.3.4** · React 19.2.8 · Tailwind CSS **v4** · TypeScript 5 (create-next-app 스캐폴드 상태) |
+| 저장소 | 로컬 폴더 `Solverthon/` — Next.js **16.3.4** · React 19.2.8 · Tailwind CSS **v4** · TypeScript 5 (create-next-app 스캐폴드 상태) |
 | 산출물 | 웹 서비스 (Vercel 공개 URL, **합성 더미데이터만 게시**) |
 | 이 문서의 독자 | 이 저장소에서 코드를 작성하는 **AI 코딩 에이전트**(Claude Code 등). 사람이 읽어도 되지만 문장은 에이전트 기준으로 씀 |
 
@@ -19,7 +19,7 @@
 ### 0.1 절대 규칙 — 위반 시 작업을 멈추고 사람에게 보고
 
 1. **LLM은 판단하지 않는다.** 자격 판정·마감일 계산·인원 임계값 판단·재무 수치 계산·법령 해석은 `lib/engine/*`의 **결정론적 코드**만 수행한다. LLM의 역할은 §7의 "비정형 공고문 → 정형 JSON 변환"과 §15의 "판정 결과 설명·행동 계획·신청서 목차·표 구조 읽기·집계 수치 해석"으로 한정한다. LLM 출력은 항상 `AI 제안 · 참고용` 라벨을 단다.
-2. **디자인은 확정됐다.** `design/BridgePage.tsx`와 `design/globals.css`가 시각 디자인의 원본이다. 색·간격·타이포·컴포넌트 구조·문구 톤을 바꾸지 않는다. 바꾸는 것은 (a) 하드코딩 데이터 → 실제 데이터 소스, (b) 상태 관리·라우팅, (c) §4.5에 열거된 버그 수정, (d) §8에서 명시적으로 허용한 추가 화면·요소만이다.
+2. **디자인은 확정됐다.** `design/BizBuddyPage.tsx`와 `design/globals.css`가 시각 디자인의 원본이다. 색·간격·타이포·컴포넌트 구조·문구 톤을 바꾸지 않는다. 바꾸는 것은 (a) 하드코딩 데이터 → 실제 데이터 소스, (b) 상태 관리·라우팅, (c) §4.5에 열거된 버그 수정, (d) §8에서 명시적으로 허용한 추가 화면·요소만이다.
 3. **API 키는 서버에서만.** Route Handler · 서버 컴포넌트 · `scripts/*`에서만 읽는다. `NEXT_PUBLIC_` 접두어가 없는 환경변수를 클라이언트 컴포넌트에서 참조하지 않는다. `.env.local`의 값을 로그·응답·커밋에 절대 노출하지 않는다.
 4. **기업 프로필은 브라우저 밖으로 나가지 않는다.** 사용자가 입력한 프로필·할 일·설정·판정 이력은 `localStorage`에만 저장하고, 판정 엔진은 클라이언트에서 실행한다. 서버로 가는 사용자 입력은 `/api/ai/parse`에 붙여넣은 **공고 원문**(프로필 아님), `/api/ai/dedupe`의 비교 대상 텍스트, 그리고 §15 기능에서 **사용자 동의 후** 보내는 구간값·집계 지표(회사명·사업자번호·생년월일·원본 거래내역은 절대 제외)뿐이다.
 5. **수집은 공식 오픈 API만.** K-Startup(공공데이터포털)·기업마당 API 외에 기관 누리집 HTML을 스크래핑하는 코드를 작성하지 않는다(대회 규정). `cheerio`·`puppeteer` 류를 공고 수집 목적으로 설치하지 않는다.
@@ -43,7 +43,7 @@ grep -vE '^\s*(#|$)' .env.local | cut -d= -f1
 npm install && npm run dev   # http://localhost:3000
 
 # 4) 디자인 원본 전체 읽기 (1,708행) → §4.2 분해 계획과 대조
-#    design/BridgePage.tsx, design/globals.css
+#    design/BizBuddyPage.tsx, design/globals.css
 
 # 5) §11 Phase 0부터 시작. Phase별 완료 기준을 체크한 뒤 다음 Phase로.
 ```
@@ -105,7 +105,7 @@ npm install && npm run dev   # http://localhost:3000
 ### 2.1 저장소 구조와 스택
 
 ```
-bridge/
+Solverthon/
 ├─ app/
 │  ├─ globals.css      # create-next-app 기본 (Geist 폰트 토큰, dark 모드) → §4.4에서 교체
 │  ├─ layout.tsx       # Geist/Geist_Mono, lang="en", LayoutProps<"/"> 사용 → §4.4에서 교체
@@ -118,7 +118,7 @@ bridge/
 ├─ .gitignore          # ".env*" 포함 → .env.example 커밋을 위해 "!.env.example" 추가 필요
 ├─ eslint.config.mjs · next.config.ts(빈 설정) · postcss.config.mjs · tsconfig.json (paths "@/*" → "./*")
 ├─ package.json        # scripts: dev/build/start/lint("eslint")
-└─ 브릿지_PRD.md       # 이 문서
+└─ 비즈버디_PRD.md       # 이 문서
 ```
 
 **Next.js 16 핵심 차이 (에이전트가 자주 틀리는 것 — 원문은 `node_modules/next/dist/docs/`)**
@@ -139,7 +139,7 @@ bridge/
 
 | 파일 | 내용 |
 |---|---|
-| `design/BridgePage.tsx` | 1,708행 단일 클라이언트 컴포넌트. 사이드바 상태(`page`)로 8화면 전환. 모든 데이터 하드코딩(`grants` 8건, `allAnnouncements` 12건, `tasks` 6건, `expiringItems` 3건, `employeeRules` 5/10/30, `DEFAULT_COMPANY`) |
+| `design/BizBuddyPage.tsx` | 1,708행 단일 클라이언트 컴포넌트. 사이드바 상태(`page`)로 8화면 전환. 모든 데이터 하드코딩(`grants` 8건, `allAnnouncements` 12건, `tasks` 6건, `expiringItems` 3건, `employeeRules` 5/10/30, `DEFAULT_COMPANY`) |
 | `design/globals.css` | Tailwind v4 `@theme`: 폰트 3종(Noto Sans KR / Outfit / JetBrains Mono), brand 50~900(`#6e62c2` 계열), surface/card/ink/border 토큰, 스크롤바 |
 
 **디자인의 8화면**
@@ -185,7 +185,7 @@ bridge/
 | ② 중복 판별 | **Voyage 임베딩 + pgvector** | 기업마당·K-Startup에 중복 게시된 동일 사업을 코사인 유사도로 후보 추출 | 의미 기반 비교가 필요. 단, 최종 병합 결정은 결정론(임계값 + 기간 겹침) |
 | ③ 판정·계산 | **결정론적 엔진** (`lib/engine`) | 자격 판정(3-state), 마감일·D-day, 자격 소멸 예측, 인원 시뮬레이션, 서류 리드타임 역산 | 오판이 곧 사용자 손실(기회 상실·과태료). 검증 가능·테스트 가능해야 함 |
 
-> **발표 문장:** "AI가 자격을 잘못 판정하면 사용자는 과태료를 냅니다. 그래서 브릿지는 AI를 '읽는 역할'에만 배치하고, '판단하는 역할'은 단위 테스트가 있는 코드에 맡깁니다. 룰 엔진은 AI 없이도 독립 동작합니다."
+> **발표 문장:** "AI가 자격을 잘못 판정하면 사용자는 과태료를 냅니다. 그래서 비즈버디는 AI를 '읽는 역할'에만 배치하고, '판단하는 역할'은 단위 테스트가 있는 코드에 맡깁니다. 룰 엔진은 AI 없이도 독립 동작합니다."
 
 ### 3.2 시스템 구성
 
@@ -228,14 +228,14 @@ bridge/
 | 데이터 | 저장 위치 | 이유 |
 |---|---|---|
 | 지원사업·법정의무·서류 카탈로그, 임베딩, 중복 쌍, 수집 로그 | **Supabase** (Postgres + pgvector). 접근은 **서버에서만** `SUPABASE_SECRET_KEY`로(브라우저 직접 접속 없음 → `NEXT_PUBLIC_` 키 없음). RLS는 방어선으로 anon에 합성 데이터 읽기만 허용 | 공유·누적되는 공개 데이터. pgvector로 중복제거 |
-| 기업 프로필, 할 일 완료/커스텀 항목, 알림 설정, 판정 이력 | **localStorage** (`bridge:*:v1`) | 사용자 개인 데이터를 서버에 남기지 않음(회원가입 없음 · "실제 기업 데이터 미게시" 규정 부합 · 발표 시 신뢰 논거) |
+| 기업 프로필, 할 일 완료/커스텀 항목, 알림 설정, 판정 이력 | **localStorage** (`bizbuddy:*:v1`) | 사용자 개인 데이터를 서버에 남기지 않음(회원가입 없음 · "실제 기업 데이터 미게시" 규정 부합 · 발표 시 신뢰 논거) |
 | `DATA_MODE=seed` | `seed/*.json`을 서버에서 직접 읽음 | Supabase 준비 전에도 P0 전체가 동작해야 함. `SUPABASE_URL`이 없으면 자동 seed |
 | P2 (선택) | Supabase 익명 인증으로 프로필 동기화 | 이번 산출물 범위 밖 |
 
 ### 3.5 목표 디렉터리 구조
 
 ```
-bridge/
+Solverthon/
 ├─ app/
 │  ├─ layout.tsx                 # 폰트·lang="ko"·메타데이터 (§4.4)
 │  ├─ globals.css                # design/globals.css 기반 (§4.4)
@@ -286,8 +286,8 @@ bridge/
 ├─ public/samples/ cashflow_sample.xlsx · cashflow_sample_alt.csv   # §15.3 (scripts/make-cashflow-sample.ts 생성물)
 ├─ scripts/    ingest.ts · seed-db.ts · embed-seed.ts · verify-law.ts · licenses.ts · smoke.ts
 ├─ supabase/   migrations/0001_init.sql
-├─ design/     BridgePage.tsx · globals.css   # 원본 보존 (import 금지, 참조용)
-├─ docs/       archive/브릿지_PRD_v1.0.md
+├─ design/     BizBuddyPage.tsx · globals.css   # 원본 보존 (import 금지, 참조용)
+├─ docs/       archive/비즈버디_PRD_v1.0.md
 ├─ .env.example · vercel.json · vitest.config.ts
 ```
 
@@ -297,7 +297,7 @@ bridge/
 
 ### 4.1 원칙
 
-- `design/BridgePage.tsx`는 **참조용 원본**이다. 앱 코드에서 import하지 않는다. 컴포넌트를 `components/`로 **복사·분해**하고, 이후 원본은 건드리지 않는다.
+- `design/BizBuddyPage.tsx`는 **참조용 원본**이다. 앱 코드에서 import하지 않는다. 컴포넌트를 `components/`로 **복사·분해**하고, 이후 원본은 건드리지 않는다.
 - 분해 시 **JSX와 className을 그대로 옮긴다.** 허용되는 변경: 데이터 소스(props/hook), 이벤트 핸들러 연결, 라우팅(`<button onClick={() => setPage(..)}>` → `<Link href>` 또는 `router.push`), §4.5 버그 수정, §8에서 명시한 추가 요소.
 - 새로 만드는 화면(S0·S9·S10·S11·S12)은 디자인 토큰만 사용한다: 배경 `bg-white`/`bg-[#F5F6F8]`, 테두리 `border-[#E4E6EA]`, 브랜드 `#6E62C2`(hover `#5a50a8`, 연한 배경 `#f0eef9`, 테두리 `#dddaf4`), 텍스트 `#111111`/`#444444`/`#888888`, 성공 `#EEF4F0`/`#B2D1BF`/`#2A5A46`/`#3D7260`, 경고 `amber-*`, 위험 `rose-*`, 카드 `rounded-2xl`, 헤더 `text-2xl font-display font-bold`, 본문 `text-sm`, 보조 `text-xs text-[#888888]`, 숫자·날짜 `font-mono`.
 - 다크 모드는 지원하지 않는다(스캐폴드의 `prefers-color-scheme` 블록 삭제).
@@ -317,7 +317,7 @@ UI 기반을 shadcn/ui로 옮겼다. **다만 `npx shadcn init`은 실행하지 
 
 #### 4.1.2 상호작용 계층 추가 — §4.1 무변경 규칙의 범위 조정 (2026-09-06)
 
-사용자 결정으로 **§4.1의 "시각 스타일을 바꾸지 않는다"는 기존 화면에만 적용**하고, 새로 추가하는 상호작용 요소에는 적용하지 않는다. `design/BridgePage.tsx`와 달라지는 것을 허용한다. 브랜드(색·여백·타이포)는 유지한다.
+사용자 결정으로 **§4.1의 "시각 스타일을 바꾸지 않는다"는 기존 화면에만 적용**하고, 새로 추가하는 상호작용 요소에는 적용하지 않는다. `design/BizBuddyPage.tsx`와 달라지는 것을 허용한다. 브랜드(색·여백·타이포)는 유지한다.
 
 새 규칙:
 
@@ -329,7 +329,7 @@ UI 기반을 shadcn/ui로 옮겼다. **다만 `npx shadcn init`은 실행하지 
   ```
   주의: Tailwind v4 CLI는 `-i` 경로가 아니라 **프로세스 CWD 기준**으로 소스를 스캔한다. 원본 스타일시트를 만들 때는 해당 커밋을 `git archive`로 별도 디렉터리에 풀고 그 안에서 컴파일해야 한다. 저장소 루트에서 돌리면 현재 트리를 스캔해 거짓 차이가 나온다.
 
-도입한 것(전부 Radix 기반, 브릿지 토큰으로 재도색):
+도입한 것(전부 Radix 기반, 비즈버디 토큰으로 재도색):
 
 | 컴포넌트 | 사용처 |
 | --- | --- |
@@ -344,7 +344,7 @@ UI 기반을 shadcn/ui로 옮겼다. **다만 `npx shadcn init`은 실행하지 
 
 ### 4.2 파일 분해 매핑
 
-| 원본 (design/BridgePage.tsx) | 행 범위(대략) | 목적지 | 비고 |
+| 원본 (design/BizBuddyPage.tsx) | 행 범위(대략) | 목적지 | 비고 |
 |---|---|---|---|
 | 타입 `Page, GrantStatus, EligibilityCriteria, Grant, Task, ExpiringItem, Announcement*` | 5–47, 117–130 | `lib/types.ts` (§5.4 뷰모델로 확장) | 디자인 타입은 유지하되 필드 추가만 |
 | `DEFAULT_COMPANY`, `grants`, `tasks`, `allAnnouncements`, `expiringItems`, `employeeRules` | 51–151, 1178–1191 | **삭제** → `seed/*.json` + 엔진 계산 | 디자인의 값은 시드 프로필 ①의 기대 결과로 재사용(§10) |
@@ -360,7 +360,7 @@ UI 기반을 shadcn/ui로 옮겼다. **다만 `npx shadcn init`은 실행하지 
 | `SimulatorPage` | 1193–1317 | `components/screens/SimulatorScreen.tsx` | `employeeRules` → `simulateEmployees()` 결과 |
 | `AnnouncementsPage` + 라벨/색 맵 | 1321–1464 | `components/screens/AnnouncementsScreen.tsx` | 정렬 로직 §4.5-7 |
 | `MyPage` | 1470–1683 | `components/screens/MyPageScreen.tsx` | 계정 관리 블록 → 데이터 관리(§8 S8) |
-| `BridgePage` 루트 | 1687–1707 | `components/shell/AppShell.tsx` + `app/(app)/layout.tsx` | `main`의 overflow 클래스는 `pathname === '/calendar'` 조건 유지 |
+| `BizBuddyPage` 루트 | 1687–1707 | `components/shell/AppShell.tsx` + `app/(app)/layout.tsx` | `main`의 overflow 클래스는 `pathname === '/calendar'` 조건 유지 |
 
 ### 4.3 라우팅
 
@@ -392,7 +392,7 @@ UI 기반을 shadcn/ui로 옮겼다. **다만 `npx shadcn init`은 실행하지 
 `app/layout.tsx`
 - `next/font/google`에서 `Noto_Sans_KR`(variable, `subsets: ['latin']` — **`korean` 서브셋은 존재하지 않음**, 한글 글리프는 unicode-range로 자동 로드), `Outfit`(`subsets: ['latin']`), `JetBrains_Mono`(`subsets: ['latin']`)를 각각 `variable: '--font-noto-sans-kr' | '--font-outfit' | '--font-jetbrains-mono'`로 로드.
 - `<html lang="ko" className={\`${notoSansKr.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full antialiased\`}>`, `<body className="h-full font-sans text-ink bg-surface">`.
-- `metadata`: title `브릿지 — 초기 창업기업 지원사업·법정의무 알리미`, description 1줄.
+- `metadata`: title `비즈버디 — 초기 창업기업 지원사업·법정의무 알리미`, description 1줄.
 - 시그니처는 스캐폴드대로 `RootLayout({ children }: LayoutProps<"/">)` 유지.
 
 `app/globals.css` — `design/globals.css`를 기반으로 다음만 수정
@@ -461,7 +461,7 @@ html, body { height: 100%; }
 ```ts
 export type Certification = 'venture' | 'innobiz' | 'mainbiz' | 'research_institute' | 'social_enterprise' | 'women_enterprise' | 'disabled_enterprise';
 
-// 사용자가 입력·저장하는 값 (localStorage "bridge:profile:v1")
+// 사용자가 입력·저장하는 값 (localStorage "bizbuddy:profile:v1")
 export interface CompanyProfile {
   id: string;                         // crypto.randomUUID()
   name: string;                       // "테크스타트 주식회사" (선택 입력, 없으면 "내 회사")
@@ -1098,7 +1098,7 @@ runIngest({ sources: ['kstartup','bizinfo'], maxFetch: 200, maxParse: 20, maxEmb
 
 | 항목 | 내용 |
 |---|---|
-| 레이아웃 | 앱 셸 없음. 중앙 카드 `max-w-xl bg-white border border-[#E4E6EA] rounded-3xl shadow-sm`, 상단에 로고(사이드바의 "B" 아이콘 + "브릿지" 타이포 재사용)와 진행률 바(`h-1 bg-[#E4E6EA]` 위 `bg-[#6E62C2]`) |
+| 레이아웃 | 앱 셸 없음. 중앙 카드 `max-w-xl bg-white border border-[#E4E6EA] rounded-3xl shadow-sm`, 상단에 로고(사이드바의 "B" 아이콘 + "비즈버디" 타이포 재사용)와 진행률 바(`h-1 bg-[#E4E6EA]` 위 `bg-[#6E62C2]`) |
 | 구조 | **한 화면에 한 질문**, 8단계, 이전/다음 버튼. 필수 미입력 시 다음 비활성 |
 | 1 | 회사명(선택) · 사업자번호(선택, `000-00-00000` 형식만 검사, 표시용) · 사업자 형태(개인/법인 카드 2개 중 선택) |
 | 2 | 업종 — `lib/constants.ts`의 `INDUSTRIES`(KSIC 대분류 21 + 자주 쓰는 중분류: `J62` 소프트웨어 개발, `J63` 정보서비스, `C26` 전자부품, `C10` 식료품 제조, `G47` 소매(온라인 포함), `I56` 음식점, `M70` 전문서비스, `M71` 광고·시장조사, `M72` 디자인·연구개발, `N75` 사업지원, `P85` 교육, `R90` 창작·예술) 검색 가능한 리스트 → `industry_code`·`industry_label` |
@@ -1156,7 +1156,7 @@ runIngest({ sources: ['kstartup','bizinfo'], maxFetch: 200, maxParse: 20, maxEmb
 
 | 항목 | 내용 |
 |---|---|
-| 데이터 | `useTasks()` = `generateTasks()` + localStorage `bridge:tasks:v1 = { doneIds, hiddenIds, overrides, custom }` |
+| 데이터 | `useTasks()` = `generateTasks()` + localStorage `bizbuddy:tasks:v1 = { doneIds, hiddenIds, overrides, custom }` |
 | 완료 토글 | `doneIds` 추가/제거 |
 | 추가 | `custom:` id로 `custom[]`에 저장. `dueDate`는 `YYYY.MM.DD` 입력이면 ISO로 정규화해 `dueDateIso`에도 저장(캘린더 표시용), 그 외 문자열은 이벤트형으로 취급 |
 | 수정 | 생성된 항목은 `overrides[id]`에 부분 저장, 커스텀은 직접 수정 |
@@ -1202,9 +1202,9 @@ runIngest({ sources: ['kstartup','bizinfo'], maxFetch: 200, maxParse: 20, maxEmb
 |---|---|
 | 프로필 카드 | 디자인의 6필드 인라인 편집 유지(업종·지역은 텍스트 대신 `INDUSTRIES`/`REGIONS` 셀렉트, 같은 input 스타일). 사업자번호는 디자인대로 읽기 전용, `null`이면 `미입력`(사이드바 칩도 `사업자번호 미입력`). 대표자 연령 → 생년월일 `date` 입력(§4.5-14). 헤더 우측에 `상세 수정`(→ `/onboarding?edit=1`) 버튼을 `수정` 옆에 같은 스타일로 추가 |
 | 저장 시 | `ProfileProvider.save()` → 재판정 → `HistoryProvider.push({ event: "프로필 수정", result: "{변경 요약}, 재판정 완료 (대상 {n}건, 조건부 {m}건)" })` → 저장 배너 2.5초 |
-| 알림 설정 | 채널·항목 토글을 `bridge:settings:v1`에 저장. `newGrant`(신규 공고 알림)는 이 버전에서 동작하지 않으므로 저장만 하고 설명 문구를 `"새 지원사업 공고 등록 시 발송 (제공 예정)"`으로 바꾼다. 헤더 아래 한 줄 안내 `"현재 버전은 대시보드 배너로 알립니다. 이메일·푸시 발송은 제공 예정입니다."` — 허용된 추가 |
+| 알림 설정 | 채널·항목 토글을 `bizbuddy:settings:v1`에 저장. `newGrant`(신규 공고 알림)는 이 버전에서 동작하지 않으므로 저장만 하고 설명 문구를 `"새 지원사업 공고 등록 시 발송 (제공 예정)"`으로 바꾼다. 헤더 아래 한 줄 안내 `"현재 버전은 대시보드 배너로 알립니다. 이메일·푸시 발송은 제공 예정입니다."` — 허용된 추가 |
 | 판정 이력 | `useHistory()` 최신순. 비어 있으면 `"아직 이력이 없습니다."`. `엑셀 내보내기` → P1 CSV(`date,event,result`, UTF-8 BOM), P0는 `disabled` |
-| 데이터 관리 | (§4.5-11) `데모 프로필 전환` → 3종 선택 팝오버 → 교체 후 이력 기록 · `내 데이터 내보내기(JSON)` → `bridge-export-{date}.json` 다운로드 · `프로필 초기화`(rose) → `confirm()` 대신 인라인 2단계 확인 버튼 → localStorage 전체 삭제 → `/onboarding` |
+| 데이터 관리 | (§4.5-11) `데모 프로필 전환` → 3종 선택 팝오버 → 교체 후 이력 기록 · `내 데이터 내보내기(JSON)` → `bizbuddy-export-{date}.json` 다운로드 · `프로필 초기화`(rose) → `confirm()` 대신 인라인 2단계 확인 버튼 → localStorage 전체 삭제 → `/onboarding` |
 | 완료 기준 | 직원 수 4→5 저장 시 판정함·시뮬레이터·할 일이 모두 재계산되고 이력에 1행 추가 |
 
 ### S9. 준비서류 리드타임 역산 — `/grants/[id]/documents` · **P1** · 신규
@@ -1580,7 +1580,7 @@ seed
 | 검증 | 모든 AI 응답은 zod로 재검증(`lib/ai/schema.ts`에 추가). 실패 → 1회 재시도 → 실패 시 `"AI 제안을 만들지 못했습니다"` + 결정론 부분(요약·KB·지표)만 표시. 기능이 AI 없이도 부분 동작해야 한다 |
 | 가드레일 | 라우트별 분당 10회/IP(기존 `lib/ai/rateLimit.ts` 재사용), 입력 캡(§15.5), `maxDuration = 60`, 서버 로그에 본문 저장 금지 |
 | 헬스 | `GET /api/health`에 `providers: { claude: 'ok'\|'missing'\|'auth_error', gemini: 동일 }` 추가(1토큰 핑, 60초 캐시). **Phase 8a 완료 기준** |
-| 캐시 | AI 결과는 `localStorage`에 `(programId, profile.updated_at)` 키로 캐시(`bridge:ai:v1`) — 같은 조건이면 재호출하지 않음. "다시 생성" 버튼으로만 갱신 |
+| 캐시 | AI 결과는 `localStorage`에 `(programId, profile.updated_at)` 키로 캐시(`bizbuddy:ai:v1`) — 같은 조건이면 재호출하지 않음. "다시 생성" 버튼으로만 갱신 |
 
 ### 15.1 F1. 조건 보완 AI 코치 — 판정함 확장 (P8b)
 
@@ -1608,7 +1608,7 @@ seed
 | 표준 템플릿 (`seed/outline_templates.json`) | `창업`: 기업 개요 · 문제 인식(Problem) · 실현 가능성(Solution) · 성장 전략(Scale-up) · 팀 구성(Team) — PSST · `R&D`: 개발 목표 · 개발 내용·방법 · 추진 체계·일정 · 성과 활용·사업화 · `고용`: 채용 계획 · 근로 조건 · 인력 활용 계획 · `금융`: 자금 용도 · 상환 계획 · 재무 현황 · `수출`/`경영`/`기타`: 기업 개요 · 사업 내용 · 기대 효과 |
 | Step B — 프리필 (코드, `lib/engine/prefill.ts`) | `PrefillField = 'company_name'\|'business_type'\|'industry'\|'region'\|'founded_at'\|'business_age'\|'employee_count'\|'annual_revenue'\|'certifications'\|'ceo_age'` → 프로필 값으로 문장 생성(예 `"2023년 10월 광주광역시에서 설립된 소프트웨어 개발 법인(상시근로자 4인)"`). 값 없음 → `[작성 필요]`. 프리필은 **클라이언트에서** 실행(회사명은 서버로 가지 않음) |
 | Step C — 작성 팁 (AI, 선택) | 섹션별 `작성 팁 보기` 클릭 시 `guidance + evaluation_criteria`를 근거로 3줄 팁. 회사 사실을 지어내지 않고 "무엇을 써야 하는지"만 |
-| 편집·저장 | 각 섹션에 `questions`가 표시되고 사용자가 답을 `textarea`에 씀 → `bridge:drafts:v1[programId]` 저장. 진행률 `"{답한 질문}/{전체 질문}"` |
+| 편집·저장 | 각 섹션에 `questions`가 표시되고 사용자가 답을 `textarea`에 씀 → `bizbuddy:drafts:v1[programId]` 저장. 진행률 `"{답한 질문}/{전체 질문}"` |
 | 내보내기 | `.md` 다운로드(목차 → 프리필 문장 → 질문·답 → 서류 체크리스트 → 하단 "AI 생성 뼈대 · 본문은 직접 작성"). `.docx`는 P2 |
 | UI | 좌: 섹션 아코디언(`bg-white border border-[#E4E6EA] rounded-2xl`, 필수 섹션 brand 점) · 우: 서류 체크리스트(S9 리드타임 상태 뱃지 재사용) + 평가항목 표 + 진행률 |
 | 완료 기준 | #14(원문에 서류·대상 명시) → `source:'announcement'`, 섹션 ≥ 4, 서류 2건 카탈로그 매칭 · #10(원문 짧음) → `source:'template'` 금융 4섹션 · 프리필에 회사명·업력·직원 수가 정확히 들어감 · `.md` 내보내기 파일에 사용자 답이 포함 · 네트워크 탭에 회사명 전송 없음 |
@@ -1628,7 +1628,7 @@ seed
 | AI 인사이트 | 입력 = 지표 JSON(만원 단위 반올림) + `industry_code` + `employee_count` + `hiring_planned` + **판정 `pass/conditional` 중 `금융`·`고용`·`수출` 프로그램 목록**(id·title·apply_end). 출력 `CashflowInsight { headline(≤50자), insights: [{ type: 'risk'\|'opportunity'\|'habit', text(≤100자), metric_ref: string }](3~5), actions: [{ text, program_id: string\|null }](≤3), questions_for_owner: string[](≤3) }`. 규칙: 입력 지표에 있는 숫자만 언급, `metric_ref`는 지표 키여야 함(코드가 검증·없으면 행 제거), `program_id`는 입력 목록 안의 것만, 세무·법률 판단 금지("세무사와 상의" 안내는 허용) |
 | 지원사업 연결 (코드) | `linkPrograms(metrics, verdicts)`: `runway ≤ 6` → 금융 분야 pass/conditional 마감 임박순 · 인건비 비중 ≥ 40% 또는 `hiring_planned` → 고용 분야 · 수출 입금 카테고리 존재 → 수출 분야. AI의 `actions.program_id`도 이 목록과 교차 검증 |
 | UI | 상단 KPI 카드 3(잔액 · 월평균 순현금흐름 · 런웨이 `N개월`, `healthByRule` 색: stable 성공색/ watch amber/ risk rose) → 월별 막대(입금 `#3D7260`, 출금 `#6E62C2`; SVG 직접 또는 `recharts` 허용, 색은 토큰만) → 카테고리 상위 5 가로 막대 → AI 인사이트 카드(type별 아이콘: risk rose·opportunity 성공색·habit brand) → `지금 볼 지원사업` 카드(판정함 카드 축약형, 마감 D-day) → 예정 지출 일정 → 하단 `데이터 삭제` 버튼 + 면책 |
-| 저장 | 지표 요약·매핑만 `bridge:cashflow:v1`. 원본 행은 새로고침 시 사라짐(의도) |
+| 저장 | 지표 요약·매핑만 `bizbuddy:cashflow:v1`. 원본 행은 새로고침 시 사라짐(의도) |
 | 면책 문구 | `"재무·세무 자문이 아닙니다. 업로드한 파일은 이 브라우저에서만 처리되며, 서버에는 월별 합계 등 집계 수치만 전송됩니다."` |
 | 완료 기준 | 샘플 파일 → 매핑 자동 감지(`confidence ≥ 0.8`) → 확인 → KPI·차트 렌더 → 인사이트 ≥ 3건(모두 유효 `metric_ref`) → 샘플은 `runway ≈ 4~5개월`로 설계해 `watch`와 금융 프로그램 연결이 나옴 · 헤더가 영문/순서 다른 두 번째 샘플(`cashflow_sample_alt.csv`)은 AI 매핑 경로를 탐 · 깨진 파일 → 친절한 오류 · 네트워크 탭에 원본 행·회사명 없음 |
 
@@ -1756,3 +1756,18 @@ npm i @google/genai xlsx            # Gemini SDK · SheetJS(브라우저 파싱)
 ---
 
 *문서 끝. 이 문서와 코드가 충돌하면 문서를 고치고 사람에게 알린다 — 조용히 코드만 바꾸지 않는다.*
+
+---
+
+## §16 자격 분류 고도화 (2026-09-19 추가)
+
+코드와 이 문서가 어긋나지 않도록 변경점을 적는다. 수치 근거는 `docs/matching/REPORT.md`(`npm run match:report`).
+
+1. **프로필 항목 2개 추가** — `has_tax_arrears: boolean | null`(국세·지방세 체납), `prior_support: PriorSupport[] | null`(예비·초기·도약 패키지, 청년창업사관학교, TIPS 수혜 이력). 둘 다 `null`은 "모름"이며 §0.1-7에 따라 해당 요건은 `needs_check`다. 구버전 프로필에는 필드가 없으므로 `toFlatProfile`이 `null`로 읽는다. 온보딩 수정 폼과 AI 대화 가입(§15)에서 받는다.
+2. **업종 매칭 모호성** — 프로필 코드가 조건 코드보다 덜 구체적이면(프로필 `I56` · 조건 `I56211`) `check`다. 이전에는 `in`은 조용히 fail, `not_in`은 조용히 pass였다. 업종 표에 `I561`·`I5621`·`I5622`를 추가하고 `I56`은 "세부 모름"으로 바꿨다.
+3. **조건의 상위 근거 `Condition.basis`** — `{ kind: law | rule | notice, ref, note?, checked_at }`. `source_text`(공고 문장)와 별개로, 그 문장이 기대는 법령·운영 기준을 적는다. `checked_at: null`이면 화면에 "원문 대조 전"으로 보인다(§0.1-8과 같은 원칙). 시드의 모든 basis는 아직 원문 대조 전이다.
+4. **시드 카탈로그 보강** — 공통 제외(체납), 창업 제외 업종(「중소기업창업 지원법」 시행령 제4조), 중복수혜 제한, 소상공인 정의(「소상공인기본법」 시행령 제2조 — 업종별 10인/5인 기준, 이전 시드의 C·G·I 업종 한정은 법령에 없어 삭제). 이 때문에 §10.2 프로필 ①의 기대 판정이 "대상 9 · 조건부 5 · 제외 5"로 바뀌었다(#9 제외 → 대상).
+5. **맞춤도 `lib/engine/rank.ts`** — 대상 공고끼리의 정렬. 대상을 좁히는 조건(지역 한정·청년 대표·업종 한정·인증·수혜 이력 요건 등)을 통과할수록 점수가 높고, 위생 조건(업력 7년 이내·체납 없음·제외 업종 아님)은 0점. 판정 자체는 바꾸지 않는다.
+6. **판정표** — 대상뿐 아니라 조건부·제외 공고도 요건별 판정표를 펼쳐 볼 수 있다. 확인 필요 행은 "무엇을 입력하면 확정되는지"(`missingInput`)를 보여준다.
+7. **§7.1 파서 프롬프트** — 위 두 필드와 제외 업종 KSIC 코드를 field 목록에 추가했다(`lib/ai/prompts.ts`).
+

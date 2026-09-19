@@ -71,6 +71,17 @@ describe("시드 구조", () => {
     }
   });
 
+  it("상위 근거(법령·지침)는 원문 대조 전이면 checked_at이 비어 있다 (§0.1-8)", () => {
+    const walk = (node: { conditions?: unknown[]; basis?: { ref: string; checked_at: string | null } }): void => {
+      if (Array.isArray(node.conditions)) node.conditions.forEach((c) => walk(c as typeof node));
+      else if (node.basis) {
+        expect(node.basis.ref.length).toBeGreaterThan(0);
+        expect(node.basis.checked_at).toBeNull();
+      }
+    };
+    for (const p of catalog.programs) walk(p.eligibility);
+  });
+
   it("모든 조건에 근거 원문 문장이 붙어 있다 (§10.2)", () => {
     const walk = (node: { operator?: string; conditions?: unknown[]; source_text?: string }): void => {
       if (Array.isArray(node.conditions)) {
@@ -86,15 +97,17 @@ describe("시드 구조", () => {
 describe("프로필 ① 테크스타트 — §10.2 기대 판정", () => {
   const rows = verdictsFor(P1);
 
-  it("대상 8 · 조건부 5 · 제외 6", () => {
+  // 소상공인 정의를 법령(「소상공인기본법」 시행령 제2조)대로 바꾸면서 #9가 제외 → 대상으로 옮겼다.
+  // 예전 시드는 법령에 없는 업종 제한(C·G·I)을 걸어 소프트웨어 4인 기업을 떨어뜨리고 있었다.
+  it("대상 9 · 조건부 5 · 제외 5", () => {
     expect(idsByStatus(rows, "pass")).toEqual(
-      ["seed-01", "seed-03", "seed-06", "seed-08", "seed-10", "seed-12", "seed-14", "seed-15"].sort(),
+      ["seed-01", "seed-03", "seed-06", "seed-08", "seed-09", "seed-10", "seed-12", "seed-14", "seed-15"].sort(),
     );
     expect(idsByStatus(rows, "conditional")).toEqual(
       ["seed-02", "seed-04", "seed-05", "seed-16", "seed-20"].sort(),
     );
     expect(idsByStatus(rows, "fail")).toEqual(
-      ["seed-07", "seed-09", "seed-13", "seed-17", "seed-18", "seed-19"].sort(),
+      ["seed-07", "seed-13", "seed-17", "seed-18", "seed-19"].sort(),
     );
   });
 
@@ -107,14 +120,14 @@ describe("프로필 ① 테크스타트 — §10.2 기대 판정", () => {
     expect(sub("seed-16")).toBe("needs_check"); // 지역 우수기업
   });
 
-  it("곧 사라짐: 업력 2건 · 대표자연령 1건 · 직원수 1건, 90일 이내는 2건", () => {
+  it("곧 사라짐: 업력 2건 · 대표자연령 1건 · 직원수 2건, 90일 이내는 2건", () => {
     const flat = toFlatProfile(P1, TODAY);
     const verdicts = catalog.programs.map((p) => evaluateProgram(p, flat, TODAY));
     const list = computeExpiringList(catalog.programs, verdicts, flat, TODAY);
 
-    expect(list.map((i) => i.programId)).toEqual(["seed-01", "seed-03", "seed-15", "seed-14"]);
-    expect(list.map((i) => i.axis)).toEqual(["업력", "업력", "대표자연령", "직원수"]);
-    expect(list[3].expiresIn).toBeNull(); // 직원수 축은 "채용 시"
+    expect(list.map((i) => i.programId)).toEqual(["seed-01", "seed-03", "seed-15", "seed-09", "seed-14"]);
+    expect(list.map((i) => i.axis)).toEqual(["업력", "업력", "대표자연령", "직원수", "직원수"]);
+    expect(list[3].expiresIn).toBeNull(); // 직원수 축은 "채용 시" — 5인이 되면 소상공인이 아니다
     expect(list.filter((i) => i.expiresIn !== null && i.expiresIn <= 90)).toHaveLength(2);
   });
 

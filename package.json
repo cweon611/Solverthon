@@ -1,5 +1,5 @@
 {
-  "name": "bridge",
+  "name": "bizbuddy",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -20,7 +20,8 @@
     "law:verify": "tsx scripts/verify-law.ts",
     "licenses": "tsx scripts/licenses.ts",
     "smoke": "tsx scripts/smoke.ts",
-    "admin:create": "tsx scripts/create-admin.ts"
+    "admin:create": "tsx scripts/create-admin.ts",
+    "match:report": "tsx scripts/match-report.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.123.0",

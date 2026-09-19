@@ -3,7 +3,7 @@
 
 import { INDUSTRIES, REGIONS } from "@/lib/constants";
 import { fromIso, toIso } from "@/lib/engine/format";
-import type { Certification, CompanyProfile } from "@/lib/types";
+import type { Certification, CompanyProfile, PriorSupport } from "@/lib/types";
 
 import type { InterviewExtractedRaw } from "./geminiSchemas";
 
@@ -22,6 +22,8 @@ export interface InterviewExtract {
   handles_personal_data: boolean | null;
   is_food_business: boolean | null;
   certifications: Certification[];
+  has_tax_arrears: boolean | null;
+  prior_support: PriorSupport[] | null; // null = 모름, [] = 받은 적 없음
   business_direction: string | null;
 }
 
@@ -29,7 +31,7 @@ export const EMPTY_EXTRACT: InterviewExtract = {
   name: null, business_type: null, industry_code: null, region_code: null, founded_at: null,
   employee_count: null, ceo_birth_date: null, ceo_gender: null, annual_revenue_krw: null,
   hiring_planned: null, has_online_sales: null, handles_personal_data: null, is_food_business: null,
-  certifications: [], business_direction: null,
+  certifications: [], has_tax_arrears: null, prior_support: null, business_direction: null,
 };
 
 const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -67,6 +69,10 @@ export function coerceExtracted(raw: InterviewExtractedRaw, today: Date): Interv
     handles_personal_data: tri(raw.handles_personal_data),
     is_food_business: tri(raw.is_food_business),
     certifications: [...new Set(raw.certifications)],
+    has_tax_arrears: tri(raw.has_tax_arrears),
+    prior_support: raw.prior_support_status === "none" ? []
+      : raw.prior_support.length > 0 ? [...new Set(raw.prior_support)]
+      : null, // "받았다"만 하고 무엇인지 모르면 모름으로 둔다
     business_direction: raw.business_direction.trim() || null,
   };
 }
@@ -78,6 +84,8 @@ export function mergeExtract(prev: InterviewExtract, next: InterviewExtract): In
     const v = next[key];
     if (key === "certifications") {
       out.certifications = [...new Set([...prev.certifications, ...next.certifications])];
+    } else if (key === "prior_support") {
+      if (next.prior_support !== null) out.prior_support = [...new Set([...(prev.prior_support ?? []), ...next.prior_support])];
     } else if (v !== null && v !== undefined) {
       (out as Record<string, unknown>)[key] = v;
     }
@@ -123,6 +131,8 @@ export function extractToProfile(ex: InterviewExtract): CompanyProfile | null {
     export_revenue_usd_prev_year: null,
     is_vat_exempt: false,
     certifications: ex.certifications,
+    has_tax_arrears: ex.has_tax_arrears,
+    prior_support: ex.prior_support,
     flags: {
       hiring_planned: ex.hiring_planned ?? false,
       has_online_sales: ex.has_online_sales ?? false,

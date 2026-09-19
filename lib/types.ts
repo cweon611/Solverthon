@@ -1,5 +1,5 @@
 // lib/types.ts — 도메인 타입의 단일 출처 (PRD §5)
-// 디자인(design/BridgePage.tsx)의 뷰모델 타입은 유지하고 필드만 추가한다 (§5.4).
+// 디자인(design/BizBuddyPage.tsx)의 뷰모델 타입은 유지하고 필드만 추가한다 (§5.4).
 
 // ─── §5.1 기업 프로필 ────────────────────────────────────────────────────────
 
@@ -12,7 +12,15 @@ export type Certification =
   | "women_enterprise"
   | "disabled_enterprise";
 
-// 사용자가 입력·저장하는 값 (localStorage "bridge:profile:v1")
+/** 이전에 받은 정부 창업사업화 지원 — 중복수혜 제한 판정용. 계열 단위로 묶는다 */
+export type PriorSupport =
+  | "pre_startup_pkg" // 예비창업패키지
+  | "early_startup_pkg" // 초기창업패키지
+  | "leap_pkg" // 창업도약패키지
+  | "youth_academy" // 청년창업사관학교 (졸업 포함)
+  | "tips"; // TIPS 창업사업화
+
+// 사용자가 입력·저장하는 값 (localStorage "bizbuddy:profile:v1")
 export interface CompanyProfile {
   id: string; // crypto.randomUUID()
   name: string; // "테크스타트 주식회사" (선택 입력, 없으면 "내 회사")
@@ -36,6 +44,10 @@ export interface CompanyProfile {
     handles_personal_data: boolean; // 개인정보처리방침 축
     is_food_business: boolean; // 식품 영업신고 축
   };
+  /** 국세·지방세 체납 여부. null·없음(구버전 프로필) = 모름 → 해당 요건은 확인 필요 */
+  has_tax_arrears?: boolean | null;
+  /** 이전에 받은 창업사업화 지원. null·없음 = 모름, [] = 받은 적 없음 */
+  prior_support?: PriorSupport[] | null;
   /** 창업가가 말한 사업 방향·계획 (대화형 온보딩에서 수집, 신청서 초안 프리필에 사용). 선택 */
   business_direction?: string | null;
   created_at: string;
@@ -61,6 +73,8 @@ export interface FlatProfile {
   has_online_sales: boolean;
   handles_personal_data: boolean;
   is_food_business: boolean;
+  has_tax_arrears: boolean | null;
+  prior_support: PriorSupport[] | null;
 }
 
 // Condition.field에 허용되는 키
@@ -81,12 +95,25 @@ export type FieldMeta = Record<
 
 export type Operator = "lt" | "lte" | "gt" | "gte" | "eq" | "neq" | "in" | "not_in" | "includes";
 
+/**
+ * 조건이 왜 존재하는지 — 공고 문장(source_text)과 별개로, 그 문장이 기대는 상위 규범.
+ * law: 법령 조문 · rule: 사업 운영지침·통칙(여러 공고 공통) · notice: 이 공고만의 규정.
+ * checked_at이 null이면 원문 대조 전이다 → 화면에 "원문 확인 전"으로 보인다 (§0.1-8과 같은 원칙).
+ */
+export interface ConditionBasis {
+  kind: "law" | "rule" | "notice";
+  ref: string; // "「소상공인기본법」 시행령 제2조" · "창업사업화 지원사업 통합공고 공통 제외 기준"
+  note?: string; // 조문이 정한 내용의 요지(사람이 쓴 것). 조문 인용이 아니다
+  checked_at: string | null;
+}
+
 export interface Condition {
   field: ConditionField;
   op: Operator;
   value: number | string | boolean | string[];
   label: string; // 사용자에게 보여줄 요건 문구: "업력 3년 이상 7년 이하" (AI가 생성)
   source_text: string; // 공고 원문에서 근거가 된 문장 그대로 ← 투명성의 핵심
+  basis?: ConditionBasis; // 상위 근거(법령·지침). 없으면 공고 문장만이 근거
 }
 export interface ConditionGroup {
   operator: "AND" | "OR";
@@ -200,6 +227,9 @@ export interface EligibilityCriteria {
   pass: boolean;
   state: "pass" | "fail" | "check"; // check = needs_check (pass=false)
   sourceText: string; // 행 클릭 시 펼침
+  basis?: ConditionBasis;
+  /** 이 행을 확정하려면 입력해야 하는 프로필 항목 (check일 때만) */
+  missingInput?: string;
 }
 
 export interface Grant {
@@ -224,6 +254,8 @@ export interface Grant {
   hasDocuments: boolean;
   /** 시연용 합성 공고인가. 실제 공고 페이지가 없어 원문 링크가 포털 목록으로 간다 */
   isSynthetic: boolean;
+  /** 맞춤도 (lib/engine/rank.ts). 대상 공고끼리 정렬하는 데 쓴다 */
+  fit?: { score: number; reasons: string[] };
 }
 
 export type AnnouncementStatus = "open" | "closing" | "closed";
@@ -295,7 +327,7 @@ export interface Company {
   ageMonths: number;
 }
 
-// 판정 이력 1행 (localStorage "bridge:history:v1")
+// 판정 이력 1행 (localStorage "bizbuddy:history:v1")
 export interface HistoryEntry {
   date: string; // 표시용 "YYYY.MM.DD"
   event: string;
