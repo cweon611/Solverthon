@@ -307,7 +307,14 @@ export function SurveyScreen() {
                     elevate={stored.answered.length > 0 ? "none" : "brand"}>
                     {stored.answered.length > 0 ? "처음부터 다시" : "설문 시작"}
                   </Button>
+                  {/* 시연용: 설문을 건너뛰고 데모 프로필 ①로 바로 들어간다 */}
+                  <Button onClick={() => applyDemo(0)} variant="soft" pad="5x2.5" text="sm" radius="xl" motion="colors">
+                    입력 건너뛰고 둘러보기 →
+                  </Button>
                 </div>
+                <p className="text-[11px] text-[#888888]">
+                  건너뛰면 데모 회사({loadDemoProfiles(today)[0]?.name})의 정보로 판정 결과를 바로 볼 수 있습니다. 마이페이지에서 언제든 내 정보로 바꿀 수 있습니다.
+                </p>
                 <div className="border-t border-[#E4E6EA] pt-4 space-y-2">
                   <p className="text-[11px] text-[#888888]">시연용 데모 프로필로 바로 보기</p>
                   <div className="flex flex-wrap gap-2">
