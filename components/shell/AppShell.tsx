@@ -73,7 +73,7 @@ function ShellGuard({ children }: { children: ReactNode }) {
           <span>
             로그인 없이 체험 ·{" "}
             {meta.mode === "local"
-              ? `공고는 K-Startup 공식 API로 수집한 모집 중 실공고 (${meta.syncedAt ? isoToDot(meta.syncedAt.slice(0, 10)) : "-"} 수집, 이 PC 시연용)`
+              ? `공고는 K-Startup 공식 API로 수집한 모집 중 실공고 (${meta.syncedAt ? isoToDot(meta.syncedAt.slice(0, 10)) : "-"} 수집 기준 · 마감된 공고는 제외)`
               : "공고는 시연용 합성 데이터"}{" "}
             · 입력한 정보는 이 브라우저에만 저장됩니다
           </span>
