@@ -25,7 +25,7 @@ export type CoachOutput = z.infer<typeof CoachOutputZ>;
 export const PREFILL_KEYS = [
   "company_name", "biz_no", "business_type", "industry", "region", "founded_at",
   "business_age", "employee_count", "ceo_age", "annual_revenue", "certifications", "business_direction",
-  "eligibility_summary",
+  "eligibility_summary", "company_intro",
 ] as const;
 export type PrefillKey = (typeof PREFILL_KEYS)[number];
 
@@ -33,7 +33,7 @@ export const PREFILL_LABEL: Record<PrefillKey, string> = {
   company_name: "회사명", biz_no: "사업자번호", business_type: "사업자 형태", industry: "업종", region: "소재지",
   founded_at: "개업일", business_age: "업력", employee_count: "상시근로자 수", ceo_age: "대표자 연령",
   annual_revenue: "연매출", certifications: "보유 인증", business_direction: "사업 방향",
-  eligibility_summary: "자격 충족 근거",
+  eligibility_summary: "자격 충족 근거", company_intro: "회사 소개 문장",
 };
 
 export const DraftOutputZ = z.object({

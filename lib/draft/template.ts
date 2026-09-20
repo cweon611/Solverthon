@@ -16,7 +16,7 @@ const FORMAT_OF: Record<SupportField, Format> = {
 const OVERVIEW_SECTION = {
   heading: "0. 기업 개요",
   purpose: "심사위원이 회사를 한눈에 파악하게 합니다.",
-  template: "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다. 보유 인증: {{certifications}}.\n\n{{business_direction}}",
+  template: "{{company_intro}}\n\n보유 인증: {{certifications}}.\n\n{{business_direction}}",
   tips: ["숫자(업력·인원·매출)는 증빙 서류와 일치해야 합니다."],
   criteria: [] as number[],
 };
