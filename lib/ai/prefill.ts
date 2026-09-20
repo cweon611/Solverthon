@@ -16,7 +16,11 @@ import { PREFILL_KEYS, PREFILL_LABEL, type PrefillKey } from "./geminiSchemas";
 
 export type PrefillValues = Record<PrefillKey, string | null>;
 
-export function buildPrefillValues(p: CompanyProfile, today: Date, extra: { eligibility_summary?: string | null } = {}): PrefillValues {
+export function buildPrefillValues(
+  p: CompanyProfile,
+  today: Date,
+  extra: { eligibility_summary?: string | null; company_intro?: string | null } = {},
+): PrefillValues {
   const founded = fromIso(p.founded_at);
   const ageMonths = founded ? monthsBetween(founded, today) : null;
   return {
@@ -34,6 +38,7 @@ export function buildPrefillValues(p: CompanyProfile, today: Date, extra: { elig
     certifications: p.certifications.length > 0 ? p.certifications.map((c) => CERT_LABEL[c] ?? c).join(", ") : "없음",
     business_direction: p.business_direction?.trim() || null,
     eligibility_summary: extra.eligibility_summary ?? null,
+    company_intro: extra.company_intro ?? null,
   };
 }
 

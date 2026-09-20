@@ -39,7 +39,7 @@ describe("기본 양식 (AI 없음)", () => {
 
   it("모든 공고의 모든 토큰이 알려진 키다 (채우면 {{ }}가 남지 않는다)", () => {
     const lib = Object.fromEntries(LIB_KEYS.map((k) => [k, `${k} 답`]));
-    const values = buildPrefillValues(company, TODAY, { eligibility_summary: "근거" });
+    const values = buildPrefillValues(company, TODAY, { eligibility_summary: "근거", company_intro: "회사 소개" });
     for (const p of programs) {
       for (const s of buildBasicDraft(p).sections) {
         const r = applyPrefill(s.template, values, lib);

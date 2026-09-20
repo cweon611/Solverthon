@@ -13,11 +13,13 @@ import { toast } from "sonner";
 import type { DraftOutput } from "@/lib/ai/geminiSchemas";
 import { hasCachedDraft } from "@/lib/ai-cache/available";
 import { applyPrefill, buildPrefillValues, countBlanks, fillBlank, freeBlanks, libBlanks, refill, splitBlanks, toPlainText } from "@/lib/ai/prefill";
+import { companyIntro, enrichTemplate, type TableKind } from "@/lib/draft/enrich";
 import { eligibilityEvidence } from "@/lib/draft/evidence";
 import { LIB_FIELDS, LIB_KEYS, libraryProgress, type LibKey, type Library } from "@/lib/draft/library";
+import { readiness, sectionQuality } from "@/lib/draft/quality";
 import { buildBasicDraft } from "@/lib/draft/template";
 import { evaluateProgram } from "@/lib/engine/evaluate";
-import { isoToDot } from "@/lib/engine/format";
+import { fmtBusinessAge, fromIso, isoToDot, monthsBetween } from "@/lib/engine/format";
 import { useCatalog, useFlatProfile, useProfile, useToday } from "@/lib/store/hooks";
 import { usePersistent } from "@/lib/store/persistent";
 import { STORAGE_KEYS } from "@/lib/store/storage";
@@ -69,21 +71,34 @@ export function DraftScreen({ programId }: { programId: string }) {
   const preRef = useRef<HTMLPreElement>(null);
 
   // 판정 엔진 결과 → "신청 자격 충족 현황" 문단
-  const evidence = useMemo(() => {
-    if (!program || !profile) return null;
-    return eligibilityEvidence(evaluateProgram(program, flat, today), profile.name);
-  }, [program, profile, flat, today]);
+  const verdict = useMemo(() => (program ? evaluateProgram(program, flat, today) : null), [program, flat, today]);
+  const evidence = useMemo(
+    () => (verdict && profile ? eligibilityEvidence(verdict, profile.name) : null),
+    [verdict, profile],
+  );
+
+  // 첫 문단에 들어가는 회사 소개 문장 — 프로필 + 충족한 요건에서 만든다
+  const intro = useMemo(() => {
+    if (!program || !profile || !verdict) return null;
+    const founded = fromIso(profile.founded_at);
+    const ageText = founded ? fmtBusinessAge(monthsBetween(founded, today)) : "-";
+    const passed = verdict.criteria.filter((c) => c.state === "pass").map((c) => c.required);
+    return companyIntro(program, profile, ageText, passed);
+  }, [program, profile, verdict, today]);
 
   const values = useMemo(
-    () => (profile ? buildPrefillValues(profile, today, { eligibility_summary: evidence?.text ?? null }) : null),
-    [profile, today, evidence],
+    () => (profile ? buildPrefillValues(profile, today, { eligibility_summary: evidence?.text ?? null, company_intro: intro }) : null),
+    [profile, today, evidence, intro],
   );
 
   // 섹션별 최종 본문: 사용자가 고친 것(그 사이 생긴 값으로 빈칸 재채움) > 템플릿 채움 결과
   const sections = useMemo(() => {
-    if (!saved || !values) return [];
+    if (!saved || !values || !program) return [];
+    // 표는 초안 전체에서 한 번씩만 — 문단을 도는 동안 공유한다
+    const usedTables = new Set<TableKind>();
     return saved.draft.sections.map((s, i) => {
-      const pre = applyPrefill(s.template, values, library);
+      const enriched = enrichTemplate(s.template, { heading: s.heading, program, profile, usedTables });
+      const pre = applyPrefill(enriched, values, library);
       const edited = saved.edits[String(i)];
       const text = edited !== undefined ? refill(edited, values, library) : pre.text;
       return {
@@ -94,10 +109,23 @@ export function DraftScreen({ programId }: { programId: string }) {
         blanks: countBlanks(text),
         libNeeded: libBlanks(text),
         free: freeBlanks(text),
-        chars: text.replace(/\s/g, "").length,
+        quality: sectionQuality(text, { criteriaCount: (s.criteria ?? []).length, heading: s.heading }),
       };
     });
-  }, [saved, values, library]);
+  }, [saved, values, library, program, profile]);
+
+  // 제출 전 점검 — 분량·빈칸·근거·과장 표현
+  const checks = useMemo(
+    () =>
+      saved
+        ? readiness({
+            sections: sections.map((s) => ({ heading: s.heading, quality: s.quality, criteria: s.criteria })),
+            criteriaCount: saved.draft.evaluation_criteria.length,
+            documents: saved.draft.documents,
+          })
+        : [],
+    [saved, sections],
+  );
 
   // 이 초안이 쓰는 "내 사업 정보" 항목 — 채워도 목록에서 사라지지 않게 템플릿 기준으로 모은다
   const libUsed = useMemo(() => {
@@ -394,7 +422,13 @@ export function DraftScreen({ programId }: { programId: string }) {
                       <p className="text-xs text-[#888888] mt-0.5">{s.purpose}</p>
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <span className="text-[10px] font-mono text-[#888888]">{s.chars.toLocaleString("ko-KR")}자</span>
+                      {/* 권장 분량 대비 — 공고 양식이 분량을 정했다면 그쪽이 우선이다 */}
+                      <span className="text-[10px] font-mono text-[#888888]" title="빈칸을 뺀 글자 수 / 권장 분량">
+                        {s.quality.chars.toLocaleString("ko-KR")} / {s.quality.target.toLocaleString("ko-KR")}자
+                      </span>
+                      <span className="w-10 h-1 rounded-full bg-[#E4E6EA] overflow-hidden" aria-hidden>
+                        <span className={`block h-full ${s.quality.ratio >= 1 ? "bg-[#3D7260]" : s.quality.ratio >= 0.6 ? "bg-[#6E62C2]" : "bg-amber-400"}`} style={{ width: `${Math.round(s.quality.ratio * 100)}%` }} />
+                      </span>
                       {s.blanks > 0 ? <Badge size="md" weight="none" tone="warning">빈칸 {s.blanks}</Badge> : <Badge size="md" weight="none" tone="successAlt">완성</Badge>}
                       {saved.edits[String(i)] !== undefined && <Badge size="md" weight="none" tone="brand">수정됨</Badge>}
                     </div>
@@ -415,6 +449,14 @@ export function DraftScreen({ programId }: { programId: string }) {
                           : <span key={j}>{part.value}</span>,
                       )}
                     </p>
+                  )}
+
+                  {(s.quality.ratio < 0.6 || (s.criteria.length > 0 && !s.quality.hasNumber) || s.quality.hype.length > 0) && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-amber-700">
+                      {s.quality.ratio < 0.6 && <span>· 분량이 권장치의 {Math.round(s.quality.ratio * 100)}%입니다</span>}
+                      {s.criteria.length > 0 && !s.quality.hasNumber && <span>· 수치 근거가 없습니다</span>}
+                      {s.quality.hype.length > 0 && <span>· 과장 표현: {s.quality.hype.join(", ")}</span>}
+                    </div>
                   )}
 
                   {s.tips.length > 0 && (
@@ -459,6 +501,27 @@ export function DraftScreen({ programId }: { programId: string }) {
                 )}
               </Alert>
             </div>
+
+            {/* 제출 전 점검 — 코드가 셀 수 있는 것만 본다 */}
+            <Card shadow="none" clip>
+              <CardHeader size="tight" layout="row">
+                <h3 className="text-sm font-bold text-[#111111]">제출 전 점검</h3>
+                <span className="text-[10px] text-[#888888]">{checks.filter((c) => c.ok).length} / {checks.length} 통과</span>
+              </CardHeader>
+              <CardContent size="none" list>
+                {checks.map((c) => (
+                  <div key={c.label} className="px-5 py-2.5 flex items-start gap-2.5">
+                    <span className={`mt-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-bold shrink-0 ${c.ok ? "bg-[#3D7260] text-white" : "bg-amber-400 text-white"}`}>
+                      {c.ok ? "✓" : "!"}
+                    </span>
+                    <div className="min-w-0">
+                      <p className={`text-xs font-medium ${c.ok ? "text-[#111111]" : "text-amber-800"}`}>{c.label}</p>
+                      <p className="text-[11px] text-[#888888] mt-0.5">{c.detail}</p>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           </div>
 
           {/* ── 오른쪽: 빈칸 채우기 ── */}
