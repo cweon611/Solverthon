@@ -5246,5 +5246,4749 @@
   },
   "model": "claude-opus-5",
   "generatedAt": "2026-09-20T07:54:58.381Z"
+ },
+ "ks-179143": {
+  "draft": {
+   "title": "2026년 여성과학기술인 R&D 경력복귀 지원사업 하반기 모집  공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 한국여성과학기술인육성재단)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.23 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179098": {
+  "draft": {
+   "title": "연구개발특구진흥재단 X 현대차증권 Corporate Venture Connect 오픈이노베이션 배치프로그램 참가기업 모집공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 연구개발특구진흥재단)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.25 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179189": {
+  "draft": {
+   "title": "앤틀러코리아 ANTLER INCEPTION  참여 기업 모집  |  Build Money-making AI 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 앤틀러코리아)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.26 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179282": {
+  "draft": {
+   "title": "2026 글로컬 Angelwave IR Camp 신청서",
+   "overview": "전시회·투자 상담회 참가 신청서입니다. 심사에서는 현장에서 보여 줄 것이 준비되어 있는지와 참가 목적의 구체성을 봅니다. (공고 성격: 전시·IR·상담회 · 주관 한국엔젤투자협회 호남권 엔젤투자허브)",
+   "evaluation_criteria": [
+    {
+     "name": "제품 완성도",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "현장에서 보여 줄 제품·서비스의 상태"
+    },
+    {
+     "name": "참가 목적",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "만나고 싶은 상대와 기대하는 결과"
+    },
+    {
+     "name": "후속 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "행사 이후 이어갈 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 간단히 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [
+      "한 문장 소개를 미리 다듬어 두세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 제품·서비스 소개",
+     "purpose": "현장에서 보여 줄 것을 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시연 가능한 형태인지 밝히세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 성과와 시장",
+     "purpose": "지금까지의 실적을 보여줍니다.",
+     "template": "{{lib:traction}}\n\n{{lib:market}}",
+     "tips": [
+      "투자 상담회라면 매출·사용자 지표를 앞세우세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 참가 목적",
+     "purpose": "무엇을 얻으러 가는지 적습니다.",
+     "template": "[[이 행사에서 만나고 싶은 상대 (바이어·투자자·협력사)와 이유]]\n\n[[행사에서 달성할 목표 (상담 건수·계약·투자 유치 등)]]",
+     "tips": [
+      "목표를 숫자로 적으면 구체해집니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 기대효과와 후속 계획",
+     "purpose": "행사 이후를 계획합니다.",
+     "template": "{{lib:impact}}\n\n[[행사 이후 후속 조치 계획]]",
+     "tips": [
+      "사후 보고 의무가 있는지 확인하세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "참가비·부스비 자부담과 취소 규정을 확인하세요.",
+    "전시 부스 준비물(배너·샘플·영문 자료)은 별도 비용이 듭니다.",
+    "접수 마감 2026.09.27 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179259": {
+  "draft": {
+   "title": "OCEANˈS TAP 해양 OI 리버스피칭 및 OI 밋업 참여기업 모집 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 주관기관)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.27 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179249": {
+  "draft": {
+   "title": "강남구 개포동지역 ㈜오피스허브 1인 창조기업 지원센터 입주기업 모집(1인실,2인실) 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 ㈜오피스허브 1인 창조기업 지원센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.27 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179220": {
+  "draft": {
+   "title": "2026년 서경대학교 창업보육센터 입주기업 모집(3차) 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 서경대학교 창업보육센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.27 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179179": {
+  "draft": {
+   "title": "Midnight Korea Hackathon 2026 & Privacy Night 참가 안내 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 서울핀테크랩)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.27 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179112": {
+  "draft": {
+   "title": "하드웨어 제조 고민, 현직 엔지니어가 1:1 무료 진단합니다. 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 인탑스(주))",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.27 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179289": {
+  "draft": {
+   "title": "2026년 하반기 경기도여성창업보육센터 입주기업 모집 연장공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 경기도일자리재단 남부사업본부장)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179273": {
+  "draft": {
+   "title": "제7회 원주권 스타트업 커뮤니티 데이 참가자 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 상지대학교 벤처창업본부)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179257": {
+  "draft": {
+   "title": "2026년 대전 스타트업스쿨 스타트업 리딩클래스 (5회차 ㅣ 예비 및 초기창업자가 1년 안에 가장 후회하는 3가지) 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 대전창조경제혁신센터)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179223": {
+  "draft": {
+   "title": "연구개발특구진흥재단 × 대구창조경제혁신센터 「2026 이노폴리스 오픈이노베이션 밋업데이」참여기업 모집 공고 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 연구개발특구진흥재단)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179187": {
+  "draft": {
+   "title": "2026년 하반기 서울창업허브 성수 입주기업 모집 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 서울경제진흥원)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179180": {
+  "draft": {
+   "title": "2026년  강동 K-ISS멘토링센터 4차 교육 및 튜토링 과정 투자 유치 전략과 IR 피칭 스킬업 신청서",
+   "overview": "전시회·투자 상담회 참가 신청서입니다. 심사에서는 현장에서 보여 줄 것이 준비되어 있는지와 참가 목적의 구체성을 봅니다. (공고 성격: 전시·IR·상담회 · 주관 주식회사 이노시아)",
+   "evaluation_criteria": [
+    {
+     "name": "제품 완성도",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "현장에서 보여 줄 제품·서비스의 상태"
+    },
+    {
+     "name": "참가 목적",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "만나고 싶은 상대와 기대하는 결과"
+    },
+    {
+     "name": "후속 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "행사 이후 이어갈 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 간단히 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [
+      "한 문장 소개를 미리 다듬어 두세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 제품·서비스 소개",
+     "purpose": "현장에서 보여 줄 것을 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시연 가능한 형태인지 밝히세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 성과와 시장",
+     "purpose": "지금까지의 실적을 보여줍니다.",
+     "template": "{{lib:traction}}\n\n{{lib:market}}",
+     "tips": [
+      "투자 상담회라면 매출·사용자 지표를 앞세우세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 참가 목적",
+     "purpose": "무엇을 얻으러 가는지 적습니다.",
+     "template": "[[이 행사에서 만나고 싶은 상대 (바이어·투자자·협력사)와 이유]]\n\n[[행사에서 달성할 목표 (상담 건수·계약·투자 유치 등)]]",
+     "tips": [
+      "목표를 숫자로 적으면 구체해집니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 기대효과와 후속 계획",
+     "purpose": "행사 이후를 계획합니다.",
+     "template": "{{lib:impact}}\n\n[[행사 이후 후속 조치 계획]]",
+     "tips": [
+      "사후 보고 의무가 있는지 확인하세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "참가비·부스비 자부담과 취소 규정을 확인하세요.",
+    "전시 부스 준비물(배너·샘플·영문 자료)은 별도 비용이 듭니다.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179048": {
+  "draft": {
+   "title": "[서초창업스테이션] 서리풀 소상공인 창업 클리닉(9월) - 소상공인 1:1 컨설팅 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 서초창업스테이션)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179038": {
+  "draft": {
+   "title": "[투자연계&사업화] 더인벤션랩 2026 엣지업 크리에이터스 4기 AX/LX Challenge  모집공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 더인벤션랩)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-178981": {
+  "draft": {
+   "title": "2026년 제3차 대전 팁스타운 입주기업 모집 공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 창업진흥원장)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-178896": {
+  "draft": {
+   "title": "2026년 모두의 창업 글로벌 재외국민 프로그램 참여자 모집 공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 중소벤처기업부)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.28 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179271": {
+  "draft": {
+   "title": "[인천] 2026년 IP창업존 51기 교육(모두의창업 연계과정) 모집 공고 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 인천지식재산센터)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.29 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179270": {
+  "draft": {
+   "title": "「서울소셜벤처허브」2026년  ‘허브 멤버스’ 입주사 추가모집 공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 서울소셜벤처허브)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.29 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179224": {
+  "draft": {
+   "title": "2026 투자 유치 세미나 - 투자사 관점에서 보는 투자유치를 위한 실전 전략 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 서울창업허브 창동)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.29 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179297": {
+  "draft": {
+   "title": "2026 중장년기술창업센터 제3차 신규 입주기업 모집 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 (재)안양산업진흥원장)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179278": {
+  "draft": {
+   "title": "제2서울핀테크랩 민간위탁 운영기관 모집 공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 서울특별시)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179274": {
+  "draft": {
+   "title": "블루포인트파트너스 CSprint 1기 사업가형 인재 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 ㈜블루포인트파트너스)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179255": {
+  "draft": {
+   "title": "26년 9월 스타트업 언론 홍보 지원사업 참가사 모집 공고(2차) 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 스타트업 데일리)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179248": {
+  "draft": {
+   "title": "(재)여성기업종합지원센터 광주센터 BI 입주기업 모집 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 (재)여성기업종합지원센터 광주센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179233": {
+  "draft": {
+   "title": "로봇 분야 예비·초기·재창업자를 위한 「창업 성장 프로그램」참가자 모집 공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 한국로봇산업진흥원장)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179230": {
+  "draft": {
+   "title": "2026년 9월 KICXUP 서울 입주기업 모집공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 한국산업단지공단,씨엔티테크)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179226": {
+  "draft": {
+   "title": "2026년 특허출원·등록 비용 바우처 지원사업 13차(하반기 6차) 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 (사)한국중소기업발전협회)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179225": {
+  "draft": {
+   "title": "[도봉구청년창업센터] 제6차 스케일업 아카데미:  초기 스타트업을 위한 AI 재무관리 노하우 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 도봉구 청년창업센터장)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179222": {
+  "draft": {
+   "title": "2026년 서울창업허브 창동 투자 특화 프로그램 - IR 라운드(3회차) 신청서",
+   "overview": "전시회·투자 상담회 참가 신청서입니다. 심사에서는 현장에서 보여 줄 것이 준비되어 있는지와 참가 목적의 구체성을 봅니다. (공고 성격: 전시·IR·상담회 · 주관 서울창업허브 창동)",
+   "evaluation_criteria": [
+    {
+     "name": "제품 완성도",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "현장에서 보여 줄 제품·서비스의 상태"
+    },
+    {
+     "name": "참가 목적",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "만나고 싶은 상대와 기대하는 결과"
+    },
+    {
+     "name": "후속 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "행사 이후 이어갈 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 간단히 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [
+      "한 문장 소개를 미리 다듬어 두세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 제품·서비스 소개",
+     "purpose": "현장에서 보여 줄 것을 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시연 가능한 형태인지 밝히세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 성과와 시장",
+     "purpose": "지금까지의 실적을 보여줍니다.",
+     "template": "{{lib:traction}}\n\n{{lib:market}}",
+     "tips": [
+      "투자 상담회라면 매출·사용자 지표를 앞세우세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 참가 목적",
+     "purpose": "무엇을 얻으러 가는지 적습니다.",
+     "template": "[[이 행사에서 만나고 싶은 상대 (바이어·투자자·협력사)와 이유]]\n\n[[행사에서 달성할 목표 (상담 건수·계약·투자 유치 등)]]",
+     "tips": [
+      "목표를 숫자로 적으면 구체해집니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 기대효과와 후속 계획",
+     "purpose": "행사 이후를 계획합니다.",
+     "template": "{{lib:impact}}\n\n[[행사 이후 후속 조치 계획]]",
+     "tips": [
+      "사후 보고 의무가 있는지 확인하세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "참가비·부스비 자부담과 취소 규정을 확인하세요.",
+    "전시 부스 준비물(배너·샘플·영문 자료)은 별도 비용이 듭니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179214": {
+  "draft": {
+   "title": "수원대학교 예비창업패키지 2026 Pre-WoW! 창업아카데미 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 수원대학교 창업지원단)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179210": {
+  "draft": {
+   "title": "첨단기술기업 지정 컨설팅 희망기업 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 (주)윕스)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179206": {
+  "draft": {
+   "title": "2026 서울게임콘텐츠센터 게임스튜디오 신규 입주기업 모집 공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 (재)서울경제진흥원)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179205": {
+  "draft": {
+   "title": "('26년 4분기) 공공조달시장 진출지원 컨설팅 희망기업 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 인천지방조달청 경기조달지원센터)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179204": {
+  "draft": {
+   "title": "2026 고양시 F&B 성장지원 프로그램  with G-ROUND 877 참여기업 모집공고 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 스타에셋파트너스(주))",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179194": {
+  "draft": {
+   "title": "한국공학대학교 창업보육센터 입주기업 모집공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 한국공학대학교 창업보육센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179186": {
+  "draft": {
+   "title": "『 2026 산림분야 오픈이노베이션 』 현대건설, 한국콜마 협력 희망 스타트업 모집(~9.30. 15:00) 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 재단법인 서울창조경제혁신센터)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179182": {
+  "draft": {
+   "title": "12대 국가전략기술 분야 기술이전 수요 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 (주)윕스)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179178": {
+  "draft": {
+   "title": "2026 협성대학교 창업보육센터 하반기 신규 입주기업 모집 공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 협성대학교 창업보육센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179168": {
+  "draft": {
+   "title": "호서대학교 서울창업보육센터 신규입주모집 공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 호서대학교 서울창업보육센터장)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179147": {
+  "draft": {
+   "title": "충북대학교 『글로벌(G)테크벤처센터(BI) 』 입주기업 모집 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 충북대학교 글로벌(G)테크벤처센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179144": {
+  "draft": {
+   "title": "2026년 스타 IR 데모데이 참여기업 모집공고(5차) 신청서",
+   "overview": "전시회·투자 상담회 참가 신청서입니다. 심사에서는 현장에서 보여 줄 것이 준비되어 있는지와 참가 목적의 구체성을 봅니다. (공고 성격: 전시·IR·상담회 · 주관 스타에셋파트너스 주식회사)",
+   "evaluation_criteria": [
+    {
+     "name": "제품 완성도",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "현장에서 보여 줄 제품·서비스의 상태"
+    },
+    {
+     "name": "참가 목적",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "만나고 싶은 상대와 기대하는 결과"
+    },
+    {
+     "name": "후속 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "행사 이후 이어갈 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 간단히 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [
+      "한 문장 소개를 미리 다듬어 두세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 제품·서비스 소개",
+     "purpose": "현장에서 보여 줄 것을 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시연 가능한 형태인지 밝히세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 성과와 시장",
+     "purpose": "지금까지의 실적을 보여줍니다.",
+     "template": "{{lib:traction}}\n\n{{lib:market}}",
+     "tips": [
+      "투자 상담회라면 매출·사용자 지표를 앞세우세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 참가 목적",
+     "purpose": "무엇을 얻으러 가는지 적습니다.",
+     "template": "[[이 행사에서 만나고 싶은 상대 (바이어·투자자·협력사)와 이유]]\n\n[[행사에서 달성할 목표 (상담 건수·계약·투자 유치 등)]]",
+     "tips": [
+      "목표를 숫자로 적으면 구체해집니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 기대효과와 후속 계획",
+     "purpose": "행사 이후를 계획합니다.",
+     "template": "{{lib:impact}}\n\n[[행사 이후 후속 조치 계획]]",
+     "tips": [
+      "사후 보고 의무가 있는지 확인하세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "참가비·부스비 자부담과 취소 규정을 확인하세요.",
+    "전시 부스 준비물(배너·샘플·영문 자료)은 별도 비용이 듭니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179141": {
+  "draft": {
+   "title": "2026 제조전문형 메이커스페이스 2차(일반/학생) 프로젝트 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 국민대학교)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179135": {
+  "draft": {
+   "title": "2026 예비창업패키지 INU 창업준비 아카데미(1기) 교육생 모집공고 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 국립대학법인 인천대학교)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179123": {
+  "draft": {
+   "title": "2026년 한라대학교 창업보육센터 9월 신규입주기업 모집 공고 신청서",
+   "overview": "공간 입주와 보육 프로그램에 지원하는 신청서입니다. 심사에서는 입주 기간에 무엇을 이룰지, 그리고 그 공간이 왜 필요한지를 봅니다. (공고 성격: 입주·보육 · 주관 한라대학교 창업보육센터)",
+   "evaluation_criteria": [
+    {
+     "name": "사업 아이템",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "해결하려는 문제와 제품·서비스의 구체성"
+    },
+    {
+     "name": "입주 필요성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "이 공간·보육이 필요한 이유와 활용 계획"
+    },
+    {
+     "name": "성장 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "입주 기간 중 목표와 팀 운영 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사와 대표자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "사업자등록증·재직 증빙과 숫자를 맞추세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 사업 아이템",
+     "purpose": "무엇을 하는 사업인지 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시제품·서비스 화면이 있으면 캡처를 붙이세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 목표 고객과 시장",
+     "purpose": "누구에게 파는지 밝힙니다.",
+     "template": "{{lib:customer}}\n\n{{lib:market}}",
+     "tips": [
+      "시장 규모에는 출처를 적으세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 입주 필요성과 활용 계획",
+     "purpose": "왜 이 공간·프로그램이 필요한지 적습니다.",
+     "template": "[[현재 근무 환경과 이 공간이 필요한 이유]]\n\n[[입주 기간 중 활용하려는 보육·멘토링 프로그램]]",
+     "tips": [
+      "단순한 임차료 절감보다 프로그램 활용 계획이 설득력 있습니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 추진 일정과 성장 계획",
+     "purpose": "입주 기간의 목표를 제시합니다.",
+     "template": "{{lib:schedule}}\n\n{{lib:impact}}",
+     "tips": [
+      "입주 기간과 같은 길이로 일정을 잡으세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "입주에는 보증금·관리비 등 자부담이 있을 수 있습니다. 공고에서 확인하세요.",
+    "사업자 주소 이전 의무가 붙는 경우가 많습니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179105": {
+  "draft": {
+   "title": "(창업공모전) 2026 여성벤처 성장 챌린지 참가자 모집 공고 신청서",
+   "overview": "전시회·투자 상담회 참가 신청서입니다. 심사에서는 현장에서 보여 줄 것이 준비되어 있는지와 참가 목적의 구체성을 봅니다. (공고 성격: 전시·IR·상담회 · 주관 한국여성벤처협회장)",
+   "evaluation_criteria": [
+    {
+     "name": "제품 완성도",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "현장에서 보여 줄 제품·서비스의 상태"
+    },
+    {
+     "name": "참가 목적",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "만나고 싶은 상대와 기대하는 결과"
+    },
+    {
+     "name": "후속 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "행사 이후 이어갈 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 간단히 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [
+      "한 문장 소개를 미리 다듬어 두세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 제품·서비스 소개",
+     "purpose": "현장에서 보여 줄 것을 설명합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:solution}}\n\n{{lib:differentiation}}",
+     "tips": [
+      "시연 가능한 형태인지 밝히세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 성과와 시장",
+     "purpose": "지금까지의 실적을 보여줍니다.",
+     "template": "{{lib:traction}}\n\n{{lib:market}}",
+     "tips": [
+      "투자 상담회라면 매출·사용자 지표를 앞세우세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "4. 참가 목적",
+     "purpose": "무엇을 얻으러 가는지 적습니다.",
+     "template": "[[이 행사에서 만나고 싶은 상대 (바이어·투자자·협력사)와 이유]]\n\n[[행사에서 달성할 목표 (상담 건수·계약·투자 유치 등)]]",
+     "tips": [
+      "목표를 숫자로 적으면 구체해집니다."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "5. 기대효과와 후속 계획",
+     "purpose": "행사 이후를 계획합니다.",
+     "template": "{{lib:impact}}\n\n[[행사 이후 후속 조치 계획]]",
+     "tips": [
+      "사후 보고 의무가 있는지 확인하세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "참가비·부스비 자부담과 취소 규정을 확인하세요.",
+    "전시 부스 준비물(배너·샘플·영문 자료)은 별도 비용이 듭니다.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179096": {
+  "draft": {
+   "title": "[동대문구 창업지원센터] 9월 메이커스페이스(레이저커터, 3D프린팅) 교육 일정 신청서",
+   "overview": "교육 과정·캠프·네트워킹 프로그램 참가 신청서입니다. 참가 동기와 과정 이후 계획이 핵심입니다. (공고 성격: 교육·네트워킹 · 주관 동대문구 창업지원센터)",
+   "evaluation_criteria": [
+    {
+     "name": "참가 동기",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "지금 이 과정이 필요한 이유"
+    },
+    {
+     "name": "적용 계획",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "배운 것을 사업에 어떻게 적용할지"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업·참가자 개요",
+     "purpose": "회사와 참가자를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
+     "tips": [
+      "참가자 본인의 역할을 적으세요."
+     ],
+     "criteria": []
+    },
+    {
+     "heading": "2. 현재 사업과 어려움",
+     "purpose": "지금 상황을 설명합니다.",
+     "template": "{{lib:solution}}\n\n{{lib:problem}}",
+     "tips": [
+      "구체적인 어려움일수록 선발에 유리합니다."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 참가 동기와 적용 계획",
+     "purpose": "과정을 어떻게 쓸지 적습니다.",
+     "template": "[[이 과정에서 배우고 싶은 것]]\n\n[[과정 종료 후 사업에 적용할 계획]]",
+     "tips": [
+      "커리큘럼을 보고 구체적으로 연결하세요."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 기대효과",
+     "purpose": "과정 이후 목표를 제시합니다.",
+     "template": "{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "출석률·수료 기준이 있는 경우가 많습니다. 일정 참여가 가능한지 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179085": {
+  "draft": {
+   "title": "출연연, 대학 연구소기업 Business Development 프로그램 참여 예비창업자 모집 (9월) 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 연구개발특구진흥재단)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
+ },
+ "ks-179078": {
+  "draft": {
+   "title": "[성동구 관내기업] 「모두의 창업⸥ 정부R&D사업 및 베트남 해외진출 컨설팅 지원기업 모집 신청서",
+   "overview": "사업화 자금·지원 프로그램 신청서입니다. 문제와 해결책, 시장, 자금 사용 계획, 팀을 차례로 보여 줍니다. (공고 성격: 사업화·자금 · 주관 성동구청)",
+   "evaluation_criteria": [
+    {
+     "name": "문제 인식",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "고객 문제의 실재와 크기"
+    },
+    {
+     "name": "실현 가능성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "제품 상태와 차별성, 지금까지의 성과"
+    },
+    {
+     "name": "성장 전략",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "시장·일정·자금 계획"
+    },
+    {
+     "name": "팀 구성",
+     "weight_text": "공고에서 배점 확인",
+     "what_to_show": "수행 역량과 고용 계획"
+    }
+   ],
+   "sections": [
+    {
+     "heading": "1. 기업 개요",
+     "purpose": "회사를 소개합니다.",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
+     "tips": [],
+     "criteria": []
+    },
+    {
+     "heading": "2. 문제 인식",
+     "purpose": "해결할 문제와 고객을 정의합니다.",
+     "template": "{{lib:problem}}\n\n{{lib:customer}}",
+     "tips": [
+      "문제 크기를 숫자로 보여주세요."
+     ],
+     "criteria": [
+      0
+     ]
+    },
+    {
+     "heading": "3. 실현 가능성",
+     "purpose": "제품과 차별성, 성과를 보여줍니다.",
+     "template": "{{lib:solution}}\n\n{{lib:differentiation}}\n\n{{lib:traction}}",
+     "tips": [
+      "'무엇을 만들지'보다 '어디까지 만들었는지'."
+     ],
+     "criteria": [
+      1
+     ]
+    },
+    {
+     "heading": "4. 성장 전략과 자금 계획",
+     "purpose": "시장·일정·자금을 제시합니다.",
+     "template": "{{lib:market}}\n\n{{lib:schedule}}\n\n{{lib:budget}}",
+     "tips": [
+      "비목은 공고 기준에 맞추세요."
+     ],
+     "criteria": [
+      2
+     ]
+    },
+    {
+     "heading": "5. 팀 구성과 기대효과",
+     "purpose": "실행 역량과 목표를 보여줍니다.",
+     "template": "{{lib:team}}\n\n{{lib:impact}}",
+     "tips": [],
+     "criteria": [
+      3
+     ]
+    },
+    {
+     "heading": "신청 자격 충족 현황",
+     "purpose": "공고의 신청 자격을 요건별로 확인합니다.",
+     "template": "{{eligibility_summary}}",
+     "tips": [
+      "요건별 증빙 서류를 함께 준비하세요."
+     ],
+     "criteria": []
+    }
+   ],
+   "documents": [],
+   "warnings": [
+    "지원금 집행 기준(비목·자부담)을 공고에서 확인하세요.",
+    "접수 마감 2026.09.30 — 서류 발급 기간을 고려해 미리 준비하세요.",
+    "이 목차는 공고 성격에 맞춘 표준 구성입니다. 공고에 지정 서식이 있으면 그 서식을 따르세요."
+   ]
+  },
+  "model": "claude-opus-5",
+  "generatedAt": "2026-09-20T09:21:53.928Z"
  }
 }
