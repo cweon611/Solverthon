@@ -1,7 +1,8 @@
 // scripts/match-report.ts — 매칭 품질 리포트 (결정론 · 재현 가능)
 //
-//   npm run match:report                       → docs/matching/REPORT.md 갱신
-//   npm run match:report -- --baseline <json>  → 이전 카탈로그와 나란히 비교
+//   npm run match:report                        → docs/matching/REPORT.md 갱신
+//   npm run match:report -- --baseline <json>   → 이전 카탈로그와 나란히 비교 (엔진 개선 효과)
+//   npm run match:report -- --live <json>       → 지금 서비스가 쓰는 실공고 카탈로그 현황을 앞에 싣는다
 //
 // 기준일을 2026-09-03으로 고정한다(엔진 테스트와 같은 날). 같은 입력이면 항상 같은 숫자가 나온다.
 // 잰 것: ① 카탈로그 구조 ② 판별력(가상 회사 격자) ③ 항목별 민감도 ④ 정답 사례 ⑤ 데모 프로필 맞춤도
@@ -27,8 +28,10 @@ const OUT = "docs/matching/REPORT.md";
 
 function loadPrograms(path: string | null): Program[] {
   if (!path) return loadSeedCatalog(TODAY).programs;
-  const raw = JSON.parse(readFileSync(resolve(path), "utf8")) as Program[];
-  const r = (t: string | null) => (t === null ? null : resolveDate(t, TODAY));
+  const file = JSON.parse(readFileSync(resolve(path), "utf8")) as Program[] | { programs: Program[] };
+  const raw = Array.isArray(file) ? file : file.programs;
+  // 시드는 상대 토큰("-20d"), 실공고는 실제 날짜다. 상대 토큰일 때만 푼다
+  const r = (t: string | null) => (t === null ? null : /^[+-]/.test(t) ? resolveDate(t, TODAY) : t);
   return raw
     .filter((p) => p.duplicate_of === null)
     .map((p) => ({ ...p, apply_start: r(p.apply_start), apply_end: r(p.apply_end), created_at: r(p.created_at)!, updated_at: r(p.updated_at)! }));
@@ -177,6 +180,8 @@ function main() {
   const argv = process.argv.slice(2);
   const bi = argv.indexOf("--baseline");
   const baselinePath = bi >= 0 ? argv[bi + 1] : null;
+  const li = argv.indexOf("--live");
+  const livePath = li >= 0 ? argv[li + 1] : null;
 
   const after = loadPrograms(null);
   const before = baselinePath ? loadPrograms(baselinePath) : null;
@@ -194,9 +199,57 @@ function main() {
   const L: string[] = [];
   L.push("# 비즈버디 매칭 품질 리포트", "");
   L.push(`> \`npm run match:report${before ? ` -- --baseline ${baselinePath}` : ""}\`로 다시 만들 수 있습니다. 기준일 2026-09-03 고정 · 결정론 계산이라 같은 입력이면 같은 숫자가 나옵니다.`);
-  L.push("> 카탈로그는 시연용 합성 공고(실제 공고 구조를 본뜬 것)입니다. 법령 근거는 모두 **원문 대조 전**입니다(`checked_at: null`).", "");
+  L.push("> 법령 근거는 모두 **원문 대조 전**입니다(`checked_at: null`).", "");
+  if (livePath) L.push("> 이 리포트는 두 부분입니다. **A장**은 지금 화면이 보여주는 실공고 카탈로그의 현황, **B장**은 판정 엔진 개선 효과를 시연용 합성 공고로 잰 결과입니다.", "");
 
-  L.push("## 1. 카탈로그 구조", "", head("지표"));
+  // ── 실공고 카탈로그 현황 (서비스 화면이 지금 보여주는 공고) ──
+  if (livePath) {
+    const iso = TODAY.toISOString().slice(0, 10);
+    const liveFile = JSON.parse(readFileSync(resolve(livePath), "utf8")) as { fetchedAt?: string; programs: Program[] };
+    const live = loadPrograms(livePath).filter((p) => p.is_rolling || (p.apply_end !== null && p.apply_end >= iso));
+    const parsed = live.filter((p) => p.parsed_at);
+    const sL = structure(live);
+    const dL = discrimination(live, grid);
+    const senL = fieldSensitivity(live, bases, PROBES, TODAY);
+    L.push("## A. 현재 서비스가 보는 공고 (실공고)", "");
+    L.push(`공공데이터포털 K-Startup 공식 오픈 API로 수집한 모집 중 공고입니다${liveFile.fetchedAt ? ` (수집 ${liveFile.fetchedAt.slice(0, 10)})` : ""}. 화면의 공고 목록과 같은 카탈로그입니다.`, "");
+    L.push("| 지표 | 값 |", "|---|---:|");
+    L.push(`| 공고 수 (마감 제외) | ${sL.programs} |`);
+    L.push(`| AI 구조화(파싱) 완료 | ${parsed.length} |`);
+    L.push(`| 파싱 전 — 판정은 '확인 필요'로 유보 | ${sL.programs - parsed.length} |`);
+    L.push(`| 자격 조건 수 | ${sL.conditions} |`);
+    L.push(`| 파싱된 공고당 조건 수 | ${parsed.length === 0 ? "-" : f2(sL.conditions / parsed.length)} |`);
+    L.push(`| 필드에 매핑 못 한 조건 (원문 확인 필요) | ${sL.unmapped} |`);
+    L.push(`| 서로 다른 판정 결과 조합 (가상 회사 ${dL.profiles.toLocaleString()}곳) | ${dL.distinctVectors.toLocaleString()} |`);
+    L.push(`| 회사당 평균 '대상' 공고 수 | ${f2(dL.meanEligible)} |`);
+    L.push(`| 회사당 평균 '확인 필요' 공고 수 | ${f2(dL.meanNeedsCheck)} |`);
+    L.push("", "**입력 항목별 민감도 (실공고 기준)** — 이 항목 하나만 바꾸면 판정이 몇 건 바뀌는가", "");
+    L.push("| 입력 항목 | 평균 변화 | 영향 공고 |", "|---|---:|---:|");
+    senL.forEach((a) => L.push(`| ${a.field} | ${f2(a.meanFlips)} | ${pct(a.programsAffected)} |`));
+    L.push("");
+    for (const demo of loadDemoProfiles(TODAY)) {
+      const prof = toStoredProfile(demo);
+      const flat = toFlatProfile(prof, TODAY);
+      const ranked = live
+        .map((prog) => ({ prog, v: evaluateProgram(prog, flat, TODAY) }))
+        .filter((x) => x.v.overall === "eligible")
+        .map((x) => ({ ...x, fit: computeFit(x.prog, x.v, flat) }))
+        .sort((a, b) => b.fit.score - a.fit.score)
+        .slice(0, 5);
+      L.push(`**${demo.demo_label}** — 실공고 대상 ${ranked.length === 5 ? "상위 5" : `${ranked.length}`}건`, "");
+      if (ranked.length === 0) L.push("대상으로 확정된 공고가 없습니다. 지역 한정 공고가 많고, 파싱 전 공고는 '확인 필요'로 두기 때문입니다.", "");
+      else {
+        L.push("| 공고 | 마감 | 맞춤도 | 이유 |", "|---|---|---:|---|");
+        ranked.forEach((r) => L.push(`| ${r.prog.title.slice(0, 40)} | ${r.prog.apply_end ?? "상시"} | ${r.fit.score} | ${r.fit.reasons.join(" · ") || "공통 요건만 충족"} |`));
+        L.push("");
+      }
+    }
+    L.push("> 아래 B장은 **판정 엔진을 개선한 효과**를 재려고 시연용 합성 공고 21건으로 측정한 것입니다. 위 A장(실공고)과는 카탈로그가 다릅니다.", "");
+  }
+
+  L.push(livePath ? "## B. 엔진 개선 효과 (시연용 합성 공고 21건 기준)" : "## 1. 카탈로그 구조", "");
+  if (livePath) L.push("아래 수치는 모두 합성 공고 카탈로그에서 잰 것입니다. 실공고에는 개선 전 상태가 없어 전후 비교를 할 수 없기 때문입니다.", "", "### B-1. 카탈로그 구조", "");
+  L.push(head("지표"));
   L.push(`| 공고 수 ${col(String(sA.programs), sB && String(sB.programs))}`);
   L.push(`| 자격 조건 수 ${col(String(sA.conditions), sB && String(sB.conditions))}`);
   L.push(`| 공고당 조건 수 ${col(f2(sA.perProgram), sB && f2(sB.perProgram))}`);
@@ -207,7 +260,7 @@ function main() {
   const fields = Object.keys(FIELD_META).filter((f) => (sA.fieldsUsed[f] ?? 0) + (sB?.fieldsUsed[f] ?? 0) > 0);
   for (const f of fields) L.push(`| ${FIELD_META[f as keyof typeof FIELD_META].label} ${col(String(sA.fieldsUsed[f] ?? 0), sB && String(sB.fieldsUsed[f] ?? 0))}`);
 
-  L.push("", "## 2. 판별력 — 회사가 달라지면 결과도 달라지는가", "");
+  L.push("", livePath ? "### B-2. 판별력" : "## 2. 판별력 — 회사가 달라지면 결과도 달라지는가", "");
   L.push(`가상 회사 ${dA.profiles.toLocaleString()}곳 = 업종 ${GRID.industry.length} × 지역 ${GRID.region.length} × 업력 ${GRID.ageMonths.length} × 직원 수 ${GRID.employees.length} × 대표 연령 ${GRID.ceoAge.length} × 성별 2 × 체납(없음·모름·있음) × 수혜 이력(없음·모름·초기창업패키지).`, "");
   L.push(head("지표"));
   L.push(`| 서로 다른 판정 결과 조합 수 ${col(dA.distinctVectors.toLocaleString(), dB && dB.distinctVectors.toLocaleString())}`);
@@ -221,7 +274,7 @@ function main() {
   L.push("판정이 한 번도 바뀌지 않는 공고는 격자가 바꾸지 않는 항목(수출액·채용 예정·식품 영업·보유 인증)에만 의존하는 공고입니다. 이 항목들의 효과는 3장 민감도에서 따로 잽니다.");
   L.push("'확인 필요'가 늘어난 것은 격자의 1/3이 체납을 '모름'으로, 1/3이 수혜 이력을 '모름'으로 답했기 때문입니다. 모르는 값은 제외가 아니라 확인 필요로 둡니다(§0.1-7).");
 
-  L.push("", "## 3. 항목별 민감도 — 이 항목 하나만 바꾸면 판정이 몇 건 바뀌는가", "");
+  L.push("", livePath ? "### B-3. 항목별 민감도" : "## 3. 항목별 민감도 — 이 항목 하나만 바꾸면 판정이 몇 건 바뀌는가", "");
   L.push(`서로 다른 기준 회사 ${bases.length}곳에서 항목 하나만 바꾸고 나머지는 고정했습니다. '평균 변화'는 변형 1회당 판정이 바뀐 공고 수, '영향 공고'는 한 번이라도 판정이 바뀐 공고의 비율입니다.`, "");
   L.push(before ? "| 입력 항목 | 이전 평균 변화 | 현재 평균 변화 | 이전 영향 공고 | 현재 영향 공고 |\n|---|---:|---:|---:|---:|" : "| 입력 항목 | 평균 변화 | 영향 공고 |\n|---|---:|---:|");
   senA.forEach((a, i) => {
@@ -231,7 +284,7 @@ function main() {
   const dead = senA.filter((a) => a.meanFlips === 0).map((a) => a.field);
   L.push("", dead.length ? `현재도 판정에 영향이 없는 항목: ${dead.join(", ")} — 이 항목을 쓰는 공고가 카탈로그에 없다는 뜻입니다.` : "모든 입력 항목이 적어도 한 공고의 판정을 바꿉니다.");
 
-  L.push("", "## 4. 정답 사례 — 공개 규정대로 판정하는가", "");
+  L.push("", livePath ? "### B-4. 정답 사례" : "## 4. 정답 사례 — 공개 규정대로 판정하는가", "");
   const okA = gA.filter((g) => g.ok).length, okB = gB?.filter((g) => g.ok).length;
   L.push(`사례 ${GOLD_CASES.length}건 · 현재 일치 **${okA}/${GOLD_CASES.length}**${gB ? ` · 이전 일치 ${okB}/${GOLD_CASES.length}` : ""}`, "");
   L.push("> 정답은 공개 규정(법령·통상적 공고 문구)을 읽고 사람이 붙였습니다. 독립 평가자의 정답이 아니므로 '정확도'가 아니라 '규정 준수 검사'로 읽어야 합니다.", "");
@@ -245,7 +298,7 @@ function main() {
       : `| ${g.id} | ${title} | ${g.who} | ${VERDICT_KO[g.expected]} | ${mark(g.got, g.ok)} | ${g.why} |`);
   });
 
-  L.push("", "## 5. 데모 프로필의 맞춤도 순위", "");
+  L.push("", livePath ? "### B-5. 데모 프로필의 맞춤도 순위" : "## 5. 데모 프로필의 맞춤도 순위", "");
   L.push("대상 공고끼리는 '대상을 좁히는 조건'(지역 한정·청년 대표·업종 한정·인증 등)을 몇 개 통과했는지로 정렬합니다. 누구나 통과하는 조건(업력 7년 이내·체납 없음·제외 업종 아님)은 점수가 없습니다(`lib/engine/rank.ts`).", "");
   for (const demo of loadDemoProfiles(TODAY)) {
     const p = toStoredProfile(demo);
