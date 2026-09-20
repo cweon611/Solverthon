@@ -6,7 +6,41 @@
   "seed-04",
   "seed-06",
   "seed-10",
-  "seed-13"
+  "seed-13",
+  "seed-05",
+  "seed-07",
+  "seed-08",
+  "seed-09",
+  "seed-11",
+  "seed-12",
+  "seed-14",
+  "seed-15",
+  "seed-16",
+  "seed-17",
+  "seed-18",
+  "seed-19",
+  "seed-20",
+  "seed-23"
  ],
- "coach": []
+ "coach": [
+  "seed-02:19d6616574c92c44",
+  "seed-04:d03af0630e62c82e",
+  "seed-05:d9abfde0057f7e9b",
+  "seed-07:6b2f60a0baf7d771",
+  "seed-13:079f28e4041d36a3",
+  "seed-16:c662a6bb26412d50",
+  "seed-17:ee1e919ac82be227",
+  "seed-18:5ee4c8a01450cd55",
+  "seed-19:9266fa7c2fc119d3",
+  "seed-20:77f076e6482621e9",
+  "seed-23:de93932c61fcfe53",
+  "seed-06:d3edd58adb6f422d",
+  "seed-07:0998bf106015692b",
+  "seed-12:91a4c588d023cbc5",
+  "seed-03:5d58eefc9fa31b67",
+  "seed-08:cd83dcfe358034b9",
+  "seed-14:698595e28db0ce95",
+  "seed-15:27d46ca0ab9fef29",
+  "seed-16:bc291a4bff1a43fe"
+ ]
 }
