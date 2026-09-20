@@ -19,7 +19,8 @@ export interface AuthoredDraft {
   warnings: string[];
 }
 
-const COMPANY = "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.";
+// 회사 소개는 한 문장 토큰으로 — 프로필과 충족한 자격 요건이 함께 들어간다
+const COMPANY = "{{company_intro}}";
 
 export const AUTHORED_DRAFTS: Record<string, AuthoredDraft> = {
   "seed-05": {

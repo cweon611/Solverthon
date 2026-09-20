@@ -29,6 +29,9 @@ const write = (p: string, v: unknown) => writeFileSync(p, JSON.stringify(v, null
 type DraftCache = Record<string, { draft: DraftOutput; model: string; generatedAt: string }>;
 type CoachCache = Record<string, { programId: string; coach: CoachOutput; model: string; generatedAt: string }>;
 
+// --force-authored: 이전에 작성해 둔 결과(AUTHORED_MODEL)만 다시 만든다. Gemini 결과는 건드리지 않는다
+const forceAuthored = process.argv.includes("--force-authored");
+
 const today = new Date();
 const { programs } = loadSeedCatalog(today);
 const now = new Date().toISOString();
@@ -37,7 +40,7 @@ const now = new Date().toISOString();
 const drafts = read<DraftCache>(DRAFTS, {});
 let addedDrafts = 0;
 for (const p of programs) {
-  if (drafts[p.id]) continue; // Gemini가 만든 것 유지
+  if (drafts[p.id] && !(forceAuthored && drafts[p.id].model === AUTHORED_MODEL)) continue; // Gemini가 만든 것 유지
   const a = AUTHORED_DRAFTS[p.id];
   if (!a) continue;
   const end = p.apply_end ? fromIso(p.apply_end) : null;
@@ -71,7 +74,7 @@ for (const demo of loadDemoProfiles(today)) {
       .slice(0, 15);
     if (rows.length === 0) continue;
     const key = coachKey(p.id, rows);
-    if (coach[key]) continue;
+    if (coach[key] && !(forceAuthored && coach[key].model === AUTHORED_MODEL)) continue;
 
     const items = rows.map((r) => ({ row: r, a: COACH_ITEMS[`${r.label}|${r.required}|${r.state}`] }));
     const unknown = items.filter((x) => !x.a);

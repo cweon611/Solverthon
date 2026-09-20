@@ -20,7 +20,7 @@
    "next_step": "비즈버디의 '곧 사라짐·자격 발생' 안내에서 업력 3년이 되는 날짜를 확인해 두세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-04:d03af0630e62c82e": {
   "programId": "seed-04",
@@ -43,7 +43,7 @@
    "next_step": "지금 인원을 4대보험 가입자 명부로 확인하고, 필요한 충원 인원을 계산해 보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-05:d9abfde0057f7e9b": {
   "programId": "seed-05",
@@ -66,7 +66,7 @@
    "next_step": "공고문의 운영사 목록과 문의처를 확인해, 우리 분야와 맞는 운영사부터 추려 보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-07:6b2f60a0baf7d771": {
   "programId": "seed-07",
@@ -89,7 +89,7 @@
    "next_step": "판정함에서 수출 실적 요건이 없는 해외 진출 지원 사업을 찾아보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-13:079f28e4041d36a3": {
   "programId": "seed-13",
@@ -111,7 +111,7 @@
    "next_step": "판정함에서 성별 조건이 없는 경영·자금 지원 사업을 대신 확인하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-16:c662a6bb26412d50": {
   "programId": "seed-16",
@@ -134,7 +134,7 @@
    "next_step": "공고문 맨 뒤 문의처로 전화해 '우수기업 우선 선정'의 기준을 물어보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-17:ee1e919ac82be227": {
   "programId": "seed-17",
@@ -157,7 +157,7 @@
    "next_step": "사업자등록증의 사업장 소재지를 확인하고, 같은 분야의 광주광역시 공고를 대신 살펴보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-18:5ee4c8a01450cd55": {
   "programId": "seed-18",
@@ -191,7 +191,7 @@
    "next_step": "사업자등록증의 사업장 소재지를 확인하고, 같은 분야의 광주광역시 공고를 대신 살펴보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-19:9266fa7c2fc119d3": {
   "programId": "seed-19",
@@ -213,7 +213,7 @@
    "next_step": "판정함에서 업종 제한이 없는 소상공인 자금 공고를 확인하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-20:77f076e6482621e9": {
   "programId": "seed-20",
@@ -236,7 +236,7 @@
    "next_step": "벤처기업확인 유형 세 가지 중 우리 회사에 맞는 것이 있는지 확인해 보세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-23:de93932c61fcfe53": {
   "programId": "seed-23",
@@ -259,7 +259,7 @@
    "next_step": "청년창업사관학교 수료 이력이 있는지 확인하고, 있다면 프로필에 반영하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-06:d3edd58adb6f422d": {
   "programId": "seed-06",
@@ -282,7 +282,7 @@
    "next_step": "홈택스에서 작년 매출액을 확인해 프로필에 입력하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-07:0998bf106015692b": {
   "programId": "seed-07",
@@ -305,7 +305,7 @@
    "next_step": "작년 수출 실적을 확인해 프로필에 입력하세요. 수출이 없으면 '수출 없음'을 고르면 됩니다."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-12:91a4c588d023cbc5": {
   "programId": "seed-12",
@@ -328,7 +328,7 @@
    "next_step": "채용 계획이 있다면 채용 예정일을 정하고, 근로계약서 양식을 미리 준비하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-03:5d58eefc9fa31b67": {
   "programId": "seed-03",
@@ -350,7 +350,7 @@
    "next_step": "판정함에서 연령 제한이 없는 사업과 중장년 대상 사업을 확인하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-08:cd83dcfe358034b9": {
   "programId": "seed-08",
@@ -372,7 +372,7 @@
    "next_step": "채용 계획이 있다면 공고에서 사전 신청이 필요한지부터 확인하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-14:698595e28db0ce95": {
   "programId": "seed-14",
@@ -406,7 +406,7 @@
    "next_step": "청년 채용 계획이 있는지 정하고, 있다면 공고의 사전 신청 절차부터 확인하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-15:27d46ca0ab9fef29": {
   "programId": "seed-15",
@@ -440,7 +440,7 @@
    "next_step": "사업자등록증 소재지를 확인하고, 프로필의 지역 값이 실제와 같은지 점검하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-16:bc291a4bff1a43fe": {
   "programId": "seed-16",
@@ -475,6 +475,6 @@
    "next_step": "사업자등록증 소재지를 확인하고, 프로필의 지역 값이 실제와 같은지 점검하세요."
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  }
 }

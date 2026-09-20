@@ -842,7 +842,7 @@
     {
      "heading": "1. 기업 및 팀 개요",
      "purpose": "회사와 창업팀을 한눈에 보여줍니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{lib:team}}",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
      "tips": [
       "대표자·핵심 인력의 기술 경력을 앞세우세요."
      ],
@@ -919,7 +919,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-07": {
   "draft": {
@@ -946,7 +946,7 @@
     {
      "heading": "1. 기업 개요와 수출 현황",
      "purpose": "회사와 수출 실적을 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n수출 실적 및 준비 현황\n{{lib:traction}}",
+     "template": "{{company_intro}}\n\n수출 실적 및 준비 현황\n{{lib:traction}}",
      "tips": [
       "수출 실적은 증명서 기준 금액으로 적으세요."
      ],
@@ -1022,7 +1022,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-08": {
   "draft": {
@@ -1044,7 +1044,7 @@
     {
      "heading": "1. 기업 개요",
      "purpose": "사업장 현황을 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{business_direction}}",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
      "tips": [
       "4대보험 가입자 수와 프로필의 직원 수가 같아야 합니다."
      ],
@@ -1097,7 +1097,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-09": {
   "draft": {
@@ -1119,7 +1119,7 @@
     {
      "heading": "1. 사업장 개요",
      "purpose": "사업장 현황을 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{lib:solution}}",
+     "template": "{{company_intro}}\n\n{{lib:solution}}",
      "tips": [
       "소상공인 기준(업종별 상시근로자 수)을 함께 확인하세요."
      ],
@@ -1187,7 +1187,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-11": {
   "draft": {
@@ -1214,7 +1214,7 @@
     {
      "heading": "1. 기업 개요",
      "purpose": "회사를 간단히 소개합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{business_direction}}",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
      "tips": [],
      "criteria": []
     },
@@ -1277,7 +1277,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-12": {
   "draft": {
@@ -1299,7 +1299,7 @@
     {
      "heading": "1. 기업 개요와 고용 현황",
      "purpose": "현재 고용 상태를 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n[[현재 근로자 수와 직무 구성, 최근 1년 입·퇴사 현황]]",
+     "template": "{{company_intro}}\n\n[[현재 근로자 수와 직무 구성, 최근 1년 입·퇴사 현황]]",
      "tips": [
       "4대보험 가입자 명부와 숫자를 맞추세요."
      ],
@@ -1352,7 +1352,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-14": {
   "draft": {
@@ -1374,7 +1374,7 @@
     {
      "heading": "1. 기업 개요",
      "purpose": "광주 사업장 현황을 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{business_direction}}",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
      "tips": [
       "사업자등록증의 소재지가 광주인지 확인하세요."
      ],
@@ -1428,7 +1428,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-15": {
   "draft": {
@@ -1455,7 +1455,7 @@
     {
      "heading": "1. 창업자와 기업 개요",
      "purpose": "대표자와 회사를 소개합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{lib:team}}",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
      "tips": [
       "대표자 연령 요건(만 39세 이하) 증빙이 필요합니다."
      ],
@@ -1526,7 +1526,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-16": {
   "draft": {
@@ -1553,7 +1553,7 @@
     {
      "heading": "1. 기업 개요",
      "purpose": "회사와 사업장 위치를 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{business_direction}}",
+     "template": "{{company_intro}}\n\n{{business_direction}}",
      "tips": [
       "광주 소재 본사 또는 기업부설연구소 여부를 명확히 적으세요."
      ],
@@ -1628,7 +1628,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-17": {
   "draft": {
@@ -1655,7 +1655,7 @@
     {
      "heading": "1. 창업자와 기업 개요",
      "purpose": "대표자와 회사를 소개합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{lib:team}}",
+     "template": "{{company_intro}}\n\n{{lib:team}}",
      "tips": [],
      "criteria": []
     },
@@ -1722,7 +1722,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-18": {
   "draft": {
@@ -1744,7 +1744,7 @@
     {
      "heading": "1. 사업장 개요",
      "purpose": "사업장과 영업신고 현황을 적습니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n[[영업신고 종류와 신고일, 사업장 면적]]",
+     "template": "{{company_intro}}\n\n[[영업신고 종류와 신고일, 사업장 면적]]",
      "tips": [
       "영업신고증 사본이 필요합니다."
      ],
@@ -1804,7 +1804,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-19": {
   "draft": {
@@ -1826,7 +1826,7 @@
     {
      "heading": "1. 사업장 개요",
      "purpose": "제조 현황을 정리합니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n{{lib:solution}}",
+     "template": "{{company_intro}}\n\n{{lib:solution}}",
      "tips": [
       "제조업 여부와 상시근로자 10인 미만 기준을 확인하세요."
      ],
@@ -1885,7 +1885,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-20": {
   "draft": {
@@ -1907,7 +1907,7 @@
     {
      "heading": "1. 기업 개요",
      "purpose": "회사와 인증 현황을 적습니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n보유 인증: {{certifications}}",
+     "template": "{{company_intro}}\n\n보유 인증: {{certifications}}",
      "tips": [
       "벤처기업확인서 유효기간을 확인하세요."
      ],
@@ -1967,7 +1967,7 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  },
  "seed-23": {
   "draft": {
@@ -1994,7 +1994,7 @@
     {
      "heading": "1. 기업 개요와 수료 이력",
      "purpose": "회사와 사관학교 이력을 적습니다.",
-     "template": "{{company_name}}은(는) {{region}}에 소재한 {{industry}} {{business_type}}로, {{founded_at}}에 개업하여 업력 {{business_age}}, 상시근로자 {{employee_count}}입니다.\n\n[[청년창업사관학교 기수와 수료 시기, 당시 과제명]]",
+     "template": "{{company_intro}}\n\n[[청년창업사관학교 기수와 수료 시기, 당시 과제명]]",
      "tips": [
       "수료증·협약서 사본이 필요합니다."
      ],
@@ -2056,6 +2056,6 @@
    ]
   },
   "model": "claude-opus-5",
-  "generatedAt": "2026-09-20T03:01:18.566Z"
+  "generatedAt": "2026-09-20T06:43:02.941Z"
  }
 }
